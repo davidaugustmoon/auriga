@@ -12,7 +12,7 @@ class Player(object):
     text adventure game.
     """
     def __init__(self, name=DEFAULT_NAME, description=DEFAULT_DESCRIPTION,
-                 capacity=0, items=[], location=None, alive=True):
+                 capacity=0, location=None, alive=True):
         """
         :param name - str: The name of this player.
         :param description - str: A description of this player.
@@ -28,7 +28,7 @@ class Player(object):
         self.name = name
         self.description = description
         self.capacity = capacity
-        self.items = items
+        self.items = []
         self.location = location
         self.alive = alive
 
