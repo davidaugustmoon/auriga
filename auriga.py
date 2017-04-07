@@ -27,7 +27,6 @@ def main():
     p1 = Player(name="player_one")
     p1.set_location(s3)
     p1.add_item(i3)
-    p1.items.append(i3)
 
     p2 = Player(name="player_two")
     p2.set_location(s4)
