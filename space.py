@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
 DEFAULT_NAME = "Space"
 DEFAULT_LONG_DESCRIPTION = "This is a space."
 DEFAULT_SHORT_DESCRIPTION = "Space."
@@ -10,7 +12,7 @@ a text adventure game.
 """
 class Space(object):
     def __init__(self, name=DEFAULT_NAME, long_description=DEFAULT_LONG_DESCRIPTION,
-                 short_description=DEFAULT_SHORT_DESCRIPTION, visible=True, locked=False):
+                 short_description=DEFAULT_SHORT_DESCRIPTION, visited=False):
         """
         :param name - str: The name of this space.
         :param items - list of Item: The list of Item objects in this space.
@@ -35,8 +37,7 @@ class Space(object):
         self.long_description = long_description
         self.short_description = short_description
         self.exits = []
-        self.visible = visible
-        self.locked = locked
+        self.visited = False
     #TODO getters and setters for all properties above
 
     def get_name(self):
@@ -56,9 +57,11 @@ class Space(object):
 
     def add_item(self, item_to_add):
         self.items.append(item_to_add)
+        item_to_add.location = self
 
     def add_character(self, character_to_add):
         self.characters.append(character_to_add)
+        character_to_add.location = self
 
     def print_short_description(self):
         print(self.short_description)
@@ -66,9 +69,25 @@ class Space(object):
     def print_long_description(self):
         print(self.long_description)
 
+    def print_exits(self):
+        print("Exits: ", end="")
+        for counter, e in enumerate(self.exits):
+            print(counter + 1, ".", e.name, "  ", end="")
+        print()
+
+    def print_items(self):
+        print("Items: ", end="")
+        for counter, i in enumerate(self.items):
+            print(counter + 1, ".", i.name, "  ", end="")
+        print()
+
+    def print_characters(self):
+        print("Characters: ", end="")
+        for counter, c in enumerate(self.characters):
+            print(counter + 1, ".", c.name, "  ", end="")
+        print()
+
     def print_details(self):
-        print("\nName: {}".format(self.name.upper()))
-        print("Exits: {}".format([c.name for c in self.exits]))
-        print("Items: {}".format([i.name for i in self.items]))
-        print("Characters: {}".format([c.name for c in self.characters]))
-        print("Description: {}".format(self.short_description))
+        self.print_exits()
+        self.print_items()
+        self.print_characters()

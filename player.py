@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
 import item
 import space
 
-DEFAULT_NAME = "Player 1"
+DEFAULT_NAME = "PLAYER 1"
 DEFAULT_DESCRIPTION = "This is a player."
 
 class Player(object):
@@ -35,8 +37,18 @@ class Player(object):
     def add_item(self, item_to_add):
         self.items.append(item_to_add)
 
+    def take_item(self, item_to_take):
+        self.add_item(item_to_take)
+        item_to_take.location = None
+
     def set_location(self, new_location):
         self.location = new_location
+
+    def print_items(self):
+        print("Items: ", end="")
+        for counter, i in enumerate(self.items):
+            print(counter + 1, ".", i.name, "  ", end="")
+        print()
 
     def print_details(self):
         print("\nName: {}".format(self.name.upper()))

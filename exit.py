@@ -3,10 +3,11 @@
 import space
 
 DEFAULT_NAME = "Door"
-DEFAULT_DESCRIPTION = "A wooden door."
+DEFAULT_DESCRIPTION = "door."
 
 class Exit(object):
-    def __init__(self, name=DEFAULT_NAME, description=DEFAULT_DESCRIPTION, space=None, locked=False, visible=True, unlock_item=None):
+    def __init__(self, name=DEFAULT_NAME, description=DEFAULT_DESCRIPTION,
+                 space=None, locked=False, visible=True, unlock_item=None):
         """
         An exit to a Space.
         :param str - name: The name of the exit.
