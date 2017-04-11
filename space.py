@@ -3,7 +3,6 @@
 from __future__ import print_function
 
 DEFAULT_NAME = "Space"
-DEFAULT_LONG_DESCRIPTION = "This is a space."
 DEFAULT_SHORT_DESCRIPTION = "Space."
 
 """
@@ -11,14 +10,17 @@ This is a base class for a space. The space is intended to be used in
 a text adventure game.
 """
 class Space(object):
-    def __init__(self, name=DEFAULT_NAME, long_description=DEFAULT_LONG_DESCRIPTION,
-                 short_description=DEFAULT_SHORT_DESCRIPTION, visited=False):
+    def __init__(self, name=DEFAULT_NAME, items=None, characters=None,
+                 long_description=None, short_description=DEFAULT_SHORT_DESCRIPTION,
+                 visited=False):
         """
         :param name - str: The name of this space.
         :param items - list of Item: The list of Item objects in this space.
         :param characters - list of Character: The list of Character objects
                in this space.
-        :param long_description - str: A detailed description of this space.
+        :param long_description - list of str: A list of detailed descriptions
+               of this space. A list of descriptions allows for indexing based
+               on the state of the space.
         :param short_description - str: A brief description of this space.
         :param exits - list of exits: A list of exits in this
                space.
@@ -32,9 +34,18 @@ class Space(object):
                      until they have accomplished some task.
         """
         self.name = name
-        self.items = []
-        self.characters = []
-        self.long_description = long_description
+        if items:
+            self.items = items
+        else:
+            self.items = []
+        if characters:
+            self.characters = characters
+        else:
+            self.characters = []
+        if long_description:
+            self.long_description = long_description
+        else:
+            self.long_description = []
         self.short_description = short_description
         self.exits = []
         self.visited = False
@@ -64,10 +75,10 @@ class Space(object):
         character_to_add.location = self
 
     def print_short_description(self):
-        print(self.short_description)
+        print("\n{0}".format(self.short_description))
 
-    def print_long_description(self):
-        print(self.long_description)
+    def print_long_description(self, index):
+        print("\n{0}".format(self.long_description[index]))
 
     def print_exits(self):
         print("Exits: ", end="")
