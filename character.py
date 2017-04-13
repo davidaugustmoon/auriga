@@ -37,7 +37,7 @@ class Character(object):
         print("Description: {}".format(self.description))
 
     def print_response(self, index):
-        print("[{0}] {1}".format(self.name.upper(), self.response[index]))
+        print("\n[{0}] {1}".format(self.name.upper(), self.response[index]))
 
 
     #TODO getters and setters for all of the properties above.
