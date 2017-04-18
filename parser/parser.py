@@ -1,3 +1,11 @@
+# utility function to check for enumerable non-string
+# cite: http://stackoverflow.com/a/19944281
+from collections import Iterable
+
+def enum_check(obj):
+    return not isinstance(obj, str) and isinstance(obj, Iterable)
+
+
 class Parser:
     """A basic natural-language parser for Auriga user input."""
 
@@ -96,10 +104,6 @@ class Parser:
     def __init__(self):
         print("Creating new Parser")
 
-    # for testing functions as variable values
-    def test():
-        print("Haiyah!")
-
     def create_multiword_list(string):
         return string.split()
 
@@ -120,18 +124,36 @@ class Parser:
 
         return verb_func
 
-    def get_location_string(input_list):
-        for loc in Parser.LOCATIONS:
-            if loc in input_list:
-                return loc
+    def get_identity(input_list, core_list, alt_list):
+        if core_list is None or not enum_check(core_list):
+            # throw error
+            return
 
-        for loc in Parser.ALT_LOC_NAMES:
-            alt_loc_name = Parser.create_multiword_list(loc)
-            for i in range(len(input_list)):
-                if alt_loc_name == input_list[i:i+len(alt_loc_name)]:
-                    return Parser.ALT_LOC_NAMES[loc]
+        for elmt in core_list:
+            if elmt in input_list:
+                return elmt
+
+        if enum_check(alt_list):
+            for elmt in alt_list:
+                alt_name = Parser.create_multiword_list(elmt)
+                for i in range(len(input_list)):
+                    if alt_name == input_list[i:i + len(alt_name)]:
+                        return alt_list[elmt]
 
         return None
+
+
+    def get_location(input_list):
+        return get_identity(input_list, Parser.LOCATIONS,
+                Parser.ALT_LOC_NAMES)
+
+    def get_item(input_list):
+        return get_identity(input_list, Parser.ITEMS,
+                Parser.ALT_ITEM_NAMES)
+
+    def get_entity(input_list):
+        return get_identity(input_list, Parser.ENTITIES,
+                Parser.ALT_ENTITY_NAMES)
 
     def get_direction_string(input_list):
         NON_DIR_PREPS = list(set(Parser.PREPOSITIONS) - 
@@ -159,6 +181,7 @@ class Parser:
         cmd_list = Parser.parse_command(cmd_str.lower())
 
         # check whether first word is a verb
+        # get the verb's corresponding method
         verb = Parser.get_verb(cmd_list)
 
         # remove all articles
@@ -166,42 +189,39 @@ class Parser:
         
         # if it is a verb, check whether it is a MOVE verb
         if verb is None or verb is Player.move:
+            verb = Player.move
 
-        # if it is not a verb, check whether it is a location
+            # ignore any prepositions, only look for locations or directions
+
+            # if it is not a verb, check whether it is a location
             location_string = Parser.get_location_string(cmd_list)
 
-        # if it is not a verb, check whether it is a direction
+            # if it is not a verb, check whether it is a direction
             direction_string = Parser.get_direction_string(cmd_list)
 
             # apply the MOVE action
             if location_string is not None and direction_string is None:
                 verb(location, "location")
-            elif direction_string is not None and location_string is None:
-                verb(direction, "direction")
-
-            # MOVE command ambiguous or poorly defined
-            # print error and do nothing
-            else
-                # print error message stating could not understand
-                # user instructions
                 return
 
-            # ignore any prepositions, only look for locations or directions
+            elif direction_string is not None and location_string is None:
+                verb(direction, "direction")
+                return
 
-            # if the direction is invalid or location is hidden,
-            # locked, or not adjacent, print error message for player
-
-            # otherwise move player to new location and start next
-            # turn
+            # MOVE command ambiguous or poorly defined
 
         # if it is not a verb, location, or direction, return
+        if verb is None:
+            # print error message stating could not understand
+            # user instructions
+            return
 
-        # get the verb's corresponding method
 
         # check the following strings for params to the verb method
 
         # first check for an object - this would be a direct object
         # determine the object from possible synonyms
+        direct_obj = get_direct_obj_string(cmd_list)
 
         # check for any prepositions
         # store these in a list
@@ -212,19 +232,8 @@ class Parser:
 
         # apply the action if valid and return
 
-# just testing some Python features
-FUNC_DICT = {
-        "about": Parser.test,
-        "below": None
-        }
 
-next_func = None
-
-if "about" in FUNC_DICT:
-    next_func = FUNC_DICT["about"]
-
-if next_func is not None:
-    next_func()
+## TEST CODE
 
 test_loc = "clean room"
 test_command = "go clean room"
@@ -257,7 +266,4 @@ else:
 
 in_list = ["a", "happy", "child", "in", "the", "rain"]
 in_list = Parser.remove_articles(in_list);
-
 print(in_list)
-
-print(list(set(Parser.DIRECTIONS) - set(Parser.PREPOSITIONS)))
