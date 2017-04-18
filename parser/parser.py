@@ -12,12 +12,22 @@ class Parser:
     ## Constants
     ARTICLES = ["a", "an", "the"]
 
-    DIRECTIONS = ["north", "east", "south", "west", 
-            "northeast", "northwest", "southeast", "southwest",
-            "n", "e", "s", "w", "ne", "nw", "se", "sw",
-            "up", "down", "above", "below"]
+    DIRECTIONS = ["n", "e", "s", "w", "ne", "nw", "se", "sw", "up", "down"]
 
-    # create list of room names
+    ALT_DIR_NAMES = {
+            "north":        "n",
+            "east":         "e",
+            "south":        "s",
+            "west":         "w",
+            "northeast":    "ne",
+            "northwest":    "nw",
+            "southeast":    "se",
+            "southwest":    "sw",
+            "above":        "up",
+            "below":        "down"
+            }
+
+    # create list of room names (possibly from Space or Map file)
     #LOCATIONS = Game.get_room_names()
     LOCATIONS = ["cleanroom", "hangar", "lab", "storehouse"]
 
@@ -26,9 +36,34 @@ class Parser:
             "computer lab": "lab"
             }
 
-    # create list of room name synonyms
-    # might actually want to have a 2D list, or else a dictionary
-    SYNONYMS = { }
+    ITEMS = ["ssd1", "ssd2", "ssd3", "yo-yo", "zip tie", "ac adapter",
+            "badge", "dongle1", "dongle2", "macbook pro"]
+
+    ALT_ITEM_NAMES = {
+            "small ssd":                "ssd1",
+            "small ssd drive":          "ssd1",
+            "small hard drive":         "ssd1",
+            "small drive":              "ssd1",
+            "medium ssd":               "ssd2",
+            "medium ssd drive":         "ssd2",
+            "medium hard drive":        "ssd2",
+            "medium drive":             "ssd2",
+            "engineer badge":           "badge",
+            "employee badge":           "badge",
+            "pin badge":                "badge",
+            "pin":                      "badge",
+            "ethernet cord":            "ethernet",
+            "ethernet cable":           "ethernet",
+            "mbp":                      "macbook pro"
+            }
+
+    CHARACTERS = ["stuffed robot bear", "collapsed robot", "pr2",
+            "kelt2a", "wasp12", "jim"]
+
+    ALT_CHAR_NAMES = {
+            "robobear":                 "stuffed robot bear",
+            "robo-bear":                "stuffed robot bear"
+            }
 
     # verbs and corresponding methods
 #    ACTIONS = {
@@ -124,6 +159,10 @@ class Parser:
 
         return verb_func
 
+    def get_prepositions(input_list):
+        return [word for word in input_list
+                if word in Parser.PREPOSITIONS]
+
     def get_identity(input_list, core_list, alt_list):
         if core_list is None or not enum_check(core_list):
             # throw error
@@ -131,7 +170,10 @@ class Parser:
 
         for elmt in core_list:
             if elmt in input_list:
-                return elmt
+                elmt_mw = Parser.create_multiword_list(elmt)
+                for i in range(len(input_list)):
+                    if elmt_mw == input_list[i:i + len(elmt_mw)]:
+                        return elmt
 
         if enum_check(alt_list):
             for elmt in alt_list:
@@ -151,13 +193,13 @@ class Parser:
         return get_identity(input_list, Parser.ITEMS,
                 Parser.ALT_ITEM_NAMES)
 
-    def get_entity(input_list):
-        return get_identity(input_list, Parser.ENTITIES,
-                Parser.ALT_ENTITY_NAMES)
+    def get_character(input_list):
+        return get_identity(input_list, Parser.CHARACTERS,
+                Parser.ALT_CHAR_NAMES)
 
-    def get_direction_string(input_list):
-        NON_DIR_PREPS = list(set(Parser.PREPOSITIONS) - 
-                set(Parser.DIRECTIONS))
+    def get_direction(input_list):
+        NON_DIR_PREPS = list((set(Parser.PREPOSITIONS) - 
+                set(Parser.DIRECTIONS)) - set(Parser.ALT_DIR_NAMES))
 
         # strip out all unambiguous prepositions
         input_list = [word for word in input_list 
@@ -165,16 +207,21 @@ class Parser:
 
         direction = input_list[0]
 
-        if direction not in Parser.DIRECTIONS:
+        if direction not in Parser.DIRECTIONS and
+           direction not in Parser.ALT_DIR_NAMES:
             return None
-        else
-            return direction
+
+        if direction in Parser.ALT_DIR_NAMES:
+            return ALT_DIR_NAMES[direction]
+        
+        return direction
 
 
     ## this method will be part of another class but for now
     ## it will encapsulate the basic strategy for parsing out
     ## and running a command input by the user.
-    def run_action(cmd_str):
+    def run_action(player, cmd_str):
+
         if cmd_str is None:
             return
 
@@ -221,14 +268,34 @@ class Parser:
 
         # first check for an object - this would be a direct object
         # determine the object from possible synonyms
-        direct_obj = get_direct_obj_string(cmd_list)
+        item = get_item(cmd_list)
+        character = None
+
+        if item is None:
+            character = get_character(cmd_list)
 
         # check for any prepositions
         # store these in a list
         # if none, then apply the action if valid and return
+        preps = get_prepositions(cmd_list)
+
+        if character is None:
+            verb(player)
+            return
+
+        if item is None:
+            verb(player, character)
+            return
 
         # check for an object - this would be an indirect object
         # determine the object from possible synonyms
+        character = get_character(cmd_list)
+        
+        if character is not None:
+            verb(player, item, character)
+            return
+
+        # something went wrong, so return an error
 
         # apply the action if valid and return
 
