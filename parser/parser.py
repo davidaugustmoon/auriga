@@ -106,6 +106,20 @@ class Parser:
     def parse_command(string):
         return Parser.create_multiword_list(string)
 
+    def remove_articles(input_list):
+        return [word for word in input_list 
+                if word not in Parser.ARTICLES]
+
+    def get_verb(input_list):
+        action = input_list[0]
+        verb_func = None
+
+        if action in Parser.ACTIONS:
+            #verb_func = Parser.ACTIONS[action]
+            del input_list[0]
+
+        return verb_func
+
     def get_location_string(input_list):
         for loc in Parser.LOCATIONS:
             if loc in input_list:
@@ -119,8 +133,21 @@ class Parser:
 
         return None
 
-    def get_direction():
-        return None
+    def get_direction_string(input_list):
+        NON_DIR_PREPS = list(set(Parser.PREPOSITIONS) - 
+                set(Parser.DIRECTIONS))
+
+        # strip out all unambiguous prepositions
+        input_list = [word for word in input_list 
+                if word not in NON_DIR_PREPS]
+
+        direction = input_list[0]
+
+        if direction not in Parser.DIRECTIONS:
+            return None
+        else
+            return direction
+
 
     ## this method will be part of another class but for now
     ## it will encapsulate the basic strategy for parsing out
@@ -129,18 +156,35 @@ class Parser:
         if cmd_str is None:
             return
 
-        Parser.parse_command(cmd_str)
-        
-        # check whether first word is a verb
+        cmd_list = Parser.parse_command(cmd_str.lower())
 
-        # if it is a verb, check whether it is a GO verb
+        # check whether first word is a verb
+        verb = Parser.get_verb(cmd_list)
+
+        # remove all articles
+        cmd_list = Parser.remove_articles(cmd_list)
+        
+        # if it is a verb, check whether it is a MOVE verb
+        if verb is None or verb is Player.move:
 
         # if it is not a verb, check whether it is a location
+            location_string = Parser.get_location_string(cmd_list)
 
         # if it is not a verb, check whether it is a direction
+            direction_string = Parser.get_direction_string(cmd_list)
 
-        # if any of the last three checks was true, apply the GO
-        # verb to the location or direction
+            # apply the MOVE action
+            if location_string is not None and direction_string is None:
+                verb(location, "location")
+            elif direction_string is not None and location_string is None:
+                verb(direction, "direction")
+
+            # MOVE command ambiguous or poorly defined
+            # print error and do nothing
+            else
+                # print error message stating could not understand
+                # user instructions
+                return
 
             # ignore any prepositions, only look for locations or directions
 
@@ -187,30 +231,33 @@ test_command = "go clean room"
 test_command2 = "go to the clean room"
 location = None
 
-print("\nCommand: %s", test_loc)
+print("\nCommand: ", test_loc)
 command_parsed = Parser.parse_command(test_loc)
 location = Parser.get_location_string(command_parsed)
 if location is None:
     print("No location specified")
 else:
-    print("Location: %s", location)
+    print("Location: ", location)
 
-print("\nCommand: %s", test_command)
+print("\nCommand: ", test_command)
 command_parsed = Parser.parse_command(test_command)
 location = Parser.get_location_string(command_parsed)
 if location is None:
     print("No location specified")
 else:
-    print("Location: %s", location)
+    print("Location: ", location)
 
-print("\nCommand: %s", test_command2)
+print("\nCommand: ", test_command2)
 command_parsed = Parser.parse_command(test_command2)
 location = Parser.get_location_string(command_parsed)
 if location is None:
     print("No location specified")
 else:
-    print("Location: %s", location)
+    print("Location: ", location)
 
+in_list = ["a", "happy", "child", "in", "the", "rain"]
+in_list = Parser.remove_articles(in_list);
 
+print(in_list)
 
 print(list(set(Parser.DIRECTIONS) - set(Parser.PREPOSITIONS)))
