@@ -122,6 +122,51 @@ class Parser:
     def get_direction():
         return None
 
+    ## this method will be part of another class but for now
+    ## it will encapsulate the basic strategy for parsing out
+    ## and running a command input by the user.
+    def run_action(cmd_str):
+        if cmd_str is None:
+            return
+
+        Parser.parse_command(cmd_str)
+        
+        # check whether first word is a verb
+
+        # if it is a verb, check whether it is a GO verb
+
+        # if it is not a verb, check whether it is a location
+
+        # if it is not a verb, check whether it is a direction
+
+        # if any of the last three checks was true, apply the GO
+        # verb to the location or direction
+
+            # ignore any prepositions, only look for locations or directions
+
+            # if the direction is invalid or location is hidden,
+            # locked, or not adjacent, print error message for player
+
+            # otherwise move player to new location and start next
+            # turn
+
+        # if it is not a verb, location, or direction, return
+
+        # get the verb's corresponding method
+
+        # check the following strings for params to the verb method
+
+        # first check for an object - this would be a direct object
+        # determine the object from possible synonyms
+
+        # check for any prepositions
+        # store these in a list
+        # if none, then apply the action if valid and return
+
+        # check for an object - this would be an indirect object
+        # determine the object from possible synonyms
+
+        # apply the action if valid and return
 
 # just testing some Python features
 FUNC_DICT = {
