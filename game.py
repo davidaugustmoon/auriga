@@ -77,7 +77,7 @@ class Game(object):
 # just to demonstrate a simple version of the game. This parser only 
 # handles input in the form 'go 1', 'talk 2', 'take 1', etc.
 def get_command():
-    command = raw_input("Command: ")
+    command = input("Command: ")
     return command
 
 def parse_command(command):
