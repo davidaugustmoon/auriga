@@ -177,6 +177,7 @@ class Auriga(Game):
 def main():
     # Create Player
     player = Player(name="Auriga-7B")
+    player.set_capacity(100)
 
     # # Create an instance of the Auriga game with the player and maze
     auriga = Auriga(player)

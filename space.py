@@ -63,16 +63,46 @@ class Space(object):
     def set_items(self, new_items_list):
         self.items = new_items_list
 
-    def add_exit(self, exit):
-        self.exits.append(exit)
-
     def add_item(self, item_to_add):
         self.items.append(item_to_add)
         item_to_add.location = self
 
+    def remove_item(self, item_to_remove):
+        if item_to_remove in self.items:
+            self.items.remove(item_to_remove)
+
+    def get_exits(self):
+        return self.exits
+
+    def set_exits(self, new_exit_list):
+        self.exits = new_exit_list
+
+    def add_exit(self, exit):
+        self.exits.append(exit)
+
+    def remove_exit(self, exit_to_remove):
+        if exit_to_remove in self.exits:
+            self.exits.remove(exit_to_remove)
+
+    def get_characters(self):
+        return self.characters
+
+    def set_characters(self, new_characters_list):
+        self.characters = new_characters_list
+
     def add_character(self, character_to_add):
         self.characters.append(character_to_add)
         character_to_add.location = self
+
+    def remove_character(self, character_to_remove):
+        if character_to_remove in self.characters:
+            self.characters.remove(character_to_remove)
+
+    def get_visited(self):
+        return self.visited
+
+    def set_visited(self, new_visited):
+        self.visited = new_visited
 
     def print_short_description(self):
         print("\n{0}".format(self.short_description))

@@ -14,7 +14,7 @@ class Player(object):
     text adventure game.
     """
     def __init__(self, name=DEFAULT_NAME, description=DEFAULT_DESCRIPTION,
-                 capacity=0, location=None, alive=True):
+                 capacity=0, location=None, alive=True, energy=100):
         """
         :param name - str: The name of this player.
         :param description - str: A description of this player.
@@ -33,6 +33,7 @@ class Player(object):
         self.items = []
         self.location = location
         self.alive = alive
+        self.energy = energy
 
     def get_name(self):
         """
@@ -123,6 +124,12 @@ class Player(object):
         """
         return [i.name for i in self.items]
 
+    def get_items_total_weight(self):
+        total_weight = 0
+        for i in self.items:
+            total_weight += i.get_weight()
+        return total_weight
+
     def get_location(self):
         """
         Get the player's current location
@@ -156,13 +163,32 @@ class Player(object):
         """
         self.alive = new_alive
 
+    def get_energy(self):
+        """
+        Get a player's current energy level
+
+        :return int: The player's current energy level
+        """
+        return self.energy
+
+    def set_energy(self, new_energy):
+        """
+        Set a player's energy level
+
+        :param int - new_energy: The energy level to set for the player
+        """
+        if new_energy < 0:
+            self.energy = 0
+        else:
+            self.energy = new_energy
+
     def print_details(self):
         """
         Print details about the player
         """
         print("\nName: {}".format(self.name.upper()))
         print("Description: {}".format(self.description))
-        print("Capacity: {}".format(self.capacity))
+        print("Carrying: {0}/{1}".format(self.get_items_total_weight(), self.capacity))
         print("Items: {}".format(self.get_item_names()))
         print("location: {}".format(self.location.name))
         print("Is alive: {}".format(self.alive))
