@@ -12,11 +12,12 @@ from exit import Exit
 # The parser should determine one of the listed game commands based on the user input
 GO = "go"
 TAKE = "take"
+DROP = "drop"
 TALK = "talk"
 LOOK = "look"
 SAVE = "save"
 QUIT = "quit"
-commands = [GO, TAKE, TALK, LOOK, SAVE, QUIT]
+commands = [GO, TAKE, DROP, TALK, LOOK, SAVE, QUIT]
 
 class Game(object):
     def __init__(self, player):
@@ -55,6 +56,10 @@ class Game(object):
             elif command == TAKE:
                 item_to_take = cur_location.items[action - 1]
                 self.take(item_to_take)
+
+            elif command == DROP:
+                item_to_drop = self.player.get_items()[action - 1]
+                self.drop(item_to_drop)
 
             elif command == TALK:
                 character = cur_location.characters[action - 1]
@@ -125,6 +130,14 @@ class Game(object):
             character.print_response(index)
         else:
             print("That person's not here...")
+
+    def drop(self, item_to_drop):
+        cur_location = self.player.get_location()
+        if item_to_drop in self.player.get_items():
+            cur_location.add_item(item_to_drop)
+            self.player.remove_item(item_to_drop)
+        else:
+            print("You can't drop that.")
 
     def check_energy(self):
         if self.player.get_energy() <= 0:

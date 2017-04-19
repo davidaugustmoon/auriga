@@ -114,7 +114,7 @@ class Player(object):
         :param Item - item_to_remove: The Item to remove from the player's currently carried items
         """
         if item_to_remove in self.items:
-            self.item.remove(item_to_remove)
+            self.items.remove(item_to_remove)
 
     def get_item_names(self):
         """
