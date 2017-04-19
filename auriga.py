@@ -9,6 +9,10 @@ from exit import Exit
 from game import Game
 
 class Auriga(Game):
+    """
+    This is a specialized case of a Game. It describes a text adventure game where a robot
+    navigates a corporate facility.
+    """
     def __init__(self, player):
         Game.__init__(self, player)
 
