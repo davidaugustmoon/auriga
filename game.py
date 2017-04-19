@@ -106,4 +106,4 @@ def print_player_info(player):
     print("\nPLAYER INFO:")
     print("Current location: {}".format(player.location.name))
     print("Capacity: {}".format(player.capacity))
-    player.print_items()
+    print("Items: {}".format(player.get_item_names()))

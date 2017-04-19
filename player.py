@@ -34,28 +34,135 @@ class Player(object):
         self.location = location
         self.alive = alive
 
+    def get_name(self):
+        """
+        Get the name of the player
+
+        :return str: The name of the player
+        """
+        return self.name
+
+    def set_name(self, new_name):
+        """
+        Set the name of the player
+        
+        :param str - new_name: The name to assign the player.
+        """
+        self.name = new_name
+
+    def get_description(self):
+        """
+        Get the player description
+
+        :return str: A description of the player
+        """
+        return self.description
+
+    def set_description(self, new_description):
+        """
+        Set the description of the player
+
+        :param str - new_description: The description to set for the player
+        """
+        self.description = new_description
+
+    def get_capacity(self):
+        """
+        Get the player's maximum carrying capacity
+
+        :return int: The maximum weight a player can carry.
+        """
+        return self.capacity
+
+    def set_capacity(self, new_capacity):
+        """
+        Set the player's maximum carrying capacity
+
+        :param int - new_capacity: The maximum carrying capacity to set for the player
+        """
+        self.capacity = new_capacity
+
+    def get_items(self):
+        """
+        Get the list of items currently carried by the player
+
+        :return list of Item: The list of Item objects currently carried by the player
+        """
+        return self.items
+
+    def set_items(self, new_items_list):
+        """
+        Set the list of Item objects currently carried by the player
+
+        :param list of Item - new_item_list: The new list of Item objects carried by the player
+        """
+        self.items = new_items_list
+
     def add_item(self, item_to_add):
+        """
+        Add an Item to the player's currently carried items
+
+        :param Item - item_to_add: The Item to add to the player's currently carried items
+        """
         self.items.append(item_to_add)
 
-    def take_item(self, item_to_take):
-        self.add_item(item_to_take)
-        item_to_take.location = None
+    def remove_item(self, item_to_remove):
+        """
+        Remove an Item from the player's currently carried items
+
+        :param Item - item_to_remove: The Item to remove from the player's currently carried items
+        """
+        if item_to_remove in self.items:
+            self.item.remove(item_to_remove)
+
+    def get_item_names(self):
+        """
+        Get a list of the names of all of the Item objects currently carried by the player
+
+        :return list of str: The list of Item names of all of the objects carried by the player
+        """
+        return [i.name for i in self.items]
+
+    def get_location(self):
+        """
+        Get the player's current location
+
+        :return Space: The Space the player currently occupies
+        """
+        return self.location
 
     def set_location(self, new_location):
+        """
+        Set the player's current location
+
+        :param Space - new_location: The new Space the player will occupy
+        """
         self.location = new_location
 
-    def print_items(self):
-        print("Items: ", end="")
-        for counter, i in enumerate(self.items):
-            print(counter + 1, ".", i.name, "  ", end="")
-        print()
+    def get_alive(self):
+        """
+        Get whether the player is currently alive.
+
+        :return Bool: True if the player is alive; False if the player is not alive
+        """
+        return self.alive
+
+    def set_alive(self, new_alive):
+        """
+        Set whether the player is alive or not
+
+        :param Bool - new_alive: True will set the player to be alive; False will set
+                                 the player to not be alive
+        """
+        self.alive = new_alive
 
     def print_details(self):
+        """
+        Print details about the player
+        """
         print("\nName: {}".format(self.name.upper()))
         print("Description: {}".format(self.description))
         print("Capacity: {}".format(self.capacity))
-        print("Items: {}".format([i.name for i in self.items]))
+        print("Items: {}".format(self.get_item_names()))
         print("location: {}".format(self.location.name))
         print("Is alive: {}".format(self.alive))
-
-    #TODO getters and setters for all of the properties above.
