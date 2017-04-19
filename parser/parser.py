@@ -248,11 +248,11 @@ class Parser:
 
             # apply the MOVE action
             if location_string is not None and direction_string is None:
-                verb(location, "location")
+                verb(player, location, "location")
                 return
 
             elif direction_string is not None and location_string is None:
-                verb(direction, "direction")
+                verb(player, direction, "direction")
                 return
 
             # MOVE command ambiguous or poorly defined
@@ -296,9 +296,7 @@ class Parser:
             return
 
         # something went wrong, so return an error
-
-        # apply the action if valid and return
-
+        return
 
 ## TEST CODE
 
