@@ -104,6 +104,12 @@ class Space(object):
     def set_visited(self, new_visited):
         self.visited = new_visited
 
+    def print_description(self, index):
+        if self.visited:
+            print("\n{0}".format(self.short_description))
+        else:
+            print("\n{0}".format(self.long_description[index]))
+
     def print_short_description(self):
         print("\n{0}".format(self.short_description))
 
