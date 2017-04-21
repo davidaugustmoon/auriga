@@ -207,8 +207,8 @@ class Parser:
 
         direction = input_list[0]
 
-        if direction not in Parser.DIRECTIONS and
-           direction not in Parser.ALT_DIR_NAMES:
+        if ((direction not in Parser.DIRECTIONS) and
+           (direction not in Parser.ALT_DIR_NAMES)):
             return None
 
         if direction in Parser.ALT_DIR_NAMES:
@@ -300,35 +300,35 @@ class Parser:
 
 ## TEST CODE
 
-test_loc = "clean room"
-test_command = "go clean room"
-test_command2 = "go to the clean room"
-location = None
+# test_loc = "clean room"
+# test_command = "go clean room"
+# test_command2 = "go to the clean room"
+# location = None
 
-print("\nCommand: ", test_loc)
-command_parsed = Parser.parse_command(test_loc)
-location = Parser.get_location_string(command_parsed)
-if location is None:
-    print("No location specified")
-else:
-    print("Location: ", location)
+# print("\nCommand: ", test_loc)
+# command_parsed = Parser.parse_command(test_loc)
+# location = Parser.get_location_string(command_parsed)
+# if location is None:
+#     print("No location specified")
+# else:
+#     print("Location: ", location)
 
-print("\nCommand: ", test_command)
-command_parsed = Parser.parse_command(test_command)
-location = Parser.get_location_string(command_parsed)
-if location is None:
-    print("No location specified")
-else:
-    print("Location: ", location)
+# print("\nCommand: ", test_command)
+# command_parsed = Parser.parse_command(test_command)
+# location = Parser.get_location_string(command_parsed)
+# if location is None:
+#     print("No location specified")
+# else:
+#     print("Location: ", location)
 
-print("\nCommand: ", test_command2)
-command_parsed = Parser.parse_command(test_command2)
-location = Parser.get_location_string(command_parsed)
-if location is None:
-    print("No location specified")
-else:
-    print("Location: ", location)
+# print("\nCommand: ", test_command2)
+# command_parsed = Parser.parse_command(test_command2)
+# location = Parser.get_location_string(command_parsed)
+# if location is None:
+#     print("No location specified")
+# else:
+#     print("Location: ", location)
 
-in_list = ["a", "happy", "child", "in", "the", "rain"]
-in_list = Parser.remove_articles(in_list);
-print(in_list)
+# in_list = ["a", "happy", "child", "in", "the", "rain"]
+# in_list = Parser.remove_articles(in_list);
+# print(in_list)

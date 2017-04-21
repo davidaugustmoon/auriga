@@ -8,6 +8,7 @@ from item import Item
 from character import Character
 from player import Player
 from exit import Exit
+from parser.parser import Parser
 
 # The parser should determine one of the listed game commands based on the user input
 GO = "go"
@@ -27,6 +28,9 @@ class Game(object):
     def start(self):
         self.player.get_location().print_long_description(self.event_status)
         self.player.get_location().set_visited(True)
+        p = Parser()
+
+        # Do stuff with the parser now
         playing = True
         while playing:
             self.check_energy()
