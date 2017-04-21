@@ -182,6 +182,60 @@ class Player(object):
         else:
             self.energy = new_energy
 
+    def go_exit(self, exit, event_status):
+        # Check if that exit exists
+        if exit in self.location.get_exits():
+            # Check if the exit is locked
+            if exit.is_locked():
+                # Check if the player has the Item to unlock the Exit
+                if exit.get_unlock_item() in self.items:
+                    self.energy -= 3
+                    new_space = exit.get_space()
+                    self.location = new_space
+                    new_space.print_description(event_status)
+                    new_space.set_visited(True)
+                else:
+                    print("Sorry, that exit is locked!")
+            else:
+                self.energy -= 3
+                new_space = exit.get_space()
+                self.location = new_space
+                new_space.print_description(event_status)
+                new_space.set_visited(True)
+        else:
+            print("There's no {0} here.".format(exit.get_name()))
+
+    def take(self, item):
+        """
+        Pick up an item from the player's current location.
+
+        :param Item - item: The Item to take
+        """
+        self.energy -= 2
+        # Check that the given item is in the player's current location.
+        if item in self.location.get_items():
+            # Check that the player can carry that much weight.
+            if (self.get_items_total_weight() + item.get_weight()) < self.capacity:
+                self.add_item(item)
+                self.location.remove_item(item)
+                print("{0} took the {1}".format(self.name, item.get_name()))
+            else:
+                print("The {0} is too heavy!".format(item.get_name()))
+
+    def talk(self, character, game_state_index):
+        self.energy -= 1
+        if character in self.location.get_characters():
+            character.print_response(game_state_index)
+        else:
+            print("That person's not here...")
+
+    def drop(self, item_to_drop):
+        if item_to_drop in self.items:
+            self.location.add_item(item_to_drop)
+            self.remove_item(item_to_drop)
+        else:
+            print("You can't drop that.")
+
     def print_details(self):
         """
         Print details about the player

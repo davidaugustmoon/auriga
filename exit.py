@@ -29,3 +29,24 @@ class Exit(object):
         self.locked = locked
         self.visible = visible
         self.unlock_item = unlock_item
+
+    def get_name(self):
+      return self.name
+
+    def set_name(self, new_name):
+      self.name = new_name
+
+    def get_description(self):
+      return self.description
+
+    def get_space(self):
+      return self.space
+
+    def is_locked(self):
+      return self.locked
+
+    def is_visible(self):
+      return self.visible
+
+    def get_unlock_item(self):
+      return self.unlock_item

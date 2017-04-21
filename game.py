@@ -43,27 +43,19 @@ class Game(object):
 
             if command == GO:
                 exit = cur_location.exits[action - 1]
-                if not exit.locked:
-                    new_space = exit.space
-                    self.go_space(self.player, new_space, self.event_status)
-                else:
-                    if exit.unlock_item in self.player.items:
-                        new_space = exit.space
-                        self.go_space(self.player, new_space, self.event_status)
-                    else:
-                        print("\nIt's locked!")
+                self.player.go_exit(exit, self.event_status)
 
             elif command == TAKE:
                 item_to_take = cur_location.items[action - 1]
-                self.take(item_to_take)
+                self.player.take(item_to_take)
 
             elif command == DROP:
                 item_to_drop = self.player.get_items()[action - 1]
-                self.drop(item_to_drop)
+                self.player.drop(item_to_drop)
 
             elif command == TALK:
                 character = cur_location.characters[action - 1]
-                self.talk(self.event_status, character)
+                self.player.talk(character, self.event_status)
 
             elif command == LOOK:
                 pass
@@ -97,47 +89,6 @@ class Game(object):
 
     def increment_event_status(self):
         self.event_status += 1
-
-    def go_space(self, player, space, index):
-        cur_energy = self.player.get_energy()
-        self.player.set_energy(cur_energy - 3)
-        self.player.set_location(space)
-        if space.visited:
-            space.print_short_description()
-        else:
-            space.print_long_description(index)
-        space.visited = True
-
-    def take(self, item):
-        cur_energy = self.player.get_energy()
-        self.player.set_energy(cur_energy - 2)
-        cur_location = self.player.get_location()
-        # Check that the given item is in the player's current location.
-        if item in cur_location.get_items():
-            # Check that the player can carry that much weight.
-            if (self.player.get_items_total_weight() + item.get_weight()) < self.player.get_capacity():
-                self.player.add_item(item)
-                cur_location.remove_item(item)
-                print("{0} took the {1}".format(self.player.get_name(), item.get_name()))
-            else:
-                print("The {0} is too heavy!".format(item.get_name()))
-
-    def talk(self, index, character):
-        cur_energy = self.player.get_energy()
-        self.player.set_energy(cur_energy - 1)
-        cur_location = self.player.get_location()
-        if character in cur_location.get_characters():
-            character.print_response(index)
-        else:
-            print("That person's not here...")
-
-    def drop(self, item_to_drop):
-        cur_location = self.player.get_location()
-        if item_to_drop in self.player.get_items():
-            cur_location.add_item(item_to_drop)
-            self.player.remove_item(item_to_drop)
-        else:
-            print("You can't drop that.")
 
     def check_energy(self):
         if self.player.get_energy() <= 0:
