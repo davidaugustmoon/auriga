@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-DEFAULT_NAME = "Item"
-DEFAULT_DESCRIPTION = "This is an item."
+DEFAULT_DESCRIPTION = "an item"
 
 class Item(object):
     """
@@ -9,7 +8,7 @@ class Item(object):
     spaces, carried by characters, or carried by a player in a text
     adventure game.
     """
-    def __init__(self, name=DEFAULT_NAME, weight=5, description=DEFAULT_DESCRIPTION,
+    def __init__(self, name, weight=5, description=DEFAULT_DESCRIPTION,
                  visible=True, locked=False):
         """
         :param name - str: The name of this item.

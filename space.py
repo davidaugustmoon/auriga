@@ -3,7 +3,8 @@
 from __future__ import print_function
 
 DEFAULT_NAME = "Space"
-DEFAULT_SHORT_DESCRIPTION = "Space."
+DEFAULT_SHORT_DESCRIPTION = "a room."
+DEFAULT_LONG_DESCRIPTION = "a large open room with disco music playing in the background."
 
 """
 This is a base class for a space. The space is intended to be used in
@@ -117,24 +118,23 @@ class Space(object):
         print("\n{0}".format(self.long_description[index]))
 
     def print_exits(self):
-        print("Exits: ", end="")
-        for counter, e in enumerate(self.exits):
-            print(counter + 1, ".", e.name, "  ", end="")
-        print()
+        for exit in self.exits:
+            print("{0} is {1}".format(exit.get_direction(), exit.get_description()).capitalize())
 
     def print_items(self):
         print("Items: ", end="")
-        for counter, i in enumerate(self.items):
-            print(counter + 1, ".", i.name, "  ", end="")
+        for item in self.items:
+            print("{0}  ".format(item.get_name()), end="")
         print()
 
     def print_characters(self):
         print("Characters: ", end="")
-        for counter, c in enumerate(self.characters):
-            print(counter + 1, ".", c.name, "  ", end="")
+        for character in self.characters:
+            print("{0}  ".format(character.get_name()), end="")
         print()
 
-    def print_details(self):
+    def print_details(self, event_index):
+        self.print_description(event_index)
         self.print_exits()
-        self.print_items()
         self.print_characters()
+        self.print_items()

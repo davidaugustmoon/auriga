@@ -137,7 +137,8 @@ class Parser:
             "upon", "with", "within", "without"]
 
     def __init__(self):
-        print("Creating new Parser")
+        pass
+        # print("Creating new Parser")
 
     def create_multiword_list(string):
         return string.split()
