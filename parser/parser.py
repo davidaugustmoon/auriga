@@ -12,23 +12,18 @@ class Parser:
     ## Constants
     ARTICLES = ["a", "an", "the"]
 
-    DIRECTIONS = ["n", "e", "s", "w", "ne", "nw", "se", "sw", "up", "down"]
+    DIRECTIONS = ["north", "east", "south", "west", "up", "down"]
 
     ALT_DIR_NAMES = {
-            "north":        "n",
-            "east":         "e",
-            "south":        "s",
-            "west":         "w",
-            "northeast":    "ne",
-            "northwest":    "nw",
-            "southeast":    "se",
-            "southwest":    "sw",
-            "above":        "up",
-            "below":        "down"
+            "n":        "north",
+            "e":        "east",
+            "s":        "south",
+            "w":        "west",
+            "above":    "up",
+            "below":    "down"
             }
 
-    # create list of room names (possibly from Space or Map file)
-    #LOCATIONS = Game.get_room_names()
+    # these locations should be changed to exits, per specification
     LOCATIONS = ["cleanroom", "hangar", "lab", "storehouse"]
 
     ALT_LOC_NAMES = {
@@ -66,66 +61,94 @@ class Parser:
             }
 
     # verbs and corresponding methods
-#    ACTIONS = {
-#            # drop
-#            "drop":     Player.drop,
-#            "deposit":  Player.drop,
-#            "leave":    Player.drop,
-#            "place":    Player.drop,
-#            "put":      Player.drop,
-#            "set":      Player.drop, # down
-#            "throw":    Player.drop,
-#            
-#            # move
-#            "go":       Player.move,
-#
-#            # listen
-#            "listen":   Player.listen,
-#            "hear":     Player.listen,
-#            
-#            # look
-#            "look":     Player.look,
-#            "check":    Player.look,
-#            "inspect":  Player.look,
-#            "view":     Player.look,
-#
-#            # adjust
-#            "adjust":   Player.adjust,
-#            "loosten":  Player.adjust,
-#            "tighten":  Player.adjust,
-#
-#            # quit
-#            "quit":     Game.quit,
-#            "bye":      Game.quit,
-#            "exit":     Game.quit,
-#
-#            # save
-#            "save":     Game.save,
-#
-#            # take
-#            "take":     Player.take,
-#            "clutch":   Player.take,
-#            "gather":   Player.take,
-#            "grab":     Player.take,
-#            "pick":     Player.take, # up
-#            "pilfer":   Player.take,
-#            "steal":    Player.take,
-#
-#            # talk
-#            "talk":     Player.talk,
-#            "say":      Player.talk,
-#            "speak":    Player.talk,
-#            "tell":     Player.talk,
-#
-#            # wait
-#            "wait":     Game.wait,
-#            "chill":    Game.wait,
-#            "nap":      Game.wait,
-#            "pause":    Game.wait,
-#            "relax":    Game.wait,
-#            "rest":     Game.wait,
-#            "sleep":    Game.wait
-#            }
+    ACTIONS = {
+            ## ACTION FUNCTIONS ##
+
+            # DROP
+            "drop":         "drop",
+            "deposit":      "drop",
+            "leave":        "drop",
+            "place":        "drop",
+            "put":          "drop",
+            "set":          "drop",
+            "throw":        "drop",
+            
+            # GO
+            "go":           "go",
+            "move":         "go",
+
+            # LISTEN
+            "listen":       "listen",
+            "hear":         "listen",
+            "ears":         "listen",
+            
+            # LOOK (AROUND)
+            "look":         "look",         # preposition could change this
+            "view":         "look",
+
+            # LOOK AT
+            "check":        "look at",
+            "inspect":      "look at",
+
+            # PULL
+            "pull":         "pull",
+            "tug":          "pull",
+            "yank":         "pull",
+
+            # PUSH
+            "push":         "push",
+            "press":        "push",
+            "lean":         "push",
+
+            # TAKE
+            "take":         "take",
+            "clutch":       "take",
+            "gather":       "take",
+            "grab":         "take",
+            "pick":         "take",
+            "pilfer":       "take",
+            "steal":        "take",
+
+            # TALK
+            "talk":         "talk",
+            "say":          "talk",
+            "speak":        "talk",
+            "tell":         "talk",
+
+            # WAIT
+            "wait":         "wait",
+            "chill":        "wait",
+            "nap":          "wait",
+            "pause":        "wait",
+            "relax":        "wait",
+            "rest":         "wait",
+            "sleep":        "wait",
+
+
+            ## UTILITY FUNCTIONS ##
+
+            # HELP
+            "help":         "help",
+            "h":            "help",
+            "?":            "help",
+
+            # INVENTORY
+            "inventory":    "inventory",
+            "list":         "inventory",
+
+            #LOADGAME
+            "loadgame":     "loadgame",
+            "load":         "loadgame",
+
+            # SAVEGAME
+            "savegame":     "savegame",
+            "save":         "savegame",
+
+            # QUIT
+            "quit":         "quit",
+            "bye":          "quit",
+            "exit":         "quit"
+            }
 
     PREPOSITIONS = ["about", "above", "across", "after", "against",
             "along", "among", "around", "at", "before", "behind",
@@ -152,13 +175,13 @@ class Parser:
 
     def get_verb(input_list):
         action = input_list[0]
-        verb_func = None
+        verb = None
 
         if action in Parser.ACTIONS:
-            #verb_func = Parser.ACTIONS[action]
+            verb = Parser.ACTIONS[action]
             del input_list[0]
 
-        return verb_func
+        return verb
 
     def get_prepositions(input_list):
         return [word for word in input_list
@@ -217,119 +240,62 @@ class Parser:
         
         return direction
 
-
-    ## this method will be part of another class but for now
-    ## it will encapsulate the basic strategy for parsing out
-    ## and running a command input by the user.
-    def run_action(player, cmd_str):
-
+    
+    ## prototype of method to return disambiguated request parsed
+    ## from user input in the form of a five-tuple:
+    ## (action, location, direction, item, character)
+    ##
+    ## action =     command name or actual method pointer, None if invalid
+    ## location =   name of space on opposite side of exit, or None
+    ## direction =  cardinal direction name specifying location of exit, or None
+    ## item =       identity name of item action applied to, or None
+    ## character =  identity name of character action applied to, or None
+    ##
+    ## this method will use the logic of the run_action() method defined below
+    def action_requested(cmd_str):
         if cmd_str is None:
-            return
+            return (None, None, None, None, None)
 
         cmd_list = Parser.parse_command(cmd_str.lower())
 
         # check whether first word is a verb
         # get the verb's corresponding method
-        verb = Parser.get_verb(cmd_list)
+        action = Parser.get_verb(cmd_list)
 
         # remove all articles
         cmd_list = Parser.remove_articles(cmd_list)
         
         # if it is a verb, check whether it is a MOVE verb
-        if verb is None or verb is Player.move:
-            verb = Player.move
+        if action is None or action is Player.move:
+            action = Player.move
 
             # ignore any prepositions, only look for locations or directions
 
             # if it is not a verb, check whether it is a location
-            location_string = Parser.get_location_string(cmd_list)
+            location = Parser.get_location_string(cmd_list)
 
             # if it is not a verb, check whether it is a direction
-            direction_string = Parser.get_direction_string(cmd_list)
+            direction = Parser.get_direction_string(cmd_list)
 
-            # apply the MOVE action
-            if location_string is not None and direction_string is None:
-                verb(player, location, "location")
-                return
+            # MOVE to a specific space
+            if location is not None and direction is None:
+                return (action, location, None, None, None)
 
-            elif direction_string is not None and location_string is None:
-                verb(player, direction, "direction")
-                return
+            # MOVE through an exit in a particular direction
+            if direction_string is not None and location_string is None:
+                return (action, None, direction, None, None)
 
             # MOVE command ambiguous or poorly defined
-
-        # if it is not a verb, location, or direction, return
-        if verb is None:
-            # print error message stating could not understand
-            # user instructions
-            return
-
+            return (None, None, None, None, None)
 
         # check the following strings for params to the verb method
-
-        # first check for an object - this would be a direct object
-        # determine the object from possible synonyms
         item = get_item(cmd_list)
-        character = None
-
-        if item is None:
-            character = get_character(cmd_list)
-
-        # check for any prepositions
-        # store these in a list
-        # if none, then apply the action if valid and return
-        preps = get_prepositions(cmd_list)
-
-        if character is None:
-            verb(player)
-            return
-
-        if item is None:
-            verb(player, character)
-            return
-
-        # check for an object - this would be an indirect object
-        # determine the object from possible synonyms
         character = get_character(cmd_list)
+
+        # TODO: find more verbs that need prep to distinguish desired action
+        preps = get_prepositions(cmd_list)
         
-        if character is not None:
-            verb(player, item, character)
-            return
+        if action == "look" and "at" in preps and "around" not in preps:
+            action == "inspect"
 
-        # something went wrong, so return an error
-        return
-
-## TEST CODE
-
-# test_loc = "clean room"
-# test_command = "go clean room"
-# test_command2 = "go to the clean room"
-# location = None
-
-# print("\nCommand: ", test_loc)
-# command_parsed = Parser.parse_command(test_loc)
-# location = Parser.get_location_string(command_parsed)
-# if location is None:
-#     print("No location specified")
-# else:
-#     print("Location: ", location)
-
-# print("\nCommand: ", test_command)
-# command_parsed = Parser.parse_command(test_command)
-# location = Parser.get_location_string(command_parsed)
-# if location is None:
-#     print("No location specified")
-# else:
-#     print("Location: ", location)
-
-# print("\nCommand: ", test_command2)
-# command_parsed = Parser.parse_command(test_command2)
-# location = Parser.get_location_string(command_parsed)
-# if location is None:
-#     print("No location specified")
-# else:
-#     print("Location: ", location)
-
-# in_list = ["a", "happy", "child", "in", "the", "rain"]
-# in_list = Parser.remove_articles(in_list);
-# print(in_list)
+        return (action, None, None, item, character)
