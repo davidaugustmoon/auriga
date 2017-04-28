@@ -32,12 +32,36 @@ class Character(object):
         else:
             self.response = []
 
+    def get_name(self):
+        return self.name
+
+    def set_name(self, new_name):
+        self.name = new_name
+
+    def get_description(self):
+        return self.description
+
+    def set_description(self, new_description):
+        self.description = new_description
+
+    def get_capacity(self):
+        return self.capacity
+
+    def set_capacity(self, new_capacity):
+        self.capacity = new_capacity
+
+    def get_location(self):
+        return self.location
+
+    def set_location(self, new_location):
+        self.location = new_location
+
+    def get_response(self):
+        return self.response
+
     def print_details(self):
         print("Name: {}".format(self.name.upper()))
         print("Description: {}".format(self.description))
 
     def print_response(self, index):
         print("\n[{0}] {1}".format(self.name.upper(), self.response[index]))
-
-
-    #TODO getters and setters for all of the properties above.

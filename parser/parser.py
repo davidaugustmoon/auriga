@@ -9,123 +9,276 @@ def enum_check(obj):
 class Parser:
     """A basic natural-language parser for Auriga user input."""
 
-    ## Constants
+    ### CONSTANTS ###
+
+    # words to completely ignore
     ARTICLES = ["a", "an", "the"]
 
-    DIRECTIONS = ["n", "e", "s", "w", "ne", "nw", "se", "sw", "up", "down"]
+    # these six directions represent the location of a possible space exit
+    # classes using the Parser will need to verify that there is a valid
+    # exit in the direction specified inside the current room
+    DIRECTIONS = ["north", "east", "south", "west", "up", "down"]
 
     ALT_DIR_NAMES = {
-            "north":        "n",
-            "east":         "e",
-            "south":        "s",
-            "west":         "w",
-            "northeast":    "ne",
-            "northwest":    "nw",
-            "southeast":    "se",
-            "southwest":    "sw",
-            "above":        "up",
-            "below":        "down"
+            "n":        "north",
+            "e":        "east",
+            "s":        "south",
+            "w":        "west",
+            "above":    "up",
+            "below":    "down"
             }
 
-    # create list of room names (possibly from Space or Map file)
-    #LOCATIONS = Game.get_room_names()
-    LOCATIONS = ["cleanroom", "hangar", "lab", "storehouse"]
+    # these canonical names actually represent types of exits
+    # classes using the Parser will need to verify that there is a valid
+    # exit of the type specified inside the current room
+    EXITS = ["sliding door", "saloon doors", "air duct", "stairway", "hallway"]
 
-    ALT_LOC_NAMES = {
-            "clean room": "cleanroom",
-            "computer lab": "lab"
+    ALT_EXIT_NAMES = {
+            # SLIDING DOOR
+            "slide door":           "sliding door",
+
+            # SALOON DOORS
+            "saloon":               "saloon doors",
+            "saloon door":          "saloon doors",
+            "swinging door":        "saloon doors",
+            "swinging doors":       "saloon doors",
+
+            # AIR DUCT
+            "airway":               "air duct",
+            "duct":                 "air duct",
+            "airduct":              "air duct",
+            "vent":                 "air duct",
+            "air vent":             "air duct",
+            "air duct tunnel":      "air duct",
+            "airduct tunnel":       "air duct",
+            "tunnel":               "air duct",
+            "air tunnel":           "air duct",
+
+            # STAIRWAY
+            "stairs":               "stairway",
+            "staircase":            "stairway",
+            "stair case":           "stairway",
+            "stair way":            "stairway",
+            "stairwell":            "stairway",
+            "stair well":           "stairway",
+
+            # HALLWAY
+            "hall way":             "hallway",
+            "hall":                 "hallway"
             }
 
-    ITEMS = ["ssd1", "ssd2", "ssd3", "yo-yo", "zip tie", "ac adapter",
-            "badge", "dongle1", "dongle2", "macbook pro"]
+    ITEMS = ["security badge", "usb drive", "ssd", "small bucket", "large bucket",
+            "button", "screwdriver", "camera", "ac adapter", "usb cord"]
 
     ALT_ITEM_NAMES = {
-            "small ssd":                "ssd1",
-            "small ssd drive":          "ssd1",
-            "small hard drive":         "ssd1",
-            "small drive":              "ssd1",
-            "medium ssd":               "ssd2",
-            "medium ssd drive":         "ssd2",
-            "medium hard drive":        "ssd2",
-            "medium drive":             "ssd2",
-            "engineer badge":           "badge",
-            "employee badge":           "badge",
-            "pin badge":                "badge",
-            "pin":                      "badge",
-            "ethernet cord":            "ethernet",
-            "ethernet cable":           "ethernet",
-            "mbp":                      "macbook pro"
+            # SECURITY BADGE
+            "badge":                    "security badge"
+            "engineer badge":           "security badge",
+            "employee badge":           "security badge",
+            "pin badge":                "security badge",
+            "pin":                      "security badge",
+            "keycard":                  "security badge",
+
+            # USB DRIVE
+            "external":                 "usb drive",
+            "external drive":           "usb drive",
+            "external hard drive":      "usb drive",
+            "flash drive":              "usb drive",
+            "flashdrive":               "usb drive",
+            "thumb drive":              "usb drive",
+            "thumbdrive":               "usb drive",
+
+            # SOLID STATE DRIVE
+            "solid state drive":        "ssd",
+            "solid state":              "ssd",
+            "ss drive":                 "ssd",
+            "hard drive":               "ssd",
+            "drive":                    "ssd",
+            "hard disk":                "ssd",
+            "ss disk":                  "ssd",
+            "solid state disk":         "ssd",
+
+            # SMALL BUCKET
+            "small backpack":           "small bucket",
+            "small pail":               "small bucket",
+            "tiny bucket":              "small bucket",
+            
+            # LARGE BUCKET
+            "large backpack":           "large bucket",
+            "large pail":               "large bucket",
+            "big bucket":               "large bucket",
+
+            # BUTTON
+            "switch":                   "button",
+            "wall button":              "button",
+            "wall switch":              "button",
+            "wall panel":               "button",
+            "panel":                    "button",
+            
+            # SCREWDRIVER
+            "tool":                     "screwdriver",
+            
+            # CAMERA
+            "cam":                      "camera",
+            "video camera":             "camera",
+            "videocam":                 "camera",
+            "cctv":                     "camera",
+            "surveillance camera":      "camera",
+            
+            # AC ADAPTER
+            "power adapter":            "ac adapter",
+            "adapter":                  "ac adapter",
+            "adaptor":                  "ac adapter",
+            
+            # USB CORD
+            "cord":                     "usb cord",
+            "charge cord":              "usb cord",
+            "charge cable":             "usb cord",
+            "charging cord":            "usb cord",
+            "charging cable":           "usb cord",
+            "cable":                    "usb cord",
+            "usb cable":                "usb cord",
+            "power cord":               "usb cord",
+            "power cable":              "usb cord",
+            "adapter cord":             "usb cord",
+            "adapter cable":            "usb cord"
             }
 
     CHARACTERS = ["stuffed robot bear", "collapsed robot", "pr2",
-            "kelt2a", "wasp12", "jim"]
+            "kelt2a", "wasp12", "jim", "freight500", "fetch71"]
 
     ALT_CHAR_NAMES = {
+            # STUFFED ROBOT BEAR
             "robobear":                 "stuffed robot bear",
-            "robo-bear":                "stuffed robot bear"
+            "robo-bear":                "stuffed robot bear",
+
+            # COLLAPSED ROBOT
+            "trashed robot":            "collapsed robot"
+
+            # PR2
+
+
+            # KELT-2A
+
+
+            # WASP-12
+
+
+            # JIM
+
+
+            # FREIGHT-500
+
+
+
+            # FETCH-71
             }
 
     # verbs and corresponding methods
-#    ACTIONS = {
-#            # drop
-#            "drop":     Player.drop,
-#            "deposit":  Player.drop,
-#            "leave":    Player.drop,
-#            "place":    Player.drop,
-#            "put":      Player.drop,
-#            "set":      Player.drop, # down
-#            "throw":    Player.drop,
-#            
-#            # move
-#            "go":       Player.move,
-#
-#            # listen
-#            "listen":   Player.listen,
-#            "hear":     Player.listen,
-#            
-#            # look
-#            "look":     Player.look,
-#            "check":    Player.look,
-#            "inspect":  Player.look,
-#            "view":     Player.look,
-#
-#            # adjust
-#            "adjust":   Player.adjust,
-#            "loosten":  Player.adjust,
-#            "tighten":  Player.adjust,
-#
-#            # quit
-#            "quit":     Game.quit,
-#            "bye":      Game.quit,
-#            "exit":     Game.quit,
-#
-#            # save
-#            "save":     Game.save,
-#
-#            # take
-#            "take":     Player.take,
-#            "clutch":   Player.take,
-#            "gather":   Player.take,
-#            "grab":     Player.take,
-#            "pick":     Player.take, # up
-#            "pilfer":   Player.take,
-#            "steal":    Player.take,
-#
-#            # talk
-#            "talk":     Player.talk,
-#            "say":      Player.talk,
-#            "speak":    Player.talk,
-#            "tell":     Player.talk,
-#
-#            # wait
-#            "wait":     Game.wait,
-#            "chill":    Game.wait,
-#            "nap":      Game.wait,
-#            "pause":    Game.wait,
-#            "relax":    Game.wait,
-#            "rest":     Game.wait,
-#            "sleep":    Game.wait
-#            }
+    ACTIONS = {
+            ## ACTION FUNCTIONS ##
+
+            # DROP
+            "drop":         "drop",
+            "deposit":      "drop",
+            "leave":        "drop",
+            "place":        "drop",
+            "put":          "drop",
+            "set":          "drop",
+            "throw":        "drop",
+            
+            # GO
+            "go":           "go",
+            "move":         "go",
+            "walk":         "go",
+            "enter":        "go",
+            "leave":        "go",
+
+            # LISTEN
+            "listen":       "listen",
+            "hear":         "listen",
+            "ears":         "listen",
+            
+            # LOOK (AROUND)
+            "look":         "look",         # preposition could change this
+            "view":         "look",
+
+            # LOOK AT
+            "check":        "look at",
+            "inspect":      "look at",
+
+            # PULL
+            "pull":         "pull",
+            "tug":          "pull",
+            "yank":         "pull",
+
+            # PUSH
+            "push":         "push",
+            "press":        "push",
+            "lean":         "push",
+
+            # RECHARGE
+            "recharge":     "recharge",
+            "power":        "recharge",
+            "plug":         "recharge",
+            "boost":        "recharge",
+            "reboost":      "recharge",
+            "restore":      "recharge",
+            "battery":      "recharge",
+            "energize":     "recharge",
+            "reenergize":   "recharge",
+            "re-energize":  "recharge",
+            "charge":       "charge",
+
+            # TAKE
+            "take":         "take",
+            "clutch":       "take",
+            "gather":       "take",
+            "grab":         "take",
+            "pick":         "take",
+            "pilfer":       "take",
+            "steal":        "take",
+
+            # TALK
+            "talk":         "talk",
+            "say":          "talk",
+            "speak":        "talk",
+            "tell":         "talk",
+
+            # WAIT
+            "wait":         "wait",
+            "chill":        "wait",
+            "nap":          "wait",
+            "pause":        "wait",
+            "relax":        "wait",
+            "rest":         "wait",
+            "sleep":        "wait",
+
+
+            ## UTILITY FUNCTIONS ##
+
+            # HELP
+            "help":         "help",
+            "h":            "help",
+            "?":            "help",
+
+            # INVENTORY
+            "inventory":    "inventory",
+            "list":         "inventory",
+
+            #LOADGAME
+            "loadgame":     "loadgame",
+            "load":         "loadgame",
+
+            # SAVEGAME
+            "savegame":     "savegame",
+            "save":         "savegame",
+
+            # QUIT
+            "quit":         "quit",
+            "bye":          "quit",
+            "exit":         "quit"
+            }
 
     PREPOSITIONS = ["about", "above", "across", "after", "against",
             "along", "among", "around", "at", "before", "behind",
@@ -137,7 +290,7 @@ class Parser:
             "upon", "with", "within", "without"]
 
     def __init__(self):
-        print("Creating new Parser")
+        pass
 
     def create_multiword_list(string):
         return string.split()
@@ -151,13 +304,13 @@ class Parser:
 
     def get_verb(input_list):
         action = input_list[0]
-        verb_func = None
+        verb = None
 
         if action in Parser.ACTIONS:
-            #verb_func = Parser.ACTIONS[action]
+            verb = Parser.ACTIONS[action]
             del input_list[0]
 
-        return verb_func
+        return verb
 
     def get_prepositions(input_list):
         return [word for word in input_list
@@ -166,7 +319,7 @@ class Parser:
     def get_identity(input_list, core_list, alt_list):
         if core_list is None or not enum_check(core_list):
             # throw error
-            return
+            return None
 
         for elmt in core_list:
             if elmt in input_list:
@@ -185,9 +338,9 @@ class Parser:
         return None
 
 
-    def get_location(input_list):
-        return get_identity(input_list, Parser.LOCATIONS,
-                Parser.ALT_LOC_NAMES)
+    def get_exit_type(input_list):
+        return get_identity(input_list, Parser.EXITS,
+                Parser.ALT_EXIT_NAMES)
 
     def get_item(input_list):
         return get_identity(input_list, Parser.ITEMS,
@@ -216,119 +369,62 @@ class Parser:
         
         return direction
 
-
-    ## this method will be part of another class but for now
-    ## it will encapsulate the basic strategy for parsing out
-    ## and running a command input by the user.
-    def run_action(player, cmd_str):
-
+    
+    ## prototype of method to return disambiguated request parsed
+    ## from user input in the form of a five-tuple:
+    ## (action, location, direction, item, character)
+    ##
+    ## action =     command name or actual method pointer, None if invalid
+    ## exit =       identity name of exit type to use, or None
+    ## direction =  cardinal direction name specifying location of exit, or None
+    ## item =       identity name of item action applied to, or None
+    ## character =  identity name of character action applied to, or None
+    ##
+    ## this method will use the logic of the run_action() method defined below
+    def action_requested(cmd_str):
         if cmd_str is None:
-            return
+            return (None, None, None, None, None)
 
         cmd_list = Parser.parse_command(cmd_str.lower())
 
         # check whether first word is a verb
         # get the verb's corresponding method
-        verb = Parser.get_verb(cmd_list)
+        action = Parser.get_verb(cmd_list)
 
         # remove all articles
         cmd_list = Parser.remove_articles(cmd_list)
         
         # if it is a verb, check whether it is a MOVE verb
-        if verb is None or verb is Player.move:
-            verb = Player.move
+        if action is None or action == "go":
+            action = "go"
 
             # ignore any prepositions, only look for locations or directions
 
             # if it is not a verb, check whether it is a location
-            location_string = Parser.get_location_string(cmd_list)
+            exit = Parser.get_exit_type(cmd_list)
 
             # if it is not a verb, check whether it is a direction
-            direction_string = Parser.get_direction_string(cmd_list)
+            direction = Parser.get_direction(cmd_list)
 
-            # apply the MOVE action
-            if location_string is not None and direction_string is None:
-                verb(player, location, "location")
-                return
+            # MOVE to a specific space
+            if exit is not None and direction is None:
+                return (action, exit, None, None, None)
 
-            elif direction_string is not None and location_string is None:
-                verb(player, direction, "direction")
-                return
+            # MOVE through an exit in a particular direction
+            if direction is not None and exit is None:
+                return (action, None, direction, None, None)
 
             # MOVE command ambiguous or poorly defined
-
-        # if it is not a verb, location, or direction, return
-        if verb is None:
-            # print error message stating could not understand
-            # user instructions
-            return
-
+            return (None, None, None, None, None)
 
         # check the following strings for params to the verb method
-
-        # first check for an object - this would be a direct object
-        # determine the object from possible synonyms
         item = get_item(cmd_list)
-        character = None
-
-        if item is None:
-            character = get_character(cmd_list)
-
-        # check for any prepositions
-        # store these in a list
-        # if none, then apply the action if valid and return
-        preps = get_prepositions(cmd_list)
-
-        if character is None:
-            verb(player)
-            return
-
-        if item is None:
-            verb(player, character)
-            return
-
-        # check for an object - this would be an indirect object
-        # determine the object from possible synonyms
         character = get_character(cmd_list)
+
+        # TODO: find more verbs that need prep to distinguish desired action
+        preps = get_prepositions(cmd_list)
         
-        if character is not None:
-            verb(player, item, character)
-            return
+        if action == "look" and "at" in preps and "around" not in preps:
+            action == "inspect"
 
-        # something went wrong, so return an error
-        return
-
-## TEST CODE
-
-# test_loc = "clean room"
-# test_command = "go clean room"
-# test_command2 = "go to the clean room"
-# location = None
-
-# print("\nCommand: ", test_loc)
-# command_parsed = Parser.parse_command(test_loc)
-# location = Parser.get_location_string(command_parsed)
-# if location is None:
-#     print("No location specified")
-# else:
-#     print("Location: ", location)
-
-# print("\nCommand: ", test_command)
-# command_parsed = Parser.parse_command(test_command)
-# location = Parser.get_location_string(command_parsed)
-# if location is None:
-#     print("No location specified")
-# else:
-#     print("Location: ", location)
-
-# print("\nCommand: ", test_command2)
-# command_parsed = Parser.parse_command(test_command2)
-# location = Parser.get_location_string(command_parsed)
-# if location is None:
-#     print("No location specified")
-# else:
-#     print("Location: ", location)
-
-# in_list = ["a", "happy", "child", "in", "the", "rain"]
-# in_list = Parser.remove_articles(in_list);
-# print(in_list)
+        return (action, None, None, item, character)

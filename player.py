@@ -182,9 +182,12 @@ class Player(object):
         else:
             self.energy = new_energy
 
-    def go_exit(self, exit, event_status):
-        # Check if that exit exists
-        if exit in self.location.get_exits():
+    def go_exit(self, direction, event_status):
+        exit = None
+        for e in self.location.get_exits():
+            if e.get_direction().lower() == direction.lower():
+                exit = e
+        if exit:
             # Check if the exit is locked
             if exit.is_locked():
                 # Check if the player has the Item to unlock the Exit
@@ -192,47 +195,66 @@ class Player(object):
                     self.energy -= 3
                     new_space = exit.get_space()
                     self.location = new_space
-                    new_space.print_description(event_status)
-                    new_space.set_visited(True)
+                    # new_space.print_details(event_status)
+                    # new_space.set_visited(True)
                 else:
                     print("Sorry, that exit is locked!")
+                    return
             else:
                 self.energy -= 3
                 new_space = exit.get_space()
                 self.location = new_space
-                new_space.print_description(event_status)
-                new_space.set_visited(True)
+                # new_space.print_details(event_status)
+                # new_space.set_visited(True)
         else:
-            print("There's no {0} here.".format(exit.get_name()))
+            print("You can't go {0} here.".format(direction))
 
-    def take(self, item):
+    def take(self, item_name):
         """
         Pick up an item from the player's current location.
 
         :param Item - item: The Item to take
         """
-        self.energy -= 2
+        print()
+        item = None
+        for i in self.location.get_items():
+            if i.name.lower() == item_name.lower():
+                item = i
         # Check that the given item is in the player's current location.
-        if item in self.location.get_items():
+        if item:
             # Check that the player can carry that much weight.
             if (self.get_items_total_weight() + item.get_weight()) < self.capacity:
                 self.add_item(item)
                 self.location.remove_item(item)
                 print("{0} took the {1}".format(self.name, item.get_name()))
+                self.energy -= 2
             else:
                 print("The {0} is too heavy!".format(item.get_name()))
+        else:
+            print("There is no {} here.".format(item_name))
 
-    def talk(self, character, game_state_index):
-        self.energy -= 1
-        if character in self.location.get_characters():
+    def talk(self, character_name, game_state_index):
+        print()
+        character = None
+        for c in self.location.get_characters():
+            if c.name.lower() == character_name.lower():
+                character = c
+        if character:
+            self.energy -= 1
             character.print_response(game_state_index)
         else:
-            print("That person's not here...")
+            print("{0} is not here.".format(character_name))
 
-    def drop(self, item_to_drop):
-        if item_to_drop in self.items:
-            self.location.add_item(item_to_drop)
-            self.remove_item(item_to_drop)
+    def drop(self, item_name):
+        print()
+        item = None
+        for i in self.items:
+            if i.name.lower() == item_name.lower():
+                item = i
+        if item:
+            self.location.add_item(item)
+            self.remove_item(item)
+            print("{0} dropped the {1}.".format(self.name, item_name))
         else:
             print("You can't drop that.")
 
