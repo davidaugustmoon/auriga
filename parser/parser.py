@@ -9,9 +9,14 @@ def enum_check(obj):
 class Parser:
     """A basic natural-language parser for Auriga user input."""
 
-    ## Constants
+    ### CONSTANTS ###
+
+    # words to completely ignore
     ARTICLES = ["a", "an", "the"]
 
+    # these six directions represent the location of a possible space exit
+    # classes using the Parser will need to verify that there is a valid
+    # exit in the direction specified inside the current room
     DIRECTIONS = ["north", "east", "south", "west", "up", "down"]
 
     ALT_DIR_NAMES = {
@@ -23,12 +28,35 @@ class Parser:
             "below":    "down"
             }
 
-    # these locations should be changed to exits, per specification
-    LOCATIONS = ["cleanroom", "hangar", "lab", "storehouse"]
+    # these canonical names actually represent types of exits
+    # classes using the Parser will need to verify that there is a valid
+    # exit of the type specified inside the current room
+    EXITS = ["sliding door", "saloon doors", "air duct", "stairway"]
 
-    ALT_LOC_NAMES = {
-            "clean room": "cleanroom",
-            "computer lab": "lab"
+    ALT_EXIT_NAMES = {
+            # SLIDING DOOR
+            "slide door":           "sliding door",
+
+            # SALOON DOORS
+            "saloon":               "saloon doors",
+            "saloon door":          "saloon doors",
+            "swinging door":        "saloon doors",
+            "swinging doors":       "saloon doors",
+
+            # AIR DUCT
+            "airway":               "air duct",
+            "duct":                 "air duct",
+            "airduct":              "air duct",
+            "vent":                 "air duct",
+            "air vent":             "air duct",
+
+            # STAIRWAY
+            "stairs":               "stairway",
+            "staircase":            "stairway",
+            "stair case":           "stairway",
+            "stair way":            "stairway",
+            "stairwell":            "stairway",
+            "stair well":           "stairway"
             }
 
     ITEMS = ["ssd1", "ssd2", "ssd3", "yo-yo", "zip tie", "ac adapter",
@@ -190,7 +218,7 @@ class Parser:
     def get_identity(input_list, core_list, alt_list):
         if core_list is None or not enum_check(core_list):
             # throw error
-            return
+            return None
 
         for elmt in core_list:
             if elmt in input_list:
@@ -209,9 +237,9 @@ class Parser:
         return None
 
 
-    def get_location(input_list):
-        return get_identity(input_list, Parser.LOCATIONS,
-                Parser.ALT_LOC_NAMES)
+    def get_exit_type(input_list):
+        return get_identity(input_list, Parser.EXITS,
+                Parser.ALT_EXIT_NAMES)
 
     def get_item(input_list):
         return get_identity(input_list, Parser.ITEMS,
@@ -246,7 +274,7 @@ class Parser:
     ## (action, location, direction, item, character)
     ##
     ## action =     command name or actual method pointer, None if invalid
-    ## location =   name of space on opposite side of exit, or None
+    ## exit =       identity name of exit type to use, or None
     ## direction =  cardinal direction name specifying location of exit, or None
     ## item =       identity name of item action applied to, or None
     ## character =  identity name of character action applied to, or None
@@ -266,23 +294,23 @@ class Parser:
         cmd_list = Parser.remove_articles(cmd_list)
         
         # if it is a verb, check whether it is a MOVE verb
-        if action is None or action is Player.move:
-            action = Player.move
+        if action is None or action == "go":
+            action = "go"
 
             # ignore any prepositions, only look for locations or directions
 
             # if it is not a verb, check whether it is a location
-            location = Parser.get_location_string(cmd_list)
+            exit = Parser.get_exit_type(cmd_list)
 
             # if it is not a verb, check whether it is a direction
-            direction = Parser.get_direction_string(cmd_list)
+            direction = Parser.get_direction(cmd_list)
 
             # MOVE to a specific space
-            if location is not None and direction is None:
-                return (action, location, None, None, None)
+            if exit is not None and direction is None:
+                return (action, exit, None, None, None)
 
             # MOVE through an exit in a particular direction
-            if direction_string is not None and location_string is None:
+            if direction is not None and exit is None:
                 return (action, None, direction, None, None)
 
             # MOVE command ambiguous or poorly defined
