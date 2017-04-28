@@ -31,7 +31,7 @@ class Parser:
     # these canonical names actually represent types of exits
     # classes using the Parser will need to verify that there is a valid
     # exit of the type specified inside the current room
-    EXITS = ["sliding door", "saloon doors", "air duct", "stairway"]
+    EXITS = ["sliding door", "saloon doors", "air duct", "stairway", "hallway"]
 
     ALT_EXIT_NAMES = {
             # SLIDING DOOR
@@ -49,6 +49,10 @@ class Parser:
             "airduct":              "air duct",
             "vent":                 "air duct",
             "air vent":             "air duct",
+            "air duct tunnel":      "air duct",
+            "airduct tunnel":       "air duct",
+            "tunnel":               "air duct",
+            "air tunnel":           "air duct",
 
             # STAIRWAY
             "stairs":               "stairway",
@@ -56,36 +60,118 @@ class Parser:
             "stair case":           "stairway",
             "stair way":            "stairway",
             "stairwell":            "stairway",
-            "stair well":           "stairway"
+            "stair well":           "stairway",
+
+            # HALLWAY
+            "hall way":             "hallway",
+            "hall":                 "hallway"
             }
 
-    ITEMS = ["ssd1", "ssd2", "ssd3", "yo-yo", "zip tie", "ac adapter",
-            "badge", "dongle1", "dongle2", "macbook pro"]
+    ITEMS = ["security badge", "usb drive", "ssd", "small bucket", "large bucket",
+            "button", "screwdriver", "camera", "ac adapter", "usb cord"]
 
     ALT_ITEM_NAMES = {
-            "small ssd":                "ssd1",
-            "small ssd drive":          "ssd1",
-            "small hard drive":         "ssd1",
-            "small drive":              "ssd1",
-            "medium ssd":               "ssd2",
-            "medium ssd drive":         "ssd2",
-            "medium hard drive":        "ssd2",
-            "medium drive":             "ssd2",
-            "engineer badge":           "badge",
-            "employee badge":           "badge",
-            "pin badge":                "badge",
-            "pin":                      "badge",
-            "ethernet cord":            "ethernet",
-            "ethernet cable":           "ethernet",
-            "mbp":                      "macbook pro"
+            # SECURITY BADGE
+            "badge":                    "security badge"
+            "engineer badge":           "security badge",
+            "employee badge":           "security badge",
+            "pin badge":                "security badge",
+            "pin":                      "security badge",
+            "keycard":                  "security badge",
+
+            # USB DRIVE
+            "external":                 "usb drive",
+            "external drive":           "usb drive",
+            "external hard drive":      "usb drive",
+            "flash drive":              "usb drive",
+            "flashdrive":               "usb drive",
+            "thumb drive":              "usb drive",
+            "thumbdrive":               "usb drive",
+
+            # SOLID STATE DRIVE
+            "solid state drive":        "ssd",
+            "solid state":              "ssd",
+            "ss drive":                 "ssd",
+            "hard drive":               "ssd",
+            "drive":                    "ssd",
+            "hard disk":                "ssd",
+            "ss disk":                  "ssd",
+            "solid state disk":         "ssd",
+
+            # SMALL BUCKET
+            "small backpack":           "small bucket",
+            "small pail":               "small bucket",
+            "tiny bucket":              "small bucket",
+            
+            # LARGE BUCKET
+            "large backpack":           "large bucket",
+            "large pail":               "large bucket",
+            "big bucket":               "large bucket",
+
+            # BUTTON
+            "switch":                   "button",
+            "wall button":              "button",
+            "wall switch":              "button",
+            "wall panel":               "button",
+            "panel":                    "button",
+            
+            # SCREWDRIVER
+            "tool":                     "screwdriver",
+            
+            # CAMERA
+            "cam":                      "camera",
+            "video camera":             "camera",
+            "videocam":                 "camera",
+            "cctv":                     "camera",
+            "surveillance camera":      "camera",
+            
+            # AC ADAPTER
+            "power adapter":            "ac adapter",
+            "adapter":                  "ac adapter",
+            "adaptor":                  "ac adapter",
+            
+            # USB CORD
+            "cord":                     "usb cord",
+            "charge cord":              "usb cord",
+            "charge cable":             "usb cord",
+            "charging cord":            "usb cord",
+            "charging cable":           "usb cord",
+            "cable":                    "usb cord",
+            "usb cable":                "usb cord",
+            "power cord":               "usb cord",
+            "power cable":              "usb cord",
+            "adapter cord":             "usb cord",
+            "adapter cable":            "usb cord"
             }
 
     CHARACTERS = ["stuffed robot bear", "collapsed robot", "pr2",
-            "kelt2a", "wasp12", "jim"]
+            "kelt2a", "wasp12", "jim", "freight500", "fetch71"]
 
     ALT_CHAR_NAMES = {
+            # STUFFED ROBOT BEAR
             "robobear":                 "stuffed robot bear",
-            "robo-bear":                "stuffed robot bear"
+            "robo-bear":                "stuffed robot bear",
+
+            # COLLAPSED ROBOT
+            "trashed robot":            "collapsed robot"
+
+            # PR2
+
+
+            # KELT-2A
+
+
+            # WASP-12
+
+
+            # JIM
+
+
+            # FREIGHT-500
+
+
+
+            # FETCH-71
             }
 
     # verbs and corresponding methods
@@ -104,6 +190,9 @@ class Parser:
             # GO
             "go":           "go",
             "move":         "go",
+            "walk":         "go",
+            "enter":        "go",
+            "leave":        "go",
 
             # LISTEN
             "listen":       "listen",
@@ -127,6 +216,19 @@ class Parser:
             "push":         "push",
             "press":        "push",
             "lean":         "push",
+
+            # RECHARGE
+            "recharge":     "recharge",
+            "power":        "recharge",
+            "plug":         "recharge",
+            "boost":        "recharge",
+            "reboost":      "recharge",
+            "restore":      "recharge",
+            "battery":      "recharge",
+            "energize":     "recharge",
+            "reenergize":   "recharge",
+            "re-energize":  "recharge",
+            "charge":       "charge",
 
             # TAKE
             "take":         "take",
@@ -189,7 +291,6 @@ class Parser:
 
     def __init__(self):
         pass
-        # print("Creating new Parser")
 
     def create_multiword_list(string):
         return string.split()
