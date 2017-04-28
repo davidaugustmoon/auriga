@@ -31,7 +31,9 @@ class Parser:
     # these canonical names actually represent types of exits
     # classes using the Parser will need to verify that there is a valid
     # exit of the type specified inside the current room
-    EXITS = ["sliding door", "saloon doors", "air duct", "stairway", "hallway"]
+    EXITS = ["sliding door", "saloon doors", "air duct", "hallway",
+#    EXITS = ["sliding door", "saloon doors", "air duct", "stairway", "hallway",
+            "elevator"]
 
     ALT_EXIT_NAMES = {
             # SLIDING DOOR
@@ -54,17 +56,20 @@ class Parser:
             "tunnel":               "air duct",
             "air tunnel":           "air duct",
 
-            # STAIRWAY
-            "stairs":               "stairway",
-            "staircase":            "stairway",
-            "stair case":           "stairway",
-            "stair way":            "stairway",
-            "stairwell":            "stairway",
-            "stair well":           "stairway",
+#            # STAIRWAY
+#            "stairs":               "stairway",
+#            "staircase":            "stairway",
+#            "stair case":           "stairway",
+#            "stair way":            "stairway",
+#            "stairwell":            "stairway",
+#            "stair well":           "stairway",
 
             # HALLWAY
             "hall way":             "hallway",
             "hall":                 "hallway"
+
+            # ELEVATOR
+            
             }
 
     ITEMS = ["security badge", "usb drive", "ssd", "small bucket", "large bucket",
@@ -244,6 +249,10 @@ class Parser:
             "say":          "talk",
             "speak":        "talk",
             "tell":         "talk",
+
+            # USE
+            "use":          "use",
+            "utilize":      "use",
 
             # WAIT
             "wait":         "wait",
