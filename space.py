@@ -136,5 +136,6 @@ class Space(object):
     def print_details(self, event_index):
         self.print_description(event_index)
         self.print_exits()
+        print("\n", end="")
         self.print_characters()
         self.print_items()
