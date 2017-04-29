@@ -77,7 +77,7 @@ class Parser:
 
     ALT_ITEM_NAMES = {
             # SECURITY BADGE
-            "badge":                    "security badge"
+            "badge":                    "security badge",
             "engineer badge":           "security badge",
             "employee badge":           "security badge",
             "pin badge":                "security badge",
