@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
 import sys
+import os
+import datetime
+import json
 
 # from maze import Maze
 from space import Space
@@ -24,6 +27,30 @@ class Game(object):
     def __init__(self, player):
         self.player = player
         self.event_status = 0 # set accordingly for player achievments
+        self.spaces = []
+        self.characters = []
+        self.exits = []
+        self.items = []
+
+    def get_spaces(self):
+        return self.spaces
+
+    def get_characters(self):
+        return self.characters
+
+    def get_exits(self):
+        return self.exits
+
+    def get_items(self):
+        return self.items
+
+    def print_objects(self):
+        """
+        for testing
+        """
+        print("Spaces: {}".format([s.name for s in self.spaces]))
+        print("Characters: {}".format([c.name for c in self.characters]))
+        print("Items: {}".format([i.name for i in self.items]))
 
     def start(self):
         p = Parser()
@@ -65,7 +92,12 @@ class Game(object):
                 pass
 
             elif command == SAVE:
-                pass
+                tmp_save_dir = raw_input("Enter the save name\n> ")
+                if tmp_save_dir:
+                    save_dir = tmp_save_dir
+                else:
+                    save_dir = None
+                self.save(save_dir)
 
             elif command == QUIT:
                 print("Exiting the game...")
@@ -100,8 +132,48 @@ class Game(object):
             print("Maybe the AI program will bring you back again...")
             sys.exit()
 
-    def save(self):
-        pass
+    def save(self, dir_name=None):
+        """
+        TODO Still need to save game and player data
+        """
+        root_dir = os.getcwd()
+        cur_datetime = str(datetime.datetime.now()).split(".")[0]  # remove fractional seconds
+        if not dir_name:
+            dir_name = "game_" + cur_datetime + "/"
+        save_dir = root_dir + "/" + dir_name + "/"
+
+        # Check if the filepath already exists
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+
+        # Open the json file and write all of the game objects to it.
+        objects_dict = {}
+        with open(save_dir + "objects.json", "wb") as file_handle:
+            # Items
+            items = []
+            for i in self.items:
+                items.append(i.to_json_dict())
+            objects_dict['items'] = items
+
+            # Characters
+            characters = []
+            for c in self.characters:
+                characters.append(c.to_json_dict())
+            objects_dict['characters'] = characters
+
+            # Spaces
+            spaces = []
+            for s in self.spaces:
+                spaces.append(s.to_json_dict())
+            objects_dict['spaces'] = spaces
+
+            # Exits
+            exits = []
+            for e in self.exits:
+                exits.append(e.to_json_dict())
+            objects_dict['exits'] = exits
+
+            json.dump(objects_dict, file_handle)
 
     def load(self):
         pass

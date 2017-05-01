@@ -143,6 +143,17 @@ class Space(object):
             print("{0}  ".format(character.get_name()), end="")
         print()
 
+    def to_json_dict(self):
+        json_dict = {}
+        json_dict['id'] = self.id
+        json_dict['name'] = self.name
+        json_dict['long_description'] = self.long_description
+        json_dict['characters'] = [c.get_id() for c in self.characters]
+        json_dict['items'] = [i.get_id() for i in self.items]
+        json_dict['short_description'] = self.short_description
+        json_dict['exits'] = [e.get_id() for e in self.exits]
+        return json_dict
+
     def print_details(self, event_index):
         self.print_description(event_index)
         self.print_exits()

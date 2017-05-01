@@ -58,7 +58,21 @@ class Item(object):
     def get_locked(self):
         return self.locked
 
+    def to_json_dict(self):
+        json_dict = {}
+        json_dict['id'] = self.id
+        json_dict['name'] = self.name
+        json_dict['weight'] = self.weight
+        json_dict['description'] = self.description
+        json_dict['visible'] = self.visible
+        json_dict['locked'] = self.locked
+        return json_dict
+
     def print_details(self):
-        print("\nName: {}".format(self.name.upper()))
+        """
+        For testing
+        """
+        print("\nId: {}".format(self.id))
+        print("Name: {}".format(self.name.upper()))
         print("Size: {}".format(self.weight))
         print("Description: {}".format(self.description))

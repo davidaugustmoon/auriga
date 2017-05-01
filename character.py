@@ -69,7 +69,21 @@ class Character(object):
     def get_response(self):
         return self.response
 
+    def to_json_dict(self):
+        json_dict = {}
+        json_dict['id'] = self.id
+        json_dict['name'] = self.name
+        json_dict['description'] = self.description
+        json_dict['capacity'] = self.capacity
+        json_dict['location'] = self.location.get_id()
+        json_dict['response'] = self.response
+        return json_dict
+
     def print_details(self):
+        """
+        For testing
+        """
+        print("Id: {}".format(self.id))
         print("Name: {}".format(self.name.upper()))
         print("Description: {}".format(self.description))
 
