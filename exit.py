@@ -12,6 +12,7 @@ class Exit(object):
                  direction="north"):
         """
         An exit to a Space.
+        :param id - int: An auto-generated unique id for this object.
         :param str - name: The name of the exit.
                e.g. "Door", "Tunnel"
         :param str - description: A detailed description of the exit.
@@ -26,6 +27,7 @@ class Exit(object):
                exit.
         :param str - direction: The direction of the Exit from the Space it exits.
         """
+        self.id = id(self)
         self.name = name
         self.description = description
         self.space = space
@@ -33,6 +35,14 @@ class Exit(object):
         self.visible = visible
         self.unlock_item = unlock_item
         self.direction = direction
+
+    def get_id(self):
+        """
+        Get the unique id of this object
+
+        :return int: The unique id of this object.
+        """
+        return self.id
 
     def get_name(self):
         """

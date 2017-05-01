@@ -11,6 +11,7 @@ class Item(object):
     def __init__(self, name, weight=5, description=DEFAULT_DESCRIPTION,
                  visible=True, locked=False):
         """
+        :param id - int: An auto-generated unique id for this object.
         :param name - str: The name of this item.
         :param weight - int: The weight of this item. This can be any metric
                relative to a player or character's capacity to hold items.
@@ -25,6 +26,7 @@ class Item(object):
                Note: This can be used to not allow a player to pick up
                      an item until they have accomplished some task.
         """
+        self.id = id(self)
         self.name = name
         self.weight = weight
         self.description = description
@@ -33,6 +35,14 @@ class Item(object):
 
 
     #TODO setters for all properties above.
+    def get_id(self):
+        """
+        Get the unique id of this object
+
+        :return int: The unique id of this object.
+        """
+        return self.id
+
     def get_name(self):
         return self.name
 
