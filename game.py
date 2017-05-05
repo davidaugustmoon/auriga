@@ -132,6 +132,11 @@ class Game(object):
             print("Maybe the AI program will bring you back again...")
             sys.exit()
 
+    def to_json_dict(self):
+        json_dict = {}
+        json_dict['event_status'] = self.event_status
+        return json_dict
+
     def save(self, dir_name=None):
         """
         TODO Still need to save game and player data
@@ -140,7 +145,7 @@ class Game(object):
         cur_datetime = str(datetime.datetime.now()).split(".")[0]  # remove fractional seconds
         if not dir_name:
             dir_name = "game_" + cur_datetime + "/"
-        save_dir = root_dir + "/" + dir_name + "/"
+        save_dir = root_dir + "/saved_games/" + dir_name + "/"
 
         # Check if the filepath already exists
         if not os.path.exists(save_dir):
@@ -149,6 +154,12 @@ class Game(object):
         # Open the json file and write all of the game objects to it.
         objects_dict = {}
         with open(save_dir + "objects.json", "wb") as file_handle:
+            # Game
+            objects_dict['game'] = self.to_json_dict()
+
+            # Player
+            objects_dict['player'] = self.player.to_json_dict()
+
             # Items
             items = []
             for i in self.items:

@@ -268,3 +268,14 @@ class Player(object):
         print("Items: {}".format(self.get_item_names()))
         print("location: {}".format(self.location.name))
         print("Is alive: {}".format(self.alive))
+
+    def to_json_dict(self):
+        json_dict = {}
+        json_dict['name'] = self.name
+        json_dict['description'] = self.description
+        json_dict['capacity'] = self.capacity
+        json_dict['items'] = [i.get_id() for i in self.items]
+        json_dict['location'] = self.location.get_id()
+        json_dict['alive'] = self.alive
+        json_dict['energy'] = self.energy
+        return json_dict
