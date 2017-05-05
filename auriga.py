@@ -142,7 +142,7 @@ class Auriga(Game):
         self.assembly_room = Space(name="Assembly Room",
              short_description="You are in a bright room full of robot parts.",
              long_description=assembly_room_descriptions)
-        self.hallway1 = Space(name="hallway",
+        self.hallway1 = Space(name="Hallway 1",
              short_description="You are in a long hallway.",
              long_description=hallway1_descriptions)
         self.testing_hangar = Space(name="Testing Hangar",
@@ -157,10 +157,10 @@ class Auriga(Game):
         self.conference_room = Space(name="Conference Room",
              short_description="You are in a large conference room.",
              long_description=conference_room_descriptions)
-        self.computer_lab1 = Space(name="Computer Lab",
+        self.computer_lab1 = Space(name="Computer Lab 1",
              short_description="You are in a large room with several computers.",
              long_description=computer_lab1_descriptions)
-        self.computer_lab2 = Space(name="Computer Lab",
+        self.computer_lab2 = Space(name="Computer Lab 2",
              short_description="You are in a small room with computer docking stations.",
              long_description=computer_lab2_descriptions)
 
@@ -168,7 +168,7 @@ class Auriga(Game):
         self.brig = Space(name="Brig",
              short_description="You are in a massive room with several robots chained to the walls.",
              long_description=brig_descriptions)
-        self.hallway2 = Space(name="Hallway",
+        self.hallway2 = Space(name="Hallway 2",
              short_description="You are in a long brightly lit hallway.",
              long_description=hallway2_descriptions)
         self.supply_closet = Space(name="Supply Closet",

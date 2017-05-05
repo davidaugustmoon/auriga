@@ -139,52 +139,82 @@ class Game(object):
 
     def save(self, dir_name=None):
         """
-        TODO Still need to save game and player data
+        Saves game data in the following structure
+        /saved_games/
+            game_name_YYYY-MM-DD HH:MM:SS/
+                player/
+                    player_name.json
+                game/
+                    game_name.json
+                items/
+                    item_name.json
+                    ...
+                characters/
+                    character_name.json
+                    ...
+                spaces/
+                    space_name.json
+                    ...
+                exits/
+                    exit_id.json
+                    ...
         """
         root_dir = os.getcwd()
         cur_datetime = str(datetime.datetime.now()).split(".")[0]  # remove fractional seconds
         if not dir_name:
             dir_name = "game_" + cur_datetime + "/"
-        save_dir = root_dir + "/saved_games/" + dir_name + "/"
+        save_dir = root_dir + "/saved_games/" + dir_name + "_" + cur_datetime + "/"
 
         # Check if the filepath already exists
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
 
-        # Open the json file and write all of the game objects to it.
-        objects_dict = {}
-        with open(save_dir + "objects.json", "wb") as file_handle:
-            # Game
-            objects_dict['game'] = self.to_json_dict()
+        # Game
+        game_dir = save_dir + "game/"
+        os.makedirs(game_dir)
+        with open(game_dir + "game.json", "w") as file_handle:
+            game_dict = self.to_json_dict()
+            json.dump(game_dict, file_handle)
 
-            # Player
-            objects_dict['player'] = self.player.to_json_dict()
+        # Player
+        player_dir = save_dir + "player/"
+        os.makedirs(player_dir)
+        with open(player_dir + "player.json", "w") as file_handle:
+            player_dict = self.player.to_json_dict()
+            json.dump(player_dict, file_handle)
 
-            # Items
-            items = []
-            for i in self.items:
-                items.append(i.to_json_dict())
-            objects_dict['items'] = items
+        # Items
+        items_dir = save_dir + "items/"
+        os.makedirs(items_dir)
+        for i in self.items:
+            with open(items_dir + i.get_name() + ".json", "w") as file_handle:
+                item_dict = i.to_json_dict()
+                json.dump(item_dict, file_handle)
 
-            # Characters
-            characters = []
-            for c in self.characters:
-                characters.append(c.to_json_dict())
-            objects_dict['characters'] = characters
+        # Characters
+        characters_dir = save_dir + "characters/"
+        os.makedirs(characters_dir)
+        for c in self.characters:
+            with open(characters_dir + c.get_name() + ".json", "w") as file_handle:
+                character_dict = c.to_json_dict()
+                json.dump(character_dict, file_handle)
 
-            # Spaces
-            spaces = []
-            for s in self.spaces:
-                spaces.append(s.to_json_dict())
-            objects_dict['spaces'] = spaces
+        # Spaces
+        spaces_dir = save_dir + "spaces/"
+        os.makedirs(spaces_dir)
+        for s in self.spaces:
+            with open(spaces_dir + s.get_name() + ".json", "w") as file_handle:
+                spaces_dict = s.to_json_dict()
+                json.dump(spaces_dict, file_handle)
+            print("saving space: {}".format(s.get_name()))
 
-            # Exits
-            exits = []
-            for e in self.exits:
-                exits.append(e.to_json_dict())
-            objects_dict['exits'] = exits
-
-            json.dump(objects_dict, file_handle)
+        # Exits
+        exits_dir = save_dir + "exits/"
+        os.makedirs(exits_dir)
+        for e in self.exits:
+            with open(exits_dir + str(e.get_id()) + ".json", "w") as file_handle:
+                exits_dict = e.to_json_dict()
+                json.dump(exits_dict, file_handle)
 
     def load(self):
         pass
