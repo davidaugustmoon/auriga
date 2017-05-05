@@ -1,6 +1,4 @@
-#!/usr/bin/env python
-
-from __future__ import print_function
+#!/usr/bin/env python3
 
 DEFAULT_NAME = "Space"
 DEFAULT_SHORT_DESCRIPTION = "a room."
