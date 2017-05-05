@@ -450,16 +450,16 @@ class Parser:
 
 
     def get_character(input_list):
-    """
-    Searches for a Character name or synonym in a list and returns the canonical Character
-    name for the first match.  If no match, returns None.
+        """
+        Searches for a Character name or synonym in a list and returns the canonical Character
+        name for the first match.  If no match, returns None.
 
-    Note: if multiple Character names/synonyms are in input_list, the result is indeterminate.
+        Note: if multiple Character names/synonyms are in input_list, the result is indeterminate.
 
-    :param list - input_list: parsed list of strings from command
+        :param list - input_list: parsed list of strings from command
 
-    :return str: canonical name of matched Character, or None.
-    """
+        :return str: canonical name of matched Character, or None.
+        """
         return get_identity(input_list, Parser.CHARACTERS,
                 Parser.ALT_CHAR_NAMES)
 
