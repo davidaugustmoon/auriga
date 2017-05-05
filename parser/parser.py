@@ -7,7 +7,9 @@ def enum_check(obj):
 
 
 class Parser:
-    """A basic natural-language parser for Auriga user input."""
+    """
+    A basic natural-language parser for Auriga user input.
+    """
 
     ### CONSTANTS ###
 
@@ -298,20 +300,50 @@ class Parser:
             "to", "top", "toward", "under", "underneath", "until", "up",
             "upon", "with", "within", "without"]
 
-    def __init__(self):
-        pass
 
     def create_multiword_list(string):
+        """
+        Split space-separated string into tokens.
+        
+        :param str - string: raw string, possibly containing whitespace
+
+        :return list: string tokens after separating at whitespace
+        """
         return string.split()
 
+
     def parse_command(string):
+        """
+        Wrapper for create_multiword_list().
+
+        :param str - string: command to parse
+
+        :return list: elements of command
+        """
         return Parser.create_multiword_list(string)
 
+
     def remove_articles(input_list):
+        """
+        Returns list of strings after removing all occurrences of "a", "an", and "the".
+
+        :param list - input_list: list of strings
+
+        :return list: list of strings after removing articles
+        """
         return [word for word in input_list 
                 if word not in Parser.ARTICLES]
 
+
     def get_verb(input_list):
+        """
+        Returns the canonical name for an action either the Player or Game can execute,
+        unless the list does not contain a valid synonym for any action.
+
+        :param list - input_list: list of strings
+
+        :return str: the canonical name for an action, or None
+        """
         action = input_list[0]
         verb = None
 
@@ -321,45 +353,133 @@ class Parser:
 
         return verb
 
+
     def get_prepositions(input_list):
+        """
+        Returns a list containing every preposition found in the input string list.
+
+        :param list - input_list: list of strings
+
+        :return list: a list of all strings determined to be prepositions
+        """
         return [word for word in input_list
                 if word in Parser.PREPOSITIONS]
 
+
     def get_identity(input_list, core_list, alt_list):
+        """
+        Searches through all elements of core_list and keys of alt_list for
+        a single word in input_list.  The first name found in input_list that
+        matches an element of core_list is returned.  If none is found, the
+        first name found in input_list that matches a key of alt_list causes
+        this method to return that key's value.  If still no matching word
+        is found, returns None.
+
+        Note: Only depend on this method when you can accept whichever match
+        is discovered initially.  Do not depend on the order in which strings
+        appear in their corresponding lists.
+
+        :param list - input_list: list containing strings to search for in
+               other parameters
+        :param list - core_list: list with canonical names only
+        :param list - alt_list: dictionary with synonym names as keys mapped
+               to canonical names as values
+
+        :return str: the matching/corresponding canonical name if found,
+               otherwise none
+        """
         if core_list is None or not enum_check(core_list):
             # throw error
             return None
 
+        # see if any canonical names are in input_list
         for elmt in core_list:
             if elmt in input_list:
+                # turn multi-word name into ordered word list
                 elmt_mw = Parser.create_multiword_list(elmt)
+
                 for i in range(len(input_list)):
                     if elmt_mw == input_list[i:i + len(elmt_mw)]:
+                        # return matched name
                         return elmt
 
+        # see if any synonym names are in input_list
         if enum_check(alt_list):
+
             for elmt in alt_list:
+                # turn multi-word key into ordered word list
                 alt_name = Parser.create_multiword_list(elmt)
+
                 for i in range(len(input_list)):
                     if alt_name == input_list[i:i + len(alt_name)]:
+                        # return canonical name for matched synonym
                         return alt_list[elmt]
 
+        # no match found
         return None
 
 
     def get_exit_type(input_list):
+        """
+        Searches for an Exit name or synonym in a list and returns the canonical Exit type
+        for the first match.  If no match, returns None.
+
+        Note: if multiple Exit names/synonyms are in input_list, the result is indeterminate.
+
+        :param list - input_list: parsed list of strings from command
+
+        :return str: type of Exit, or None.
+        """
         return get_identity(input_list, Parser.EXITS,
                 Parser.ALT_EXIT_NAMES)
 
+
     def get_item(input_list):
+        """
+        Searches for an Item name or synonym in a list and returns the canonical Item name
+        for the first match.  If no match, returns None.
+
+        Note: if multiple Item names/synonyms are in input_list, the result is indeterminate.
+
+        :param list - input_list: parsed list of strings from command
+
+        :return str: canonical name of matched Item, or None.
+        """
         return get_identity(input_list, Parser.ITEMS,
                 Parser.ALT_ITEM_NAMES)
 
+
     def get_character(input_list):
+        """
+        Searches for a Character name or synonym in a list and returns the canonical Character
+        name for the first match.  If no match, returns None.
+
+        Note: if multiple Character names/synonyms are in input_list, the result is indeterminate.
+
+        :param list - input_list: parsed list of strings from command
+
+        :return str: canonical name of matched Character, or None.
+        """
         return get_identity(input_list, Parser.CHARACTERS,
                 Parser.ALT_CHAR_NAMES)
 
+
     def get_direction(input_list):
+        """
+        Searches for a direction or shorthand for one in a list and returns the canonical
+        direction name for the first match.  If no match, returns None.
+
+        A direction refers to the location of an Exit in a Space that leads to an adjacent
+        Space.  The direction to reach a room's Exit may not be the opposite of the
+        direction to reach the Exit's other end in an adjacent room, however.
+
+        Note: if multiple direction names/synonyms are in input_list, the result is
+        indeterminate.
+
+        :param list - input_list: parsed list of strings from command
+
+        :return str: canonical name of matched direction, or None.
+        """
         NON_DIR_PREPS = list((set(Parser.PREPOSITIONS) - 
                 set(Parser.DIRECTIONS)) - set(Parser.ALT_DIR_NAMES))
 
@@ -433,7 +553,10 @@ class Parser:
         # TODO: find more verbs that need prep to distinguish desired action
         preps = get_prepositions(cmd_list)
         
+        # manually disambiguate certain verbs and automate detection for rest
         if action == "look" and "at" in preps and "around" not in preps:
             action == "inspect"
+        else
+            action = get_verb(cmd_list)
 
         return (action, None, None, item, character)
