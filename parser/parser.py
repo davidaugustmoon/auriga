@@ -420,31 +420,31 @@ class Parser:
 
 
     def get_exit_type(input_list):
-    """
-    Searches for an Exit name or synonym in a list and returns the canonical Exit type
-    for the first match.  If no match, returns None.
+        """
+        Searches for an Exit name or synonym in a list and returns the canonical Exit type
+        for the first match.  If no match, returns None.
 
-    Note: if multiple Exit names/synonyms are in input_list, the result is indeterminate.
+        Note: if multiple Exit names/synonyms are in input_list, the result is indeterminate.
 
-    :param list - input_list: parsed list of strings from command
+        :param list - input_list: parsed list of strings from command
 
-    :return str: type of Exit, or None.
-    """
+        :return str: type of Exit, or None.
+        """
         return get_identity(input_list, Parser.EXITS,
                 Parser.ALT_EXIT_NAMES)
 
 
     def get_item(input_list):
-    """
-    Searches for an Item name or synonym in a list and returns the canonical Item name
-    for the first match.  If no match, returns None.
+        """
+        Searches for an Item name or synonym in a list and returns the canonical Item name
+        for the first match.  If no match, returns None.
 
-    Note: if multiple Item names/synonyms are in input_list, the result is indeterminate.
+        Note: if multiple Item names/synonyms are in input_list, the result is indeterminate.
 
-    :param list - input_list: parsed list of strings from command
+        :param list - input_list: parsed list of strings from command
 
-    :return str: canonical name of matched Item, or None.
-    """
+        :return str: canonical name of matched Item, or None.
+        """
         return get_identity(input_list, Parser.ITEMS,
                 Parser.ALT_ITEM_NAMES)
 
@@ -465,21 +465,21 @@ class Parser:
 
 
     def get_direction(input_list):
-    """
-    Searches for a direction or shorthand for one in a list and returns the canonical
-    direction name for the first match.  If no match, returns None.
+        """
+        Searches for a direction or shorthand for one in a list and returns the canonical
+        direction name for the first match.  If no match, returns None.
 
-    A direction refers to the location of an Exit in a Space that leads to an adjacent
-    Space.  The direction to reach a room's Exit may not be the opposite of the
-    direction to reach the Exit's other end in an adjacent room, however.
+        A direction refers to the location of an Exit in a Space that leads to an adjacent
+        Space.  The direction to reach a room's Exit may not be the opposite of the
+        direction to reach the Exit's other end in an adjacent room, however.
 
-    Note: if multiple direction names/synonyms are in input_list, the result is
-    indeterminate.
+        Note: if multiple direction names/synonyms are in input_list, the result is
+        indeterminate.
 
-    :param list - input_list: parsed list of strings from command
+        :param list - input_list: parsed list of strings from command
 
-    :return str: canonical name of matched direction, or None.
-    """
+        :return str: canonical name of matched direction, or None.
+        """
         NON_DIR_PREPS = list((set(Parser.PREPOSITIONS) - 
                 set(Parser.DIRECTIONS)) - set(Parser.ALT_DIR_NAMES))
 
