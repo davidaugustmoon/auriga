@@ -14,6 +14,7 @@ class Character(object):
     def __init__(self, name=DEFAULT_NAME, description=DEFAULT_DESCRIPTION,
                  capacity=0, location=None, response=None):
         """
+        :param id - int: An auto-generated unique id for this object.
         :param name - str: The name of this character.
         :param description - str: A description of this character.
         :param capacity - int: The maximum item capacity this character can
@@ -23,6 +24,7 @@ class Character(object):
                spoken to by a player. The current response is indexed by the
                player event enum list.
         """
+        self.id = id(self)
         self.name = name
         self.description = description
         self.capacity = capacity
@@ -31,6 +33,14 @@ class Character(object):
             self.response = response
         else:
             self.response = []
+
+    def get_id(self):
+        """
+        Get the unique id of this object
+
+        :return int: The unique id of this object.
+        """
+        return self.id
 
     def get_name(self):
         return self.name
@@ -59,7 +69,21 @@ class Character(object):
     def get_response(self):
         return self.response
 
+    def to_json_dict(self):
+        json_dict = {}
+        json_dict['id'] = self.id
+        json_dict['name'] = self.name
+        json_dict['description'] = self.description
+        json_dict['capacity'] = self.capacity
+        json_dict['location'] = self.location.get_id()
+        json_dict['response'] = self.response
+        return json_dict
+
     def print_details(self):
+        """
+        For testing
+        """
+        print("Id: {}".format(self.id))
         print("Name: {}".format(self.name.upper()))
         print("Description: {}".format(self.description))
 

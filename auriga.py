@@ -189,12 +189,19 @@ class Auriga(Game):
              short_description="You are in a rooftop attic.",
              long_description=attic_descriptions)
 
+        # Add spaces to object list
+        self.spaces.extend([self.assembly_room, self.hallway1, self.testing_hangar, self.clean_room,
+                            self.blueprint_room, self.conference_room, self.computer_lab1,
+                            self.computer_lab2, self.brig, self.hallway2, self.supply_closet,
+                            self.trash_room, self.maintenance_room, self.server_room, self.attic])
+
 
         # CREATE ITEMS
         self.server_room_key = Item(name="badge")
         self.ssd_1tb = Item(name="ssd")
         self.screw_driver = Item(name="screwdriver")
         self.usb_encryption_key = Item(name="usb")
+        self.items.extend([self.server_room_key, self.ssd_1tb, self.screw_driver, self.usb_encryption_key])
 
 
         # CHARACTER RESPONSES
@@ -230,139 +237,171 @@ class Auriga(Game):
         self.jim.description = "a goofy Auriga employee without a badge."
         self.jim.response = jim_responses
 
+        # Add characters to object list
+        self.characters.extend([self.pr2, self.kelt2a, self.wasp12, self.jim])
 
-        # CREATE EXITS & ADD TO SPACES
+
+        # CREATE EXITS & ADD TO SPACES (add exits to object list as objects are created)
         # for reference: sliding door, saloon doors, air duct, elevator, hallway, steel door, wooden door,
-        #                opening, glass door, 
+        #                opening, glass door
         # Assembly Room
         self.assembly_exit_testing = Exit(space=self.testing_hangar, direction="east", name="sliding door",
              description="a high tech sliding glass door that looks bulletproof.")
         self.assembly_room.add_exit(self.assembly_exit_testing)
+        self.exits.append(self.assembly_exit_testing)
 
         # Testing Hangar
         self.testing_exit_assembly = Exit(space=self.assembly_room, direction="west", name="sliding door",
              description="a high tech sliding glass door that looks bulletproof.")
         self.testing_hangar.add_exit(self.testing_exit_assembly)
+        self.exits.append(self.testing_exit_assembly)
 
         self.testing_exit_hallway1 = Exit(space=self.hallway1, direction="south", name="steel door",
             description="a large steel door, big enough for a small truck to drive through.")
         self.testing_hangar.add_exit(self.testing_exit_hallway1)
+        self.exits.append(self.testing_exit_hallway1)
 
         self.testing_exit_clean_room = Exit(space=self.clean_room, direction="east", name="glass door",
             description="a thick glass door that opens via a badge scanner.")
         self.testing_hangar.add_exit(self.testing_exit_clean_room)
+        self.exits.append(self.testing_exit_clean_room)
 
         # Clean Room
         self.clean_room_exit_testing = Exit(space=self.testing_hangar, direction="west", name="glass door",
             description="a thick glass door that opens via a badge scanner.")
         self.clean_room.add_exit(self.clean_room_exit_testing)
+        self.exits.append(self.clean_room_exit_testing)
 
         # Hallway 1
         self.hallway1_exit_testing = Exit(space=self.testing_hangar, direction="north", name="steel door",
             description="a large steel door, big enough for a small truck to drive through.")
         self.hallway1.add_exit(self.hallway1_exit_testing)
+        self.exits.append(self.hallway1_exit_testing)
 
         self.hallway1_exit_blueprint = Exit(space=self.blueprint_room, direction="north", name="saloon doors",
             description="two saloon style doors that swing in and out.")
         self.hallway1.add_exit(self.hallway1_exit_blueprint)
+        self.exits.append(self.hallway1_exit_blueprint)
         
         self.hallway1_exit_conference = Exit(space=self.conference_room, direction="west", name="sliding door",
             description="a sliding wooden door that hides into the wall.")
         self.hallway1.add_exit(self.hallway1_exit_conference)
+        self.exits.append(self.hallway1_exit_conference)
         
         self.hallway1_exit_computer_lab2 = Exit(space=self.computer_lab2, direction="south", name="wooden door",
             description="a light wooden door with a twist door knob.")
         self.hallway1.add_exit(self.hallway1_exit_computer_lab2)
+        self.exits.append(self.hallway1_exit_computer_lab2)
 
         self.hallway1_exit_hallway2 = Exit(space=self.hallway2, direction="up", name="elevator",
             description="an elevator with a badge scanner to activate it.")
-        self.hallway1.add_exit(self.hallway1_exit_computer_lab2)
+        self.hallway1.add_exit(self.hallway1_exit_hallway2)
+        self.exits.append(self.hallway1_exit_hallway2)
 
         # Blueprint Room
         self.blueprint_exit_hallway1 = Exit(space=self.hallway1, direction="south", name="saloon doors",
             description="two saloon style doors that swing in and out.")
         self.blueprint_room.add_exit(self.blueprint_exit_hallway1)
+        self.exits.append(self.blueprint_exit_hallway1)
 
         # Conference Room
         self.conference_exit_hallway1 = Exit(space=self.hallway1, direction="east", name="sliding door",
             description="a sliding wooden door that hides into the wall.")
         self.conference_room.add_exit(self.conference_exit_hallway1)
+        self.exits.append(self.conference_exit_hallway1)
 
         self.conference_exit_computer_lab1 = Exit(space=self.computer_lab1, direction="south", name="opening",
             description="an open doorway.")
         self.conference_room.add_exit(self.conference_exit_computer_lab1)
+        self.exits.append(self.conference_exit_computer_lab1)
 
         # Computer Lab 1
         self.computer_lab1_exit_conference = Exit(space=self.conference_room, direction="north", name="opening",
             description="an open doorway.")
         self.computer_lab1.add_exit(self.computer_lab1_exit_conference)
+        self.exits.append(self.computer_lab1_exit_conference)
 
         self.computer_lab1_exit_computer_lab2 = Exit(space=self.computer_lab2, direction="east", name="sliding door",
             description="a sliding wooden door that hides into the wall.")
         self.computer_lab1.add_exit(self.computer_lab1_exit_computer_lab2)
+        self.exits.append(self.computer_lab1_exit_computer_lab2)
 
         # Computer Lab 2
         self.computer_lab2_exit_computer_lab1 = Exit(space=self.computer_lab1, direction="west", name="sliding door",
             description="a sliding wooden door that hides into the wall.")
         self.computer_lab2.add_exit(self.computer_lab2_exit_computer_lab1)
+        self.exits.append(self.computer_lab2_exit_computer_lab1)
 
         self.computer_lab2_exit_hallway1 = Exit(space=self.hallway1, direction="north", name="wooden door",
             description="a light wooden door with a twist door knob.")
         self.computer_lab2.add_exit(self.computer_lab2_exit_hallway1)
+        self.exits.append(self.computer_lab2_exit_hallway1)
 
         # Hallway 2
         self.hallway2_exit_hallway1 = Exit(space=self.hallway1, direction="down", name="elevator",
             description="an elevator with a badge scanner to activate it.")
         self.hallway2.add_exit(self.hallway2_exit_hallway1)
+        self.exits.append(self.hallway2_exit_hallway1)
 
         self.hallway2_exit_brig = Exit(space=self.brig, direction="north", name="steel door",
             description="a strong steel door with bars across a small viewing window.")
         self.hallway2.add_exit(self.hallway2_exit_brig)
+        self.exits.append(self.hallway2_exit_brig)
 
         self.hallway2_exit_maintenance = Exit(space=self.maintenance_room, direction="west", name="wooden door",
             description="a light wooden door with a twist door knob.")
         self.hallway2.add_exit(self.hallway2_exit_maintenance)
+        self.exits.append(self.hallway2_exit_maintenance)
 
         self.hallway2_exit_server = Exit(space=self.server_room, direction="south", name="sliding door",
             description="a high-tech bulletproof sliding door with glass approximately 12 inches thick.")
         self.hallway2.add_exit(self.hallway2_exit_server)
+        self.exits.append(self.hallway2_exit_server)
 
         # Brig
         self.brig_exit_hallway2 = Exit(space=self.hallway2, direction="south", name="steel door",
             description="a strong steel door with bars across a small viewing window.")
         self.brig.add_exit(self.brig_exit_hallway2)
+        self.exits.append(self.brig_exit_hallway2)
 
         self.brig_exit_attic = Exit(space=self.attic, direction="up", name="air duct",
             description="an air duct that begins at the floor, and angles up and through the ceiling.")
         self.brig.add_exit(self.brig_exit_attic)
+        self.exits.append(self.brig_exit_attic)
 
         # Trash Room
         self.trash_exit_supply = Exit(space=self.supply_closet, direction="north", name="wooden door",
             description="a light wooden door with a twist door knob.")
         self.trash_room.add_exit(self.trash_exit_supply)
+        self.exits.append(self.trash_exit_supply)
 
         self.trash_exit_maintenance = Exit(space=self.maintenance_room, direction="south", name="saloon doors",
             description="two saloon style doors that swing in and out.")
         self.trash_room.add_exit(self.trash_exit_maintenance)
+        self.exits.append(self.trash_exit_maintenance)
 
         # Maintenance Room
         self.maintenance_exit_trash = Exit(space=self.trash_room, direction="north", name="saloon doors",
             description="two saloon style doors that swing in and out.")
         self.maintenance_room.add_exit(self.maintenance_exit_trash)
+        self.exits.append(self.maintenance_exit_trash)
 
         self.maintenance_exit_hallway2 = Exit(space=self.hallway2, direction="east", name="wooden door",
             description="a light wooden door with a twist door knob.")
         self.maintenance_room.add_exit(self.maintenance_exit_hallway2)
+        self.exits.append(self.maintenance_exit_hallway2)
 
         # Server Room
         self.server_exit_hallway2 = Exit(space=self.hallway2, direction="north", name="sliding door",
             description="a high-tech bulletproof sliding door with glass approximately 12 inches thick.")
         self.server_room.add_exit(self.server_exit_hallway2)
+        self.exits.append(self.server_exit_hallway2)
 
         # Attic
         self.attic_exit_brig = Exit(space=self.brig, direction="down", name="air duct",
             description="an air duct that angles down through the floor.")
         self.attic.add_exit(self.attic_exit_brig)
+        self.exits.append(self.attic_exit_brig)
 
         # Place items in Spaces (automatically sets item.location to space)
         self.assembly_room.add_item(self.ssd_1tb)
@@ -378,14 +417,6 @@ class Auriga(Game):
         self.hallway1.add_character(self.jim)
         self.player.set_location(self.assembly_room)
 
-        # For convenience, a list of all Space objects created in this Game.
-        self.all_spaces = [
-            self.assembly_room,
-            self.testing_hangar,
-            self.hallway1,
-            self.server_room
-        ]
-
     def check_event_status(self):
         # Player has entered the server room with the usb key
         if (self.get_player_location() == self.server_room) and (self.usb_encryption_key in self.get_player_items()):
@@ -395,7 +426,7 @@ class Auriga(Game):
         # more player achievments will go here to increment the event_status
 
     def set_all_spaces_to_unvisited(self):
-        for space in self.all_spaces:
+        for space in self.spaces:
             space.visited = False
 
 def main():
@@ -405,6 +436,7 @@ def main():
 
     # # Create an instance of the Auriga game with the player and maze
     auriga = Auriga(player)
+    # auriga.print_objects()
     auriga.start()
 
 if __name__ == "__main__":

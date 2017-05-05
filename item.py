@@ -11,6 +11,7 @@ class Item(object):
     def __init__(self, name, weight=5, description=DEFAULT_DESCRIPTION,
                  visible=True, locked=False):
         """
+        :param id - int: An auto-generated unique id for this object.
         :param name - str: The name of this item.
         :param weight - int: The weight of this item. This can be any metric
                relative to a player or character's capacity to hold items.
@@ -25,6 +26,7 @@ class Item(object):
                Note: This can be used to not allow a player to pick up
                      an item until they have accomplished some task.
         """
+        self.id = id(self)
         self.name = name
         self.weight = weight
         self.description = description
@@ -33,6 +35,14 @@ class Item(object):
 
 
     #TODO setters for all properties above.
+    def get_id(self):
+        """
+        Get the unique id of this object
+
+        :return int: The unique id of this object.
+        """
+        return self.id
+
     def get_name(self):
         return self.name
 
@@ -48,7 +58,21 @@ class Item(object):
     def get_locked(self):
         return self.locked
 
+    def to_json_dict(self):
+        json_dict = {}
+        json_dict['id'] = self.id
+        json_dict['name'] = self.name
+        json_dict['weight'] = self.weight
+        json_dict['description'] = self.description
+        json_dict['visible'] = self.visible
+        json_dict['locked'] = self.locked
+        return json_dict
+
     def print_details(self):
-        print("\nName: {}".format(self.name.upper()))
+        """
+        For testing
+        """
+        print("\nId: {}".format(self.id))
+        print("Name: {}".format(self.name.upper()))
         print("Size: {}".format(self.weight))
         print("Description: {}".format(self.description))

@@ -15,6 +15,7 @@ class Space(object):
                  long_description=None, short_description=DEFAULT_SHORT_DESCRIPTION,
                  visited=False):
         """
+        :param id - int: An auto-generated unique id for this object.
         :param name - str: The name of this space.
         :param items - list of Item: The list of Item objects in this space.
         :param characters - list of Character: The list of Character objects
@@ -34,6 +35,7 @@ class Space(object):
                Note: This can be used to not allow a player to enter a space
                      until they have accomplished some task.
         """
+        self.id = id(self)
         self.name = name
         if items:
             self.items = items
@@ -51,6 +53,14 @@ class Space(object):
         self.exits = []
         self.visited = False
     #TODO getters and setters for all properties above
+
+    def get_id(self):
+        """
+        Get the unique id of this object
+
+        :return int: The unique id of this object.
+        """
+        return self.id
 
     def get_name(self):
         return self.name
@@ -132,6 +142,17 @@ class Space(object):
         for character in self.characters:
             print("{0}  ".format(character.get_name()), end="")
         print()
+
+    def to_json_dict(self):
+        json_dict = {}
+        json_dict['id'] = self.id
+        json_dict['name'] = self.name
+        json_dict['long_description'] = self.long_description
+        json_dict['characters'] = [c.get_id() for c in self.characters]
+        json_dict['items'] = [i.get_id() for i in self.items]
+        json_dict['short_description'] = self.short_description
+        json_dict['exits'] = [e.get_id() for e in self.exits]
+        return json_dict
 
     def print_details(self, event_index):
         self.print_description(event_index)
