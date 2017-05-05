@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # utility function to check for enumerable non-string
 # cite: http://stackoverflow.com/a/19944281
 from collections import Iterable
@@ -556,7 +558,7 @@ class Parser:
         # manually disambiguate certain verbs and automate detection for rest
         if action == "look" and "at" in preps and "around" not in preps:
             action == "inspect"
-        else
+        else:
             action = get_verb(cmd_list)
 
         return (action, None, None, item, character)

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import os
@@ -92,7 +92,7 @@ class Game(object):
                 pass
 
             elif command == SAVE:
-                tmp_save_dir = raw_input("Enter the save name\n> ")
+                tmp_save_dir = input("Enter the save name\n> ")
                 if tmp_save_dir:
                     save_dir = tmp_save_dir
                 else:
@@ -193,7 +193,7 @@ class Game(object):
 # just to demonstrate a simple version of the game. This parser only 
 # handles input in the form 'go 1', 'talk 2', 'take 1', etc.
 def get_command():
-    command = raw_input("Command: ")
+    command = input("Command: ")
     return command
 
 def parse_command(command):
