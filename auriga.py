@@ -380,6 +380,12 @@ class Auriga(Game):
         self.trash_room.add_exit(self.trash_exit_maintenance)
         self.exits.append(self.trash_exit_maintenance)
 
+        # Supply Closet
+        self.supply_exit_trash = Exit(space=self.trash_room, direction="south", name="wooden door",
+            description="a light wooden door with a twist door knob.")
+        self.supply_closet.add_exit(self.supply_exit_trash)
+        self.exits.append(self.supply_exit_trash)
+
         # Maintenance Room
         self.maintenance_exit_trash = Exit(space=self.trash_room, direction="north", name="saloon doors",
             description="two saloon style doors that swing in and out.")
