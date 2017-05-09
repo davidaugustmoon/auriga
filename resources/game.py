@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 
+# Standard Library
 import sys
 import os
 import datetime
 import json
 
-# from maze import Maze
-from space import Space
-from item import Item
-from character import Character
-from player import Player
-from exit import Exit
+# Auriga
+from resources.space import Space
+from resources.item import Item
+from resources.character import Character
+from resources.player import Player
+from resources.exit import Exit
 from parser.parser import Parser
 
 # The parser should determine one of the listed game commands based on the user input

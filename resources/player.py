@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-import item
-import space
+import resources.item
+import resources.space
 
 DEFAULT_NAME = "PLAYER 1"
 DEFAULT_DESCRIPTION = "This is a player."

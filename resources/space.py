@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+
 DEFAULT_NAME = "Space"
 DEFAULT_SHORT_DESCRIPTION = "a room."
 DEFAULT_LONG_DESCRIPTION = "a large open room with disco music playing in the background."

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import space
+import resources.space
 
 DEFAULT_NAME = "Door"
 DEFAULT_DESCRIPTION = "a flimsy wooden door."

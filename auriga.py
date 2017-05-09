@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 
-# from maze import Maze
-from space import Space
-from item import Item
-from character import Character
-from player import Player
-from exit import Exit
-from game import Game
+from resources.space import Space
+from resources.item import Item
+from resources.character import Character
+from resources.player import Player
+from resources.exit import Exit
+from resources.game import Game
 
 class Auriga(Game):
     """
