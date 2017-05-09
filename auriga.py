@@ -200,8 +200,8 @@ class Auriga(Game):
         self.ssd_1tb = Item(name="ssd")
         self.screw_driver = Item(name="screwdriver")
         self.usb_encryption_key = Item(name="usb")
-        self.items.extend([self.server_room_key, self.ssd_1tb, self.screw_driver, self.usb_encryption_key])
-
+        self.charger1 = Item(name="charger", locked=True)
+        self.items.extend([self.charger1, self.server_room_key, self.ssd_1tb, self.screw_driver, self.usb_encryption_key])
 
         # CHARACTER RESPONSES
         pr2_responses = [
@@ -411,6 +411,7 @@ class Auriga(Game):
         # Place items in Spaces (automatically sets item.location to space)
         self.assembly_room.add_item(self.ssd_1tb)
         self.assembly_room.add_item(self.screw_driver)
+        self.assembly_room.add_item(self.charger1)
         self.testing_hangar.add_item(self.server_room_key)
         self.testing_hangar.add_item(self.usb_encryption_key)
 

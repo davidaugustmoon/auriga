@@ -20,9 +20,20 @@ TAKE = "take"
 DROP = "drop"
 TALK = "talk"
 LOOK = "look"
-SAVE = "save"
+SAVEGAME = "savegame"
 QUIT = "quit"
-commands = [GO, TAKE, DROP, TALK, LOOK, SAVE, QUIT]
+LOOK_AT = "look at"
+LISTEN = "listen"
+PULL = "pull"
+PUSH = "push"
+CHARGE = "charge"
+USE = "use"
+WAIT = "wait"
+HELP = "help"
+INVENTORY = "inventory"
+LOADGAME = "loadgame"
+commands = [GO, TAKE, DROP, TALK, LOOK, SAVEGAME, QUIT, LOOK_AT, LISTEN,
+            PULL, PUSH, CHARGE, USE, WAIT, HELP, INVENTORY, LOADGAME]
 
 class Game(object):
     def __init__(self, player):
@@ -90,9 +101,9 @@ class Game(object):
                 self.player.talk(character_name, self.event_status)
 
             elif command == LOOK:
-                pass
+                self.player.look(self.event_status)
 
-            elif command == SAVE:
+            elif command == SAVEGAME:
                 tmp_save_dir = input("Enter the save name\n> ")
                 if tmp_save_dir:
                     save_dir = tmp_save_dir
@@ -103,6 +114,42 @@ class Game(object):
             elif command == QUIT:
                 print("Exiting the game...")
                 sys.exit()
+
+            elif command == LOOK_AT:
+                # Note: This 3-word command doesn't work with the makeshift parser, but the player
+                #       function should work once the parser is working.
+                item_name = action.lower()
+                self.player.look_at(item_name)
+
+            elif command == LISTEN:
+                self.player.listen()
+
+            elif command == PULL:
+                item_name = action.lower()
+                self.player.pull(item_name)
+
+            elif command == PUSH:
+                item_name = action.lower()
+                self.player.push(item_name)
+
+            elif command == CHARGE:
+                self.player.charge()
+
+            elif command == USE:
+                item_name = action.lower()
+                self.player.use(item_name)
+
+            elif command == WAIT:
+                pass
+
+            elif command == HELP:
+                self.help()
+
+            elif command == INVENTORY:
+                self.player.print_inventory()
+
+            elif command == LOADGAME:
+                pass
             else:
                 print("Huh? That doesn't make any sense.")
 
@@ -217,8 +264,26 @@ class Game(object):
                 exits_dict = e.to_json_dict()
                 json.dump(exits_dict, file_handle)
 
-    def load(self):
-        pass
+    def help(self):
+        print("GAME HELP")
+        print("Command\t\t\t\tDescription\n")
+        print("{0} <{1}> || <{2}>:\t{3}".format(GO, "direction", "exit", "Move through an exit."))
+        print("{0} <{1}>:\t\t\t{2}".format(TAKE, "item", "Take an item."))
+        print("{0} <{1}>:\t\t\t{2}".format(DROP, "item", "Drop an item."))
+        print("{0} <{1}>:\t\t{2}".format(TALK, "character", "Talk to a character."))
+        print("{0}:\t\t\t\t{1}".format(LOOK, "Look around the space you are currently in."))
+        print("{0}:\t\t\t{1}".format(SAVEGAME, "Save your current game."))
+        print("{0}:\t\t\t\t{1}".format(QUIT, "Quit the game."))
+        print("{0} <{1}>:\t\t\t{2}".format(LOOK_AT, "item", "Look more closely at an item."))
+        print("{0}:\t\t\t\t{1}".format(LISTEN, "Listen more closely to the sounds around you."))
+        print("{0} <{1}>:\t\t\t{2}".format(PULL, "item", "Pull an item."))
+        print("{0} <{1}>:\t\t\t{2}".format(PUSH, "item", "Push an item."))
+        print("{0}:\t\t\t\t{1}".format(CHARGE, "Charge your batteries in a charger."))
+        print("{0} <{1}>:\t\t\t{2}".format(USE, "item", "Use an item you are carrying."))
+        print("{0}:\t\t\t\t{1}".format(WAIT, "Wait for something to happen."))
+        print("{0}:\t\t\t\t{1}".format(HELP, "Print this help message."))
+        print("{0}:\t\t\t{1}".format(INVENTORY, "Print the items you are currently carrying."))
+        print("{0}:\t\t\t{1}".format(LOADGAME, "Load a previously saved game."))
 
 # Obviously these will all be completely re-done by the parser, this is 
 # just to demonstrate a simple version of the game. This parser only 
@@ -239,4 +304,4 @@ def print_player_info(player):
     print("Energy: {}".format(player.get_energy()))
     print("Current location: {}".format(player.location.name))
     print("Carrying: {0}/{1}".format(player.get_items_total_weight(), player.get_capacity()))
-    print("Items: {}".format(player.get_item_names()))
+    # print("Items: {}".format(player.get_item_names()))

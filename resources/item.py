@@ -34,7 +34,6 @@ class Item(object):
         self.visible = visible
         self.locked = locked
 
-
     #TODO setters for all properties above.
     def get_id(self):
         """

@@ -5,6 +5,7 @@ import resources.space
 
 DEFAULT_NAME = "PLAYER 1"
 DEFAULT_DESCRIPTION = "This is a player."
+MAX_ENERGY = 100
 
 class Player(object):
     """
@@ -220,14 +221,18 @@ class Player(object):
                 item = i
         # Check that the given item is in the player's current location.
         if item:
-            # Check that the player can carry that much weight.
-            if (self.get_items_total_weight() + item.get_weight()) < self.capacity:
-                self.add_item(item)
-                self.location.remove_item(item)
-                print("{0} took the {1}".format(self.name, item.get_name()))
-                self.energy -= 2
+            # Check that the item is not locked
+            if not item.get_locked():
+                # Check that the player can carry that much weight.
+                if (self.get_items_total_weight() + item.get_weight()) < self.capacity:
+                    self.add_item(item)
+                    self.location.remove_item(item)
+                    print("{0} took the {1}".format(self.name, item.get_name()))
+                    self.energy -= 2
+                else:
+                    print("The {0} is too heavy!".format(item.get_name()))
             else:
-                print("The {0} is too heavy!".format(item.get_name()))
+                print("You can't pick up the {0}".format(item.get_name()))
         else:
             print("There is no {} here.".format(item_name))
 
@@ -255,6 +260,84 @@ class Player(object):
             print("{0} dropped the {1}.".format(self.name, item_name))
         else:
             print("You can't drop that.")
+
+    def look(self, event_status):
+        print(self.location.print_long_description(event_status))
+
+    def look_at(self, item_name):
+        item = None
+        for i in self.location.get_items():
+            if i.name == item_name:
+                item = i
+                break
+
+        if item:
+            print("You looked at the {0}".format(item_name))
+            print(item.get_description())
+        else:
+            print("{0} isn't here...".format(item_name))
+
+    def charge(self):
+        is_charger = False
+        # Check current location for charger
+        for i in self.location.get_items():
+            if i.name == "charger":
+                is_charger = True
+                break
+
+        if is_charger:
+            print("Feel the snake bite enter your veins!")
+            self.set_energy(MAX_ENERGY)
+        else:
+            print("Sorry, there is no charger here.\nYou are probably going to die...")
+
+    def listen(self):
+        print("You hear nothing...")
+
+    def pull(self, item_name):
+        item = None
+        for i in self.location.get_items():
+            if i.name == item_name:
+                item = i
+                break
+
+        if item:
+            print("You pulled the {0}, but nothing happened.".format(item_name))
+        else:
+            print("{0} isn't here...".format(item_name))
+
+    def push(self, item_name):
+        item = None
+        for i in self.location.get_items():
+            if i.name == item_name:
+                item = i
+                break
+
+        if item:
+            print("You pushed the {0}, and it made you feel nice.".format(item_name))
+        else:
+            print("{0} isn't here...".format(item_name))
+
+    def use(self, item_name):
+        item = None
+        for i in self.items:
+            if i.name == item_name:
+                item = i
+                break
+
+        if item:
+            print("You used the {0}, and it broke.".format(item_name))
+        else:
+            print("You're not carrying that.".format(item_name))
+
+    def print_inventory(self):
+        if self.items:
+            print("Your Inventory (Item, Weight):")
+            for i in self.items:
+                print("({0}, {1}) ".format(i.get_name(), i.get_weight()), end="")
+            print()
+        else:
+            print("You're not carrying anything...")
 
     def print_details(self):
         """
