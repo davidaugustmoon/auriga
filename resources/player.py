@@ -180,11 +180,25 @@ class Player(object):
         else:
             self.energy = new_energy
 
-    def go_exit(self, direction, event_status):
+    def go_exit(self, event_status, exit_name=None, direction=None):
         exit = None
-        for e in self.location.get_exits():
-            if e.get_direction().lower() == direction.lower():
-                exit = e
+
+        # User entered a direction
+        if direction:
+            for e in self.location.get_exits():
+                if e.get_direction().lower() == direction.lower():
+                    exit = e
+                    print("Set exit to {}".format(exit.get_name()))
+                    break
+
+        # User entered an exit name (short description)
+        # Note: this will override a direction if also entered
+        if exit_name:
+            for e in self.location.get_exits():
+                if e.get_name().lower() == exit_name:
+                    exit = e
+                    break
+
         if exit:
             # Check if the exit is locked
             if exit.is_locked():
@@ -193,19 +207,14 @@ class Player(object):
                     self.energy -= 3
                     new_space = exit.get_space()
                     self.location = new_space
-                    # new_space.print_details(event_status)
-                    # new_space.set_visited(True)
                 else:
                     print("Sorry, that exit is locked!")
-                    return
             else:
                 self.energy -= 3
                 new_space = exit.get_space()
                 self.location = new_space
-                # new_space.print_details(event_status)
-                # new_space.set_visited(True)
         else:
-            print("You can't go {0} here.".format(direction))
+            print("You entered an invalid exit name or direction")
 
     def take(self, item_name):
         """

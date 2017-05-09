@@ -36,7 +36,7 @@ class Parser:
     # classes using the Parser will need to verify that there is a valid
     # exit of the type specified inside the current room
     EXITS = ["sliding door", "saloon doors", "air duct", "hallway",
-#    EXITS = ["sliding door", "saloon doors", "air duct", "stairway", "hallway",
+    #    EXITS = ["sliding door", "saloon doors", "air duct", "stairway", "hallway",
             "elevator"]
 
     ALT_EXIT_NAMES = {
@@ -60,13 +60,13 @@ class Parser:
             "tunnel":               "air duct",
             "air tunnel":           "air duct",
 
-#            # STAIRWAY
-#            "stairs":               "stairway",
-#            "staircase":            "stairway",
-#            "stair case":           "stairway",
-#            "stair way":            "stairway",
-#            "stairwell":            "stairway",
-#            "stair well":           "stairway",
+    #            # STAIRWAY
+    #            "stairs":               "stairway",
+    #            "staircase":            "stairway",
+    #            "stair case":           "stairway",
+    #            "stair way":            "stairway",
+    #            "stairwell":            "stairway",
+    #            "stair well":           "stairway",
 
             # HALLWAY
             "hall way":             "hallway",
@@ -227,16 +227,16 @@ class Parser:
             "lean":         "push",
 
             # RECHARGE
-            "recharge":     "recharge",
-            "power":        "recharge",
-            "plug":         "recharge",
-            "boost":        "recharge",
-            "reboost":      "recharge",
-            "restore":      "recharge",
-            "battery":      "recharge",
-            "energize":     "recharge",
-            "reenergize":   "recharge",
-            "re-energize":  "recharge",
+            "recharge":     "charge",
+            "power":        "charge",
+            "plug":         "charge",
+            "boost":        "charge",
+            "reboost":      "charge",
+            "restore":      "charge",
+            "battery":      "charge",
+            "energize":     "charge",
+            "reenergize":   "charge",
+            "re-energize":  "charge",
             "charge":       "charge",
 
             # TAKE
@@ -432,7 +432,7 @@ class Parser:
 
         :return str: type of Exit, or None.
         """
-        return get_identity(input_list, Parser.EXITS,
+        return Parser.get_identity(input_list, Parser.EXITS,
                 Parser.ALT_EXIT_NAMES)
 
 
@@ -447,7 +447,7 @@ class Parser:
 
         :return str: canonical name of matched Item, or None.
         """
-        return get_identity(input_list, Parser.ITEMS,
+        return Parser.get_identity(input_list, Parser.ITEMS,
                 Parser.ALT_ITEM_NAMES)
 
 
@@ -462,7 +462,7 @@ class Parser:
 
         :return str: canonical name of matched Character, or None.
         """
-        return get_identity(input_list, Parser.CHARACTERS,
+        return Parser.get_identity(input_list, Parser.CHARACTERS,
                 Parser.ALT_CHAR_NAMES)
 
 
@@ -500,7 +500,7 @@ class Parser:
         
         return direction
 
-    
+
     ## prototype of method to return disambiguated request parsed
     ## from user input in the form of a five-tuple:
     ## (action, location, direction, item, character)
@@ -549,16 +549,16 @@ class Parser:
             return (None, None, None, None, None)
 
         # check the following strings for params to the verb method
-        item = get_item(cmd_list)
-        character = get_character(cmd_list)
+        item = Parser.get_item(cmd_list)
+        character = Parser.get_character(cmd_list)
 
         # TODO: find more verbs that need prep to distinguish desired action
-        preps = get_prepositions(cmd_list)
+        preps = Parser.get_prepositions(cmd_list)
         
         # manually disambiguate certain verbs and automate detection for rest
         if action == "look" and "at" in preps and "around" not in preps:
             action == "inspect"
         else:
-            action = get_verb(cmd_list)
+            action = Parser.get_verb(cmd_list)
 
         return (action, None, None, item, character)

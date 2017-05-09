@@ -12,17 +12,27 @@ from resources.item import Item
 from resources.character import Character
 from resources.player import Player
 from resources.exit import Exit
-from parser.parser import Parser
+from parser import parser
 
-# The parser should determine one of the listed game commands based on the user input
-GO = "go"
-TAKE = "take"
-DROP = "drop"
-TALK = "talk"
-LOOK = "look"
-SAVE = "save"
-QUIT = "quit"
-commands = [GO, TAKE, DROP, TALK, LOOK, SAVE, QUIT]
+# Available action commands for player
+GO        = "go"
+TAKE      = "take"
+DROP      = "drop"
+TALK      = "talk"
+LOOK      = "look"
+SAVEGAME  = "savegame"
+QUIT      = "quit"
+LISTEN    = "listen"
+LOOK_AT   = "look at"
+PULL      = "pull"
+PUSH      = "push"
+CHARGE    = "charge"
+USE       = "use"
+WAIT      = "wait"
+HELP      = "help"
+INVENTORY = "inventory"
+LOADGAME  = "loadgame"
+
 
 class Game(object):
     def __init__(self, player):
@@ -54,7 +64,7 @@ class Game(object):
         print("Items: {}".format([i.name for i in self.items]))
 
     def start(self):
-        p = Parser()
+        # p = parser.Parser()
 
         playing = True
         while playing:
@@ -65,34 +75,35 @@ class Game(object):
             print_player_info(self.player)
             cur_location.set_visited(True)
 
-            # Do stuff with the parser here
-            user_command = get_command()
-            print("\n") # formatting
-            parsed_command = parse_command(user_command)
-            command = parsed_command[0]
-            if len(parsed_command) >= 2:
-                action = parsed_command[1]
+            # # Do stuff with the parser here
+            # user_command = get_command()
+            # print("\n") # formatting
+            # parsed_command = parse_command(user_command)
+            # command = parsed_command[0]
 
-            if command == GO:
-                direction = action.lower()
-                self.player.go_exit(direction, self.event_status)
+            cmd_str = get_command()
+            action_cmd, exit_cmd, direction_cmd, item_cmd, character_cmd = parser.Parser.action_requested(cmd_str)
+            print("DEBUG: Command results: {0}, {1}, {2}, {3}, {4}".format(action_cmd, exit_cmd, direction_cmd, item_cmd, character_cmd))
+            if action_cmd == GO:
+                if exit_cmd:
+                    self.player.go_exit(self.event_status, exit_name=exit_cmd, direction=direction_cmd)
 
-            elif command == TAKE:
+            elif action_cmd == TAKE:
                 item_name = action.lower()
                 self.player.take(item_name)
 
-            elif command == DROP:
+            elif action_cmd == DROP:
                 item_name = action.lower()
                 self.player.drop(item_name)
 
-            elif command == TALK:
+            elif action_cmd == TALK:
                 character_name = action.lower()
                 self.player.talk(character_name, self.event_status)
 
-            elif command == LOOK:
+            elif action_cmd == LOOK:
                 pass
 
-            elif command == SAVE:
+            elif action_cmd == SAVEGAME:
                 tmp_save_dir = input("Enter the save name\n> ")
                 if tmp_save_dir:
                     save_dir = tmp_save_dir
@@ -100,7 +111,7 @@ class Game(object):
                     save_dir = None
                 self.save(save_dir)
 
-            elif command == QUIT:
+            elif action_cmd == QUIT:
                 print("Exiting the game...")
                 sys.exit()
             else:
