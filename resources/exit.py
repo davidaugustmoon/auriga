@@ -84,6 +84,9 @@ class Exit(object):
         """
         return self.locked
 
+    def set_is_locked(self, lock_value):
+        self.locked = lock_value
+
     def is_visible(self):
         """
         Get whether this exit is visible.
@@ -91,6 +94,9 @@ class Exit(object):
         :return Bool: True if the exit is visible; False if the exit is not visible.
         """
         return self.visible
+
+    def set_is_visible(self, visible_value):
+        self.visible = visible_value
 
     def get_unlock_item(self):
         """

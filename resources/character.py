@@ -69,6 +69,9 @@ class Character(object):
     def get_response(self):
         return self.response
 
+    def set_response(self, response_list):
+        self.response = response_list
+
     def to_json_dict(self):
         json_dict = {}
         json_dict['id'] = self.id
