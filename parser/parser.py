@@ -432,7 +432,7 @@ class Parser:
 
         :return str: type of Exit, or None.
         """
-        return get_identity(input_list, Parser.EXITS,
+        return Parser.get_identity(input_list, Parser.EXITS,
                 Parser.ALT_EXIT_NAMES)
 
 
@@ -447,7 +447,7 @@ class Parser:
 
         :return str: canonical name of matched Item, or None.
         """
-        return get_identity(input_list, Parser.ITEMS,
+        return Parser.get_identity(input_list, Parser.ITEMS,
                 Parser.ALT_ITEM_NAMES)
 
 
@@ -462,7 +462,7 @@ class Parser:
 
         :return str: canonical name of matched Character, or None.
         """
-        return get_identity(input_list, Parser.CHARACTERS,
+        return Parser.get_identity(input_list, Parser.CHARACTERS,
                 Parser.ALT_CHAR_NAMES)
 
 
@@ -513,6 +513,7 @@ class Parser:
     ##
     ## this method will use the logic of the run_action() method defined below
     def action_requested(cmd_str):
+
         if cmd_str is None:
             return (None, None, None, None, None)
 
@@ -549,16 +550,49 @@ class Parser:
             return (None, None, None, None, None)
 
         # check the following strings for params to the verb method
-        item = get_item(cmd_list)
-        character = get_character(cmd_list)
+        item = Parser.get_item(cmd_list)
+        character = Parser.get_character(cmd_list)
 
         # TODO: find more verbs that need prep to distinguish desired action
-        preps = get_prepositions(cmd_list)
+        preps = Parser.get_prepositions(cmd_list)
         
         # manually disambiguate certain verbs and automate detection for rest
         if action == "look" and "at" in preps and "around" not in preps:
             action == "inspect"
-        else:
-            action = get_verb(cmd_list)
+        #else:
+        #    action = Parser.get_verb(cmd_list)
 
         return (action, None, None, item, character)
+
+def main():
+    while True:
+        print()
+        cmd = input("What do you want to do? (q to quit)\n")
+
+        if cmd == 'q':
+            break
+
+        print()
+
+        action, exit, direction, item, character = Parser.action_requested(cmd)
+
+        if action is not None:
+            print("Action: {0}".format(action))
+            
+            if exit is not None:
+                print("Exit: {0}".format(exit))
+
+            if direction is not None:
+                print("Direction: {0}".format(direction))
+            
+            if item is not None:
+                print("Item: {0}".format(item))
+
+            if character is not None:
+                print("Character: {0}".format(character))
+
+        else:
+            print("ERROR: Invalid command")
+
+if __name__ == "__main__":
+    main()
