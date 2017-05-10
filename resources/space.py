@@ -128,12 +128,14 @@ class Space(object):
 
     def print_exits(self):
         for exit in self.exits:
-            print("{0} is {1}".format(exit.get_direction(), exit.get_description()).capitalize())
+            if exit.is_visible():
+                print("{0} is {1}".format(exit.get_direction(), exit.get_description()).capitalize())
 
     def print_items(self):
         print("Items: ", end="")
         for item in self.items:
-            print("{0}  ".format(item.get_name()), end="")
+            if item.get_visible():
+                print("{0}  ".format(item.get_name()), end="")
         print()
 
     def print_characters(self):

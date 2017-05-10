@@ -51,8 +51,9 @@ class Auriga(Game):
         testing_hangar_descriptions = [
             "You find yourself in a massive room with an 80 foot\n"\
             "ceiling. The room is so big that it could easily hold\n"\
-            "several airplanes or helocopters. You see a badge and a usb\n"\
-            "stick on the ground.",
+            "several airplanes or helocopters. You see a usb\n"\
+            "stick on the ground, and a small lever at the end of a row\n"\
+            "of employee lockers.",
             "long description 2",
             "long description 3",
             "long description 4",
@@ -196,12 +197,15 @@ class Auriga(Game):
 
 
         # CREATE ITEMS
-        self.server_room_key = Item(name="badge")
+        self.badge = Item(name="badge", visible=False)
         self.ssd_1tb = Item(name="ssd")
         self.screw_driver = Item(name="screwdriver")
         self.usb_encryption_key = Item(name="usb")
         self.charger1 = Item(name="charger", locked=True)
-        self.items.extend([self.charger1, self.server_room_key, self.ssd_1tb, self.screw_driver, self.usb_encryption_key])
+        self.button1 = Item(name="button", locked=True)
+        self.lever1 = Item(name="lever", locked=True)
+        self.items.extend([self.lever1, self.button1, self.charger1, self.badge, self.ssd_1tb,
+                           self.screw_driver, self.usb_encryption_key])
 
         # CHARACTER RESPONSES
         pr2_responses = [
@@ -221,6 +225,14 @@ class Auriga(Game):
             "Oh no, where is my badge!?",
             "jim response 2"
         ]
+        freight500_responses = [
+            "...",
+            "response 2"
+        ]
+        fetch4_responses = [
+            "Disco never dies! Up and down, up and down, up and down...",
+            "response 2"
+        ]
 
         # CREATE CHARACTERS
         self.pr2 = Character(name="PR2")
@@ -235,9 +247,15 @@ class Auriga(Game):
         self.jim = Character(name="Jim")
         self.jim.description = "a goofy Auriga employee without a badge."
         self.jim.response = jim_responses
+        self.freight500 = Character(name="FREIGHT-500")
+        self.freight500.description = "a large mobile robot base that doesn't seem to work."
+        self.freight500.response = freight500_responses
+        self.fetch4 = Character(name="FETCH-4")
+        self.fetch4.description = "a mobile robot arm stuck in an endless test sequence."
+        self.fetch4.response = fetch4_responses
 
         # Add characters to object list
-        self.characters.extend([self.pr2, self.kelt2a, self.wasp12, self.jim])
+        self.characters.extend([self.fetch4, self.freight500, self.pr2, self.kelt2a, self.wasp12, self.jim])
 
 
         # CREATE EXITS & ADD TO SPACES (add exits to object list as objects are created)
@@ -245,7 +263,7 @@ class Auriga(Game):
         #                opening, glass door
         # Assembly Room
         self.assembly_exit_testing = Exit(space=self.testing_hangar, direction="east", name="sliding door",
-             description="a high tech sliding glass door that looks bulletproof.")
+             description="a high tech sliding glass door that looks bulletproof.", locked=True)
         self.assembly_room.add_exit(self.assembly_exit_testing)
         self.exits.append(self.assembly_exit_testing)
 
@@ -261,7 +279,8 @@ class Auriga(Game):
         self.exits.append(self.testing_exit_hallway1)
 
         self.testing_exit_clean_room = Exit(space=self.clean_room, direction="east", name="glass door",
-            description="a thick glass door that opens via a badge scanner.")
+            description="a thick glass door that opens via a badge scanner.", visible=False,
+            locked=True, unlock_item=self.badge)
         self.testing_hangar.add_exit(self.testing_exit_clean_room)
         self.exits.append(self.testing_exit_clean_room)
 
@@ -412,14 +431,18 @@ class Auriga(Game):
         self.assembly_room.add_item(self.ssd_1tb)
         self.assembly_room.add_item(self.screw_driver)
         self.assembly_room.add_item(self.charger1)
-        self.testing_hangar.add_item(self.server_room_key)
+        self.assembly_room.add_item(self.button1)
+        self.testing_hangar.add_item(self.badge)
         self.testing_hangar.add_item(self.usb_encryption_key)
+        self.testing_hangar.add_item(self.lever1)
 
         # Place characters in spaces (automatically sets character.location
         # to space)
         self.assembly_room.add_character(self.pr2)
         self.assembly_room.add_character(self.kelt2a)
         self.testing_hangar.add_character(self.wasp12)
+        self.testing_hangar.add_character(self.freight500)
+        self.clean_room.add_character(self.fetch4)
         self.hallway1.add_character(self.jim)
         self.player.set_location(self.assembly_room)
 
@@ -435,14 +458,107 @@ class Auriga(Game):
         for space in self.spaces:
             space.visited = False
 
+    def use(self, item_name):
+        # Check if the player is carrying the item specified
+        item = None
+        for i in self.player.get_items():
+            if item_name == i.get_name():
+                item = i
+                break
+
+        if not item:
+            print("You're not carrying that.")
+            return
+
+        cur_space = self.player.get_location()
+        cur_exits = self.player.get_location().get_exits()
+
+        # Player uses ssd in testing hangar
+        if item_name == "ssd" and cur_space.get_name() == "Testing Hangar":
+            self.player.remove_item(item)
+            clean_room_exit = self.get_object_by_name(cur_exits, "glass door")
+            clean_room_exit.set_is_visible(True)
+            freight500_responses = [
+                "Error...mislocalized. Error...mislocalized.",
+                "response 2",
+                "response 3"
+            ]
+            self.freight500.set_response(freight500_responses)
+            print("You place the ssd into Freight-500's computer, and suddenly the fan kicks on ")
+            print("Freight-500 comes to life and whizzes past you.\n")
+            print("[FREIGHT-500] Executing task-523883 move forklift pallet to pose 23.")
+            print("\n...\n")
+            print("Freight-500 drove across the testing hangar to the large forklift pallet loaded ")
+            print("with heavy boxes. When Freight-500 arrived at the pallet, an automated jack in the floor ")
+            print("lifted the pallet and Freight-500 drove under it.")
+            print("Freight-500 headed for the other side of the hangar with the pallet.")
+            print("You notice a door you couldn't see before, that was blocked by the cargo.")
+        elif cur_space.get_name() == "Clean Room":
+            print("You attempt to use the {0} on FETCH-4, but something went terribly wrong!".format(item_name))
+            print("FETCH-4 begins smoking, and the head and arm begin moving faster and faster!")
+            print("FETCH-4 explodes and causes extensive damage to your shielding and batteries.")
+            self.player.set_energy(self.player.get_energy() // 2)
+        else:
+            print("You can't use that here.")
+
+
+    def push(self, item_name):
+        # Check if the specified item is in the player's current location
+        item = None
+        cur_space = self.player.get_location()
+        for i in cur_space.get_items():
+            if item_name == i.get_name():
+                item = i
+                break
+
+        if not item:
+            print("That item is not here.")
+            return
+
+        cur_exits = cur_space.get_exits()
+
+        # Player pushes the button in the Assembly Room -> Unlocks door to Testing Hangar
+        if item_name == "button" and cur_space.get_name() == "Assembly Room":
+            testing_hanger_exit = self.get_object_by_name(cur_exits, "sliding door")
+            testing_hanger_exit.set_is_locked(False)
+            print("You pressed the large red button, and you hear a loud click near the only door ")
+            print("in the room. A green light illuminates the keypad to the left of the door.")
+        # More 'PUSH' cases here
+        else:
+            print("You pushed the {0}, and it made you feel nice.".format(item_name))
+
+    def pull(self, item_name):
+        # Check if the specified item is in the player's current location
+        item = None
+        cur_space = self.player.get_location()
+        for i in cur_space.get_items():
+            if item_name == i.get_name():
+                item = i
+                break
+
+        if not item:
+            print("That item is not here.")
+            return
+
+        cur_exits = cur_space.get_exits()
+        cur_items = cur_space.get_items()
+
+        # Player pulls the lever in the Testing Hanger -> Opens a locker to reveal a badge
+        if item_name == "lever" and cur_space.get_name() == "Testing Hangar":
+            badge_item = self.get_object_by_name(cur_items, "badge")
+            badge_item.set_visible(True)
+            print("You pulled the small lever, and a locker popped open. In the locker you ")
+            print("see an Auriga worker's badge.")
+        else:
+            print("You pulled the {0} and you lost some energy.".format(item_name))
+            self.player.set_energy(self.player.get_energy() - 1)
+
 def main():
     # Create Player
-    player = Player(name="Auriga-7B")
-    player.set_capacity(100)
+    player = Player(name="Auriga-7B", capacity=50)
 
     # # Create an instance of the Auriga game with the player and maze
     auriga = Auriga(player)
-    # auriga.print_objects()
     auriga.start()
 
 if __name__ == "__main__":

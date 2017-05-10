@@ -126,18 +126,18 @@ class Game(object):
 
             elif command == PULL:
                 item_name = action.lower()
-                self.player.pull(item_name)
+                self.pull(item_name)
 
             elif command == PUSH:
                 item_name = action.lower()
-                self.player.push(item_name)
+                self.push(item_name)
 
             elif command == CHARGE:
                 self.player.charge()
 
             elif command == USE:
                 item_name = action.lower()
-                self.player.use(item_name)
+                self.use(item_name)
 
             elif command == WAIT:
                 pass
@@ -179,6 +179,9 @@ class Game(object):
             print("Sorry, you ran out of energy and died.")
             print("Maybe the AI program will bring you back again...")
             sys.exit()
+        elif self.player.get_energy() < 25:
+            print("You're getting low on energy.")
+            print("You'll need to find a charger quick!")
 
     def to_json_dict(self):
         json_dict = {}
@@ -284,6 +287,25 @@ class Game(object):
         print("{0}:\t\t\t\t{1}".format(HELP, "Print this help message."))
         print("{0}:\t\t\t{1}".format(INVENTORY, "Print the items you are currently carrying."))
         print("{0}:\t\t\t{1}".format(LOADGAME, "Load a previously saved game."))
+
+    def use(self, item_name):
+        print("This function should be over-written in the child class.")
+
+    def get_object_by_name(self, object_list, object_name):
+        obj = None
+        for i in object_list:
+            if i.get_name() == object_name:
+                obj = i
+                break
+        return obj
+
+    def get_object_by_id(self, object_list, object_id):
+        obj = None
+        for i in object_list:
+            if i.get_id() == object_id:
+                obj = i
+                break
+        return obj
 
 # Obviously these will all be completely re-done by the parser, this is 
 # just to demonstrate a simple version of the game. This parser only 

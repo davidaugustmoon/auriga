@@ -55,8 +55,14 @@ class Item(object):
     def get_visible(self):
         return self.visible
 
+    def set_visible(self, visible_value):
+        self.visible = visible_value
+
     def get_locked(self):
         return self.locked
+
+    def set_locked(self, locked_value):
+        self.locked = locked_value
 
     def to_json_dict(self):
         json_dict = {}

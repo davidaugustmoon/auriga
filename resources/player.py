@@ -294,42 +294,6 @@ class Player(object):
     def listen(self):
         print("You hear nothing...")
 
-    def pull(self, item_name):
-        item = None
-        for i in self.location.get_items():
-            if i.name == item_name:
-                item = i
-                break
-
-        if item:
-            print("You pulled the {0}, but nothing happened.".format(item_name))
-        else:
-            print("{0} isn't here...".format(item_name))
-
-    def push(self, item_name):
-        item = None
-        for i in self.location.get_items():
-            if i.name == item_name:
-                item = i
-                break
-
-        if item:
-            print("You pushed the {0}, and it made you feel nice.".format(item_name))
-        else:
-            print("{0} isn't here...".format(item_name))
-
-    def use(self, item_name):
-        item = None
-        for i in self.items:
-            if i.name == item_name:
-                item = i
-                break
-
-        if item:
-            print("You used the {0}, and it broke.".format(item_name))
-        else:
-            print("You're not carrying that.".format(item_name))
-
     def print_inventory(self):
         if self.items:
             print("Your Inventory (Item, Weight):")
