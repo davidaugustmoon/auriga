@@ -16,7 +16,7 @@ class Parser:
     ### CONSTANTS ###
 
     # words to completely ignore
-    ARTICLES = ["a", "an", "the"]
+    ARTICLES = ["a", "an", "the", "some", "this", "that", "these", "those"]
 
     # these six directions represent the location of a possible space exit
     # classes using the Parser will need to verify that there is a valid
@@ -70,10 +70,10 @@ class Parser:
 
             # HALLWAY
             "hall way":             "hallway",
-            "hall":                 "hallway"
+            "hall":                 "hallway",
 
             # ELEVATOR
-            
+            "elevator shaft":       "elevator" 
             }
 
     ITEMS = ["security badge", "usb drive", "ssd", "small bucket", "large bucket",
@@ -539,11 +539,11 @@ class Parser:
             direction = Parser.get_direction(cmd_list)
 
             # MOVE to a specific space
-            if exit is not None and direction is None:
+            if exit and direction is None:
                 return (action, exit, None, None, None)
 
             # MOVE through an exit in a particular direction
-            if direction is not None and exit is None:
+            if direction and exit is None:
                 return (action, None, direction, None, None)
 
             # MOVE command ambiguous or poorly defined
@@ -557,10 +557,11 @@ class Parser:
         preps = Parser.get_prepositions(cmd_list)
         
         # manually disambiguate certain verbs and automate detection for rest
-        if action == "look" and "at" in preps and "around" not in preps:
-            action == "inspect"
-        #else:
-        #    action = Parser.get_verb(cmd_list)
+        if action == "look" and "at" in preps:
+            if "around" not in preps:
+                action = "look at"
+            else:
+                action = None
 
         return (action, None, None, item, character)
 
@@ -576,19 +577,19 @@ def main():
 
         action, exit, direction, item, character = Parser.action_requested(cmd)
 
-        if action is not None:
+        if action: 
             print("Action: {0}".format(action))
             
-            if exit is not None:
+            if exit:
                 print("Exit: {0}".format(exit))
 
-            if direction is not None:
+            if direction:
                 print("Direction: {0}".format(direction))
             
-            if item is not None:
+            if item:
                 print("Item: {0}".format(item))
 
-            if character is not None:
+            if character:
                 print("Character: {0}".format(character))
 
         else:
