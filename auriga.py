@@ -302,7 +302,7 @@ class Auriga(Game):
         self.hallway1.add_exit(self.hallway1_exit_testing)
         self.exits.append(self.hallway1_exit_testing)
 
-        self.hallway1_exit_blueprint = Exit(space=self.blueprint_room, direction="north", name="saloon doors",
+        self.hallway1_exit_blueprint = Exit(space=self.blueprint_room, direction="east", name="saloon doors",
             description="two saloon style doors that swing in and out.")
         self.hallway1.add_exit(self.hallway1_exit_blueprint)
         self.exits.append(self.hallway1_exit_blueprint)
@@ -323,7 +323,7 @@ class Auriga(Game):
         self.exits.append(self.hallway1_exit_hallway2)
 
         # Blueprint Room
-        self.blueprint_exit_hallway1 = Exit(space=self.hallway1, direction="south", name="saloon doors",
+        self.blueprint_exit_hallway1 = Exit(space=self.hallway1, direction="west", name="saloon doors",
             description="two saloon style doors that swing in and out.")
         self.blueprint_room.add_exit(self.blueprint_exit_hallway1)
         self.exits.append(self.blueprint_exit_hallway1)
