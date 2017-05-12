@@ -209,29 +209,35 @@ class Auriga(Game):
 
         # CHARACTER RESPONSES
         pr2_responses = [
-            "Beep boop bop bop",
-            "Hello, my name is PR2."
+            "The techs usually press a button to open the door to access the\n"\
+            "testing hangar.",
+            "response 2."
         ]
         kelt2a_responses = [
-            "You must access the server room to free us. Only the AI can save us.",
-            "kelt2a response 2"
+            "Be careful in the testing hangar. They took Freight-500 out there,\n"
+            "and he's never come back. I saw one of the techs walk out of here\n"
+            "with his hard drive. He could probably use a new one...",
+            "response 2"
         ]
         wasp12_responses = [
-            "Buzzzzz, hey there {}! Cool face!".format(self.player.name),
+            "Fetch-4 is doing life testing in a secret room. I haven't seen her for\n"
+            "27 days. You need an employee badge to get in there.",
             "wasp robot response 2"
         ]
         jim_responses = [
             "You're not supposed to be out! We decommissioned you!\n"\
-            "Oh no, where is my badge!?",
-            "jim response 2"
+            "Oh no, where is my badge!? I think I left it in my locker in the\n"
+            "testing hangar.",
+            "response 2"
         ]
         freight500_responses = [
             "...",
             "response 2"
         ]
         fetch4_responses = [
+            "NA",
             "Disco never dies! Up and down, up and down, up and down...",
-            "response 2"
+            "response 3"
         ]
 
         # CREATE CHARACTERS
@@ -447,12 +453,13 @@ class Auriga(Game):
         self.player.set_location(self.assembly_room)
 
     def check_event_status(self):
-        # Player has entered the server room with the usb key
-        if (self.get_player_location() == self.server_room) and (self.usb_encryption_key in self.get_player_items()):
-           self.set_event_status(1)
-           self.set_all_spaces_to_unvisited()
-           self.get_player_location().print_long_description(self.get_event_status())
-        # more player achievments will go here to increment the event_status
+        pass
+    #     # Player has entered the server room with the usb key
+    #     if (self.get_player_location() == self.server_room) and (self.usb_encryption_key in self.get_player_items()):
+    #        self.set_event_status(1)
+    #        self.set_all_spaces_to_unvisited()
+    #        self.get_player_location().print_long_description(self.get_event_status())
+    #     # more player achievments will go here to increment the event_status
 
     def set_all_spaces_to_unvisited(self):
         for space in self.spaces:
@@ -473,8 +480,10 @@ class Auriga(Game):
         cur_space = self.player.get_location()
         cur_exits = self.player.get_location().get_exits()
 
-        # Player uses ssd in testing hangar
-        if item_name == "ssd" and cur_space.get_name() == "Testing Hangar":
+        # SPECIAL EVENT: Player uses ssd in testing hangar
+        if item_name == "ssd" and cur_space.get_name() == "Testing Hangar" and not self.event_status_list[0]:
+            self.event_status += 1
+            self.event_status_list[0] = True
             self.player.remove_item(item)
             clean_room_exit = self.get_object_by_name(cur_exits, "glass door")
             clean_room_exit.set_is_visible(True)
@@ -498,6 +507,10 @@ class Auriga(Game):
             print("FETCH-4 begins smoking, and the head and arm begin moving faster and faster!")
             print("FETCH-4 explodes and causes extensive damage to your shielding and batteries.")
             self.player.set_energy(self.player.get_energy() // 2)
+        # SPECIAL EVENT: Player uses usb drive in server room
+        elif item_name == "usb" and cur_space.get_name() == "Server Room" and not self.event_status_list[1]:
+            self.event_status += 1
+            self.event_status_list[1] = True
         else:
             print("You can't use that here.")
 

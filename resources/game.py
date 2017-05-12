@@ -39,6 +39,7 @@ class Game(object):
     def __init__(self, player):
         self.player = player
         self.event_status = 0 # set accordingly for player achievments
+        self.event_status_list = [False, False, False, False, False]
         self.spaces = []
         self.characters = []
         self.exits = []
