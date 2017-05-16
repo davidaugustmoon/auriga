@@ -96,6 +96,7 @@ class Parser:
             "flashdrive":               "usb drive",
             "thumb drive":              "usb drive",
             "thumbdrive":               "usb drive",
+            "usb":                      "usb drive",
 
             # SOLID STATE DRIVE
             "solid state drive":        "ssd",
@@ -150,11 +151,17 @@ class Parser:
             "power cord":               "usb cord",
             "power cable":              "usb cord",
             "adapter cord":             "usb cord",
-            "adapter cable":            "usb cord"
+            "adapter cable":            "usb cord",
+
+            # LEVER
+            "lever":                    "lever",
+
+            # CHARGER
+            "charger":                  "charger"
             }
 
     CHARACTERS = ["stuffed robot bear", "collapsed robot", "pr2",
-            "kelt2a", "wasp12", "jim", "freight500", "fetch71"]
+            "kelt2a", "wasp12", "jim", "freight500", "fetch71", "fetch-4"]
 
     ALT_CHAR_NAMES = {
             # STUFFED ROBOT BEAR
@@ -162,7 +169,7 @@ class Parser:
             "robo-bear":                "stuffed robot bear",
 
             # COLLAPSED ROBOT
-            "trashed robot":            "collapsed robot"
+            "trashed robot":            "collapsed robot",
 
             # PR2
 
@@ -177,8 +184,12 @@ class Parser:
 
 
             # FREIGHT-500
+            "freight500":               "freight-500",
+            "freight-500":              "freight-500",
 
-
+            # FETCH-4
+            "fetch4":                   "fetch-4",
+            "fetch-4":                  "fetch-4",
 
             # FETCH-71
             }
@@ -496,7 +507,7 @@ class Parser:
             return None
 
         if direction in Parser.ALT_DIR_NAMES:
-            return ALT_DIR_NAMES[direction]
+            return Parser.ALT_DIR_NAMES[direction]
         
         return direction
 

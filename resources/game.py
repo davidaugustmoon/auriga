@@ -77,34 +77,31 @@ class Game(object):
             print_player_info(self.player)
             cur_location.set_visited(True)
 
-            # Do stuff with the parser here
-            user_command = get_command()
+
             print("\n") # formatting
-            parsed_command = parse_command(user_command)
-            command = parsed_command[0]
-            if len(parsed_command) >= 2:
-                action = parsed_command[1]
+            player_command = get_command()
+            cmd_action, cmd_exit, cmd_direction, cmd_item, cmd_character = Parser.action_requested(player_command)
 
-            if command == GO:
-                direction = action.lower()
-                self.player.go_exit(direction, self.event_status)
+            # DEBUG
+            print("action = {0}, exit = {1}, direction = {2}, item = {3}, character = {4}"
+                  .format(cmd_action, cmd_exit, cmd_direction, cmd_item, cmd_character))
 
-            elif command == TAKE:
-                item_name = action.lower()
-                self.player.take(item_name)
+            if cmd_action == GO:
+                self.player.go_exit(self.event_status, direction=cmd_direction, exit_name=cmd_exit)
 
-            elif command == DROP:
-                item_name = action.lower()
-                self.player.drop(item_name)
+            elif cmd_action == TAKE:
+                self.player.take(cmd_item)
 
-            elif command == TALK:
-                character_name = action.lower()
-                self.player.talk(character_name, self.event_status)
+            elif cmd_action == DROP:
+                self.player.drop(cmd_item)
 
-            elif command == LOOK:
+            elif cmd_action == TALK:
+                self.player.talk(cmd_character, self.event_status)
+
+            elif cmd_action == LOOK:
                 self.player.look(self.event_status)
 
-            elif command == SAVEGAME:
+            elif cmd_action == SAVEGAME:
                 tmp_save_dir = input("Enter the save name\n> ")
                 if tmp_save_dir:
                     save_dir = tmp_save_dir
@@ -112,44 +109,38 @@ class Game(object):
                     save_dir = None
                 self.save(save_dir)
 
-            elif command == QUIT:
+            elif cmd_action == QUIT:
                 print("Exiting the game...")
                 sys.exit()
 
-            elif command == LOOK_AT:
-                # Note: This 3-word command doesn't work with the makeshift parser, but the player
-                #       function should work once the parser is working.
-                item_name = action.lower()
-                self.player.look_at(item_name)
+            elif cmd_action == LOOK_AT:
+                self.player.look_at(cmd_item)
 
-            elif command == LISTEN:
+            elif cmd_action == LISTEN:
                 self.player.listen()
 
-            elif command == PULL:
-                item_name = action.lower()
-                self.pull(item_name)
+            elif cmd_action == PULL:
+                self.pull(cmd_item)
 
-            elif command == PUSH:
-                item_name = action.lower()
-                self.push(item_name)
+            elif cmd_action == PUSH:
+                self.push(cmd_item)
 
-            elif command == CHARGE:
+            elif cmd_action == CHARGE:
                 self.player.charge()
 
-            elif command == USE:
-                item_name = action.lower()
-                self.use(item_name)
+            elif cmd_action == USE:
+                self.use(cmd_item)
 
-            elif command == WAIT:
+            elif cmd_action == WAIT:
                 pass
 
-            elif command == HELP:
+            elif cmd_action == HELP:
                 self.help()
 
-            elif command == INVENTORY:
+            elif cmd_action == INVENTORY:
                 self.player.print_inventory()
 
-            elif command == LOADGAME:
+            elif cmd_action == LOADGAME:
                 pass
             else:
                 print("Huh? That doesn't make any sense.")
