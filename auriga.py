@@ -197,7 +197,7 @@ class Auriga(Game):
 
 
         # CREATE ITEMS
-        self.badge = Item(name="badge", visible=False)
+        self.badge = Item(name="security badge", visible=False)
         self.ssd_1tb = Item(name="ssd")
         self.screw_driver = Item(name="screwdriver")
         self.usb_encryption_key = Item(name="usb")
@@ -558,7 +558,7 @@ class Auriga(Game):
 
         # Player pulls the lever in the Testing Hanger -> Opens a locker to reveal a badge
         if item_name == "lever" and cur_space.get_name() == "Testing Hangar":
-            badge_item = self.get_object_by_name(cur_items, "badge")
+            badge_item = self.get_object_by_name(cur_items, "security badge")
             badge_item.set_visible(True)
             print("You pulled the small lever, and a locker popped open. In the locker you ")
             print("see an Auriga worker's badge.")

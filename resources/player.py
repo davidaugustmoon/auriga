@@ -181,11 +181,33 @@ class Player(object):
         else:
             self.energy = new_energy
 
-    def go_exit(self, direction, event_status):
+    def go_exit(self, event_status, direction=None, exit_name=None):
         exit = None
+        possible_exits = []
+
+        # Get any exits that match the passed direction or exit name
         for e in self.location.get_exits():
-            if e.get_direction().lower() == direction.lower():
-                exit = e
+            if direction and (e.get_direction().lower() == direction.lower()):
+                possible_exits.append(e)
+            if exit_name and (e.get_name().lower() == exit_name):
+                possible_exits.append(e)
+
+        print("Possible exits: {}".format(possible_exits))
+
+        if len(possible_exits) == 1:
+            exit = possible_exits[0]
+        # Multiple possible exits, check if one matches both name and direction
+        elif len(possible_exits) > 1:
+            for pe in possible_exits:
+                if pe.get_name() == exit_name and pe.get_direction() == direction:
+                    exit = pe
+            if not exit:
+                print("You need to be more specic.")
+                return None
+        else:
+            print("Invalid direction and/or exit name.")
+            return None
+
         if exit:
             # Check if the exit is locked
             if exit.is_locked():
@@ -198,15 +220,14 @@ class Player(object):
                     # new_space.set_visited(True)
                 else:
                     print("Sorry, that exit is locked!")
-                    return
+                    return None
             else:
                 self.energy -= 3
                 new_space = exit.get_space()
                 self.location = new_space
-                # new_space.print_details(event_status)
-                # new_space.set_visited(True)
         else:
             print("You can't go {0} here.".format(direction))
+            return None
 
     def take(self, item_name):
         """
@@ -217,7 +238,7 @@ class Player(object):
         print()
         item = None
         for i in self.location.get_items():
-            if i.name.lower() == item_name.lower():
+            if item_name and (i.get_name().lower() == item_name.lower()):
                 item = i
         # Check that the given item is in the player's current location.
         if item:
@@ -234,25 +255,25 @@ class Player(object):
             else:
                 print("You can't pick up the {0}".format(item.get_name()))
         else:
-            print("There is no {} here.".format(item_name))
+            print("That item is not here.")
 
     def talk(self, character_name, game_state_index):
         print()
         character = None
         for c in self.location.get_characters():
-            if c.name.lower() == character_name.lower():
+            if character_name and (c.name.lower() == character_name.lower()):
                 character = c
         if character:
             self.energy -= 1
             character.print_response(game_state_index)
         else:
-            print("{0} is not here.".format(character_name))
+            print("That character is not here.")
 
     def drop(self, item_name):
         print()
         item = None
         for i in self.items:
-            if i.name.lower() == item_name.lower():
+            if item_name and (i.name.lower() == item_name.lower()):
                 item = i
         if item:
             self.location.add_item(item)
@@ -267,7 +288,7 @@ class Player(object):
     def look_at(self, item_name):
         item = None
         for i in self.location.get_items():
-            if i.name == item_name:
+            if item_name and (i.get_name() == item_name):
                 item = i
                 break
 
