@@ -81,7 +81,7 @@ class Game(object):
             player_command = get_command()
             cmd_action, cmd_exit, cmd_direction, cmd_item, cmd_character = Parser.action_requested(player_command)
 
-            print()
+            print() # formatting
             if cmd_action == GO:
                 self.player.go_exit(self.event_status, direction=cmd_direction, exit_name=cmd_exit)
 
@@ -137,7 +137,7 @@ class Game(object):
                 self.player.print_inventory()
 
             elif cmd_action == LOADGAME:
-                pass
+                self.load_game()
             else:
                 print("Huh? That doesn't make any sense.")
 
@@ -174,6 +174,7 @@ class Game(object):
     def to_json_dict(self):
         json_dict = {}
         json_dict['event_status'] = self.event_status
+        json_diect['event_status_list'] = self.event_status_list
         return json_dict
 
     def save(self, dir_name=None):
@@ -254,6 +255,9 @@ class Game(object):
             with open(exits_dir + str(e.get_id()) + ".json", "w") as file_handle:
                 exits_dict = e.to_json_dict()
                 json.dump(exits_dict, file_handle)
+
+    def load_game(self):
+        pass
 
     def help(self):
         print("GAME HELP")
