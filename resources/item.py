@@ -9,7 +9,7 @@ class Item(object):
     spaces, carried by characters, or carried by a player in a text
     adventure game.
     """
-    def __init__(self, name, weight=5, description=DEFAULT_DESCRIPTION,
+    def __init__(self, name, weight=1, description=DEFAULT_DESCRIPTION,
                  visible=True, locked=False):
         """
         :param id - int: An auto-generated unique id for this object.

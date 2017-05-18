@@ -195,7 +195,6 @@ class Auriga(Game):
                             self.computer_lab2, self.brig, self.hallway2, self.supply_closet,
                             self.trash_room, self.maintenance_room, self.server_room, self.attic])
 
-
         # CREATE ITEMS
         self.badge = Item(name="security badge", visible=False)
         self.ssd_1tb = Item(name="ssd")
@@ -217,7 +216,8 @@ class Auriga(Game):
         self.button1 = Item(name="button", locked=True)
         # levers
         self.lever1 = Item(name="lever", locked=True)
-        self.items.extend([self.lever1, self.button1, self.charger1, self.badge, self.ssd_1tb,
+        self.items.extend([self.lever1, self.button1, self.charger1, self.charger2, self.charger3,
+                           self.charger4, self.charger5, self.badge, self.ssd_1tb,
                            self.screw_driver, self.usb_encryption_key, self.hmi25, self.hmi50, self.elevator_key])
 
         # CHARACTER RESPONSES
