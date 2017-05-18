@@ -424,14 +424,14 @@ class Parser:
 
         # see if any canonical names are in input_list
         for elmt in core_list:
-            if elmt in input_list:
-                # turn multi-word name into ordered word list
-                elmt_mw = Parser.create_multiword_list(elmt)
+            #if elmt in input_list:
+            # turn multi-word name into ordered word list
+            elmt_mw = Parser.create_multiword_list(elmt)
 
-                for i in range(len(input_list)):
-                    if elmt_mw == input_list[i:i + len(elmt_mw)]:
-                        # return matched name
-                        return elmt
+            for i in range(len(input_list)):
+                if elmt_mw == input_list[i:i + len(elmt_mw)]:
+                    # return matched name
+                    return elmt
 
         # see if any synonym names are in input_list
         if enum_check(alt_list):
