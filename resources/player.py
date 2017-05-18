@@ -6,6 +6,7 @@ import resources.space
 DEFAULT_NAME = "PLAYER 1"
 DEFAULT_DESCRIPTION = "This is a player."
 MAX_ENERGY = 100
+DEFAULT_CAPACITY = 50
 
 class Player(object):
     """
@@ -13,7 +14,7 @@ class Player(object):
     text adventure game.
     """
     def __init__(self, name=DEFAULT_NAME, description=DEFAULT_DESCRIPTION,
-                 capacity=0, location=None, alive=True, energy=100):
+                 capacity=DEFAULT_CAPACITY, location=None, alive=True, energy=100):
         """
         :param name - str: The name of this player.
         :param description - str: A description of this player.
@@ -187,12 +188,10 @@ class Player(object):
 
         # Get any exits that match the passed direction or exit name
         for e in self.location.get_exits():
-            if direction and (e.get_direction().lower() == direction.lower()):
+            if direction and e.is_visible() and (e.get_direction().lower() == direction.lower()):
                 possible_exits.append(e)
             if exit_name and (e.get_name().lower() == exit_name):
                 possible_exits.append(e)
-
-        print("Possible exits: {}".format(possible_exits))
 
         if len(possible_exits) == 1:
             exit = possible_exits[0]

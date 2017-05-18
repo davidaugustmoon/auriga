@@ -36,18 +36,19 @@ class Parser:
     # classes using the Parser will need to verify that there is a valid
     # exit of the type specified inside the current room
     EXITS = ["sliding door", "saloon doors", "air duct", "hallway",
-#    EXITS = ["sliding door", "saloon doors", "air duct", "stairway", "hallway",
-            "elevator"]
+            "elevator", "steel door", "glass door", "opening"]
 
     ALT_EXIT_NAMES = {
             # SLIDING DOOR
             "slide door":           "sliding door",
+            "sliding door":         "sliding door",
 
             # SALOON DOORS
             "saloon":               "saloon doors",
             "saloon door":          "saloon doors",
             "swinging door":        "saloon doors",
             "swinging doors":       "saloon doors",
+            "saloon doors":         "saloon doors",
 
             # AIR DUCT
             "airway":               "air duct",
@@ -60,24 +61,26 @@ class Parser:
             "tunnel":               "air duct",
             "air tunnel":           "air duct",
 
-#            # STAIRWAY
-#            "stairs":               "stairway",
-#            "staircase":            "stairway",
-#            "stair case":           "stairway",
-#            "stair way":            "stairway",
-#            "stairwell":            "stairway",
-#            "stair well":           "stairway",
+            # STEEL DOOR
+            "steel":                "steel door",
 
             # HALLWAY
             "hall way":             "hallway",
             "hall":                 "hallway",
 
             # ELEVATOR
-            "elevator shaft":       "elevator" 
+            "elevator shaft":       "elevator",
+
+            # GLASS DOOR
+            "glass door":           "glass door",
+            "glass":                "glass door",
+
+            # OPENING
+            "opening":              "opening",
             }
 
-    ITEMS = ["security badge", "usb drive", "ssd", "small bucket", "large bucket",
-            "button", "screwdriver", "camera", "ac adapter", "usb cord"]
+    ITEMS = ["security badge", "usb drive", "ssd", "small bucket", "large bucket", "elevator key",
+            "button", "screwdriver", "camera", "ac adapter", "usb cord", "HMI 25", "HMI 50"]
 
     ALT_ITEM_NAMES = {
             # SECURITY BADGE
@@ -87,6 +90,11 @@ class Parser:
             "pin badge":                "security badge",
             "pin":                      "security badge",
             "keycard":                  "security badge",
+
+            # ELEVATOR KEY
+            "elevator key":             "elevator key",
+            "elevator":                 "elevator key",
+            "key":                      "elevator key",
 
             # USB DRIVE
             "external":                 "usb drive",
@@ -152,6 +160,15 @@ class Parser:
             "power cable":              "usb cord",
             "adapter cord":             "usb cord",
             "adapter cable":            "usb cord",
+
+            # HMI SHELVES
+            "hmi25":                    "HMI 25",
+            "hmi-25":                   "HMI 25",
+            "hmi 25":                   "HMI 25",
+
+            "hmi50":                    "HMI 50",
+            "hmi-50":                   "HMI 50",
+            "hmi 50":                   "HMI 50",
 
             # LEVER
             "lever":                    "lever",

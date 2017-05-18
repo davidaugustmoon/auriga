@@ -10,7 +10,7 @@ import json
 from resources.space import Space
 from resources.item import Item
 from resources.character import Character
-from resources.player import Player
+from resources.player import Player, DEFAULT_CAPACITY
 from resources.exit import Exit
 from parser.parser import Parser
 
@@ -70,6 +70,7 @@ class Game(object):
 
         playing = True
         while playing:
+            self.check_upgrades()
             self.check_energy()
             cur_location = self.player.get_location()
             self.check_event_status()
@@ -77,15 +78,10 @@ class Game(object):
             print_player_info(self.player)
             cur_location.set_visited(True)
 
-
-            print("\n") # formatting
             player_command = get_command()
             cmd_action, cmd_exit, cmd_direction, cmd_item, cmd_character = Parser.action_requested(player_command)
 
-            # DEBUG
-            print("action = {0}, exit = {1}, direction = {2}, item = {3}, character = {4}"
-                  .format(cmd_action, cmd_exit, cmd_direction, cmd_item, cmd_character))
-
+            print()
             if cmd_action == GO:
                 self.player.go_exit(self.event_status, direction=cmd_direction, exit_name=cmd_exit)
 
@@ -299,11 +295,17 @@ class Game(object):
                 break
         return obj
 
+    def check_upgrades(self):
+        if "HMI 25" in self.player.get_item_names():
+            self.player.set_capacity(DEFAULT_CAPACITY + 25)
+        if "HMI 50" in self.player.get_item_names():
+            self.player.set_capacity(DEFAULT_CAPACITY + 50)
+
 # Obviously these will all be completely re-done by the parser, this is 
 # just to demonstrate a simple version of the game. This parser only 
 # handles input in the form 'go 1', 'talk 2', 'take 1', etc.
 def get_command():
-    command = input("Command: ")
+    command = input("\nEnter a command\n>>> ")
     return command
 
 def parse_command(command):

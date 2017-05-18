@@ -201,11 +201,24 @@ class Auriga(Game):
         self.ssd_1tb = Item(name="ssd")
         self.screw_driver = Item(name="screwdriver")
         self.usb_encryption_key = Item(name="usb")
+        self.elevator_key = Item(name="elevator key")
+        # chargers
         self.charger1 = Item(name="charger", locked=True)
+        self.charger2 = Item(name="charger", locked=True)
+        self.charger3 = Item(name="charger", locked=True)
+        self.charger4 = Item(name="charger", locked=True)
+        self.charger5 = Item(name="charger", locked=True)
+        # upgrades
+        self.hmi25 = Item(name="HMI 25", weight=0,
+                          description="A robot shelving attachment that increases your capacity by 25 lbs.")
+        self.hmi50 = Item(name="HMI 50", weight=0,
+                          description="A robot shelving attachment that increases your capacity by 50 lbs.")
+        # buttons
         self.button1 = Item(name="button", locked=True)
+        # levers
         self.lever1 = Item(name="lever", locked=True)
         self.items.extend([self.lever1, self.button1, self.charger1, self.badge, self.ssd_1tb,
-                           self.screw_driver, self.usb_encryption_key])
+                           self.screw_driver, self.usb_encryption_key, self.hmi25, self.hmi50, self.elevator_key])
 
         # CHARACTER RESPONSES
         pr2_responses = [
@@ -302,7 +315,7 @@ class Auriga(Game):
         self.hallway1.add_exit(self.hallway1_exit_testing)
         self.exits.append(self.hallway1_exit_testing)
 
-        self.hallway1_exit_blueprint = Exit(space=self.blueprint_room, direction="east", name="saloon doors",
+        self.hallway1_exit_blueprint = Exit(space=self.blueprint_room, direction="north", name="saloon doors",
             description="two saloon style doors that swing in and out.")
         self.hallway1.add_exit(self.hallway1_exit_blueprint)
         self.exits.append(self.hallway1_exit_blueprint)
@@ -318,12 +331,13 @@ class Auriga(Game):
         self.exits.append(self.hallway1_exit_computer_lab2)
 
         self.hallway1_exit_hallway2 = Exit(space=self.hallway2, direction="up", name="elevator",
-            description="an elevator with a badge scanner to activate it.")
+            description="an elevator with a badge scanner to activate it.", locked=True,
+            unlock_item=self.elevator_key)
         self.hallway1.add_exit(self.hallway1_exit_hallway2)
         self.exits.append(self.hallway1_exit_hallway2)
 
         # Blueprint Room
-        self.blueprint_exit_hallway1 = Exit(space=self.hallway1, direction="west", name="saloon doors",
+        self.blueprint_exit_hallway1 = Exit(space=self.hallway1, direction="south", name="saloon doors",
             description="two saloon style doors that swing in and out.")
         self.blueprint_room.add_exit(self.blueprint_exit_hallway1)
         self.exits.append(self.blueprint_exit_hallway1)
@@ -363,7 +377,8 @@ class Auriga(Game):
 
         # Hallway 2
         self.hallway2_exit_hallway1 = Exit(space=self.hallway1, direction="down", name="elevator",
-            description="an elevator with a badge scanner to activate it.")
+            description="an elevator with a badge scanner to activate it.", locked=True,
+            unlock_item=self.elevator_key)
         self.hallway2.add_exit(self.hallway2_exit_hallway1)
         self.exits.append(self.hallway2_exit_hallway1)
 
@@ -441,6 +456,13 @@ class Auriga(Game):
         self.testing_hangar.add_item(self.badge)
         self.testing_hangar.add_item(self.usb_encryption_key)
         self.testing_hangar.add_item(self.lever1)
+        self.conference_room.add_item(self.hmi25)
+        self.maintenance_room.add_item(self.hmi50)
+        self.clean_room.add_item(self.elevator_key)
+        self.computer_lab2.add_item(self.charger2)
+        self.maintenance_room.add_item(self.charger3)
+        self.server_room.add_item(self.charger4)
+        self.conference_room.add_item(self.charger5)
 
         # Place characters in spaces (automatically sets character.location
         # to space)
@@ -454,12 +476,6 @@ class Auriga(Game):
 
     def check_event_status(self):
         pass
-    #     # Player has entered the server room with the usb key
-    #     if (self.get_player_location() == self.server_room) and (self.usb_encryption_key in self.get_player_items()):
-    #        self.set_event_status(1)
-    #        self.set_all_spaces_to_unvisited()
-    #        self.get_player_location().print_long_description(self.get_event_status())
-    #     # more player achievments will go here to increment the event_status
 
     def set_all_spaces_to_unvisited(self):
         for space in self.spaces:
@@ -514,7 +530,6 @@ class Auriga(Game):
         else:
             print("You can't use that here.")
 
-
     def push(self, item_name):
         # Check if the specified item is in the player's current location
         item = None
@@ -568,7 +583,7 @@ class Auriga(Game):
 
 def main():
     # Create Player
-    player = Player(name="Auriga-7B", capacity=50)
+    player = Player(name="Auriga-7B")
 
     # # Create an instance of the Auriga game with the player and maze
     auriga = Auriga(player)
