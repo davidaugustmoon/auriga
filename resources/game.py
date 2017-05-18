@@ -174,7 +174,7 @@ class Game(object):
     def to_json_dict(self):
         json_dict = {}
         json_dict['event_status'] = self.event_status
-        json_diect['event_status_list'] = self.event_status_list
+        json_dict['event_status_list'] = self.event_status_list
         return json_dict
 
     def save(self, dir_name=None):
