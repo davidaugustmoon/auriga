@@ -530,6 +530,10 @@ class Parser:
         input_list = [word for word in input_list 
                 if word not in NON_DIR_PREPS]
 
+        # deals with commands like "under"
+        if len(input_list) == 0:
+            return None
+
         direction = input_list[0]
 
         if ((direction not in Parser.DIRECTIONS) and
