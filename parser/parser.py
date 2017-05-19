@@ -417,6 +417,9 @@ class Parser:
         is discovered initially.  Do not depend on the order in which strings
         appear in their corresponding lists.
 
+        Citation: http://stackoverflow.com/a/2587419 for creating a new
+            sorted list based on string length.
+
         :param list - input_list: list containing strings to search for in
                other parameters
         :param list - core_list: list with canonical names only
@@ -430,8 +433,9 @@ class Parser:
             # throw error
             return None
 
-        # see if any canonical names are in input_list
-        for elmt in core_list:
+        # see if any canonical names are in input_list, looking
+        # at longer names first
+        for elmt in sorted(core_list, key=len, reverse=True):
             #if elmt in input_list:
             # turn multi-word name into ordered word list
             elmt_mw = Parser.create_multiword_list(elmt)
@@ -441,10 +445,11 @@ class Parser:
                     # return matched name
                     return elmt
 
-        # see if any synonym names are in input_list
+        # see if any synonym names are in input_list, looking
+        # at longer names first
         if enum_check(alt_list):
 
-            for elmt in alt_list:
+            for elmt in sorted(alt_list, key=len, reverse=True):
                 # turn multi-word key into ordered word list
                 alt_name = Parser.create_multiword_list(elmt)
 
