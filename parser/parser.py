@@ -155,7 +155,7 @@ class Parser:
             "charging cord":            "usb cord",
             "charging cable":           "usb cord",
             "cable":                    "usb cord",
-            "usb cable":                "usb cord",
+            # "usb cable":                "usb cord",
             "power cord":               "usb cord",
             "power cable":              "usb cord",
             "adapter cord":             "usb cord",
@@ -189,16 +189,24 @@ class Parser:
             "trashed robot":            "collapsed robot",
 
             # PR2
+            "pr2":                      "pr2",
+            "pr 2":                     "pr2",
+            "pr-2":                     "pr2",
 
 
             # KELT-2A
+            "kelt2a":                   "kelt-2a",
+            "kelt 2a":                  "kelt-2a",
+            "kelt-2a":                  "kelt-2a",
 
 
             # WASP-12
-
+            "wasp-12":                  "wasp-12",
+            "wasp12":                   "wasp-12",
+            "wasp 12":                  "wasp-12",
 
             # JIM
-
+            "jim":                      "jim",
 
             # FREIGHT-500
             "freight500":               "freight-500",

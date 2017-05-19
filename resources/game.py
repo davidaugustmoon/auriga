@@ -67,6 +67,7 @@ class Game(object):
 
     def start(self):
         p = Parser()
+        print("\n" * 100)
 
         playing = True
         while playing:
@@ -81,7 +82,7 @@ class Game(object):
             player_command = get_command()
             cmd_action, cmd_exit, cmd_direction, cmd_item, cmd_character = Parser.action_requested(player_command)
 
-            print() # formatting
+            print("\n" * 100)
             if cmd_action == GO:
                 self.player.go_exit(self.event_status, direction=cmd_direction, exit_name=cmd_exit)
 
@@ -141,6 +142,7 @@ class Game(object):
             else:
                 print("Huh? That doesn't make any sense.")
 
+
     def check_event_status(self):
         print("check_event_status() should be overridden in the child class.")
 
@@ -175,6 +177,10 @@ class Game(object):
         json_dict = {}
         json_dict['event_status'] = self.event_status
         json_dict['event_status_list'] = self.event_status_list
+        json_dict['spaces'] = [s.get_id() for s in self.spaces]
+        json_dict['characters'] = [c.get_id() for c in self.characters]
+        json_dict['exits'] = [e.get_id() for e in self.exits]
+        json_dict['items'] = [i.get_id() for i in self.items]
         return json_dict
 
     def save(self, dir_name=None):
@@ -246,7 +252,7 @@ class Game(object):
             with open(spaces_dir + s.get_name() + ".json", "w") as file_handle:
                 spaces_dict = s.to_json_dict()
                 json.dump(spaces_dict, file_handle)
-            print("saving space: {}".format(s.get_name()))
+            # print("saving space: {}".format(s.get_name()))
 
         # Exits
         exits_dir = save_dir + "exits/"
