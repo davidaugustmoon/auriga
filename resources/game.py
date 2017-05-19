@@ -321,7 +321,7 @@ def print_space_info(space, event_index):
 
 def print_player_info(player):
     print("\nPLAYER INFO:")
-    print("Energy: {}".format(player.get_energy()))
+    player.print_energy()
     print("Current location: {}".format(player.location.name))
     print("Carrying: {0}/{1}".format(player.get_items_total_weight(), player.get_capacity()))
     # print("Items: {}".format(player.get_item_names()))

@@ -334,6 +334,10 @@ class Player(object):
         print("location: {}".format(self.location.name))
         print("Is alive: {}".format(self.alive))
 
+    def print_energy(self):
+        energy_level = "+" * int(self.energy / 2)
+        print("Energy: {}".format(energy_level))
+
     def to_json_dict(self):
         json_dict = {}
         json_dict['name'] = self.name
