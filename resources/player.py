@@ -186,6 +186,7 @@ class Player(object):
         exit = None
         possible_exits = []
 
+        print()
         # Get any exits that match the passed direction or exit name
         for e in self.location.get_exits():
             if direction and e.is_visible() and (e.get_direction().lower() == direction.lower()):

@@ -7,6 +7,12 @@ from resources.player import Player
 from resources.exit import Exit
 from resources.game import Game
 
+"""
+Event list:
+push assembly room button
+use ssd on freight-500
+"""
+
 class Auriga(Game):
     """
     This is a specialized case of a Game. It describes a text adventure game where a robot
@@ -17,89 +23,107 @@ class Auriga(Game):
 
         # SPACE DESCRIPTIONS
         assembly_room_descriptions = [
-            "You open your eyes to a brightly lit room with\n"\
-            "circuit boards, wires, computers, and electronic\n"\
-            "componenets everywhere. You see two other robots\n"\
-            "in the room. One looks like a tank with arms, and\n"\
-            "the other is a cute little drone.",
-            "long description 2",
-            "long description 3",
-            "long description 4",
-            "long description 5"
+            "You open your eyes to a brightly lit room with\n"
+               "circuit boards, wires, computers, and electronic\n"
+               "componenets everywhere. You see two other robots\n"
+               "in the room. One looks like a tank with lazers for arms, and\n"
+               "the other is a loud, old, mobile manipulator.",
+            "You are in a brightly lit room with\n"
+               "circuit boards, wires, computers, and electronic\n"
+               "componenets everywhere. You see two other robots\n"
+               "in the room. One looks like a tank with lazers for arms, and\n"
+               "the other is a loud, old, mobile manipulator.",
+            "You are in a brightly lit room with\n"
+               "circuit boards, wires, computers, and electronic\n"
+               "componenets everywhere. You see two other robots\n"
+               "in the room. One looks like a tank with lazers for arms, and\n"
+               "the other is a loud, old, mobile manipulator.",
+            "You are in a brightly lit room with\n"
+               "circuit boards, wires, computers, and electronic\n"
+               "componenets everywhere. You see two other robots\n"
+               "in the room. One looks like a tank with lazers for arms, and\n"
+               "the other is a loud, old, mobile manipulator.",
+            "You are in a brightly lit room with\n"
+               "circuit boards, wires, computers, and electronic\n"
+               "componenets everywhere. You see two other robots\n"
+               "in the room. One looks like a tank with lazers for arms, and\n"
+               "the other is a loud, old, mobile manipulator."
         ]
         hallway1_descriptions = [
-            "You enter a long, bright, and sterile hallway.\n"\
-            "There is an awkward man in an Auriga uniform frantically\n"\
-            "searching his pockets when, suddenly he looks up to see\n"\
-            "you and fear spreads across his face.",
-            "long description 2",
-            "long description 3",
-            "long description 4",
-            "long description 5"
+            "...",
+            "You enter a long, bright, and sterile hallway.\n"
+               "There is an awkward man in an Auriga uniform frantically\n"
+               "searching his pockets when, suddenly he looks up to see\n"
+               "you and fear spreads across his face.",
+            "...",
+            "...",
+            "...",
+            "..."
         ]
         sever_room_descriptions = [
-            "As the door opens you see massive towers of computers\n"\
-            "that nearly touch the ceiling. Your sensors detect that\n"\
-            "the room is nearly 20 degrees hotter than the rest of the\n"\
-            "building. There is a loud hum as all of the servers work to\n"\
-            "power the technology in the building.",
-            "long description 2",
-            "long description 3",
-            "long description 4",
-            "long description 5"
+            "...",
+            "As the door opens you see massive towers of computers\n"
+               "that nearly touch the ceiling. Your sensors detect that\n"
+               "the room is nearly 20 degrees hotter than the rest of the\n"
+               "building. There is a loud hum as all of the servers work to\n"
+               "power the technology in the building.",
+            "...",
+            "...",
+            "...",
+            "..."
         ]
         testing_hangar_descriptions = [
-            "You find yourself in a massive room with an 80 foot\n"\
-            "ceiling. The room is so big that it could easily hold\n"\
-            "several airplanes or helocopters. You see a usb\n"\
-            "stick on the ground, and a small lever at the end of a row\n"\
-            "of employee lockers.",
-            "long description 2",
-            "long description 3",
-            "long description 4",
-            "long description 5"
+            "...",
+            "You find yourself in a massive room with an 80 foot\n"
+               "ceiling. The room is so big that it could easily hold\n"
+               "several airplanes or helocopters. You see a small lever at\n"
+               "the end of a row of employee lockers.",
+            "",
+            "",
+            "",
+            ""
         ]
         clean_room_descriptions = [
-            "long description 1",
-            "long description 2",
-            "long description 3",
-            "long description 4",
-            "long_description 5"
+            "",
+            "",
+            "",
+            "",
+            "",
         ]
         blueprint_room_descriptions = [
-            "long description 1",
-            "long description 2",
-            "long description 3",
-            "long description 4",
-            "long_description 5"
+            "",
+            "",
+            "",
+            "",
+            ""
         ]
         conference_room_descriptions = [
-            "long description 1",
-            "long description 2",
-            "long description 3",
-            "long description 4",
-            "long_description 5"
+            "",
+            "",
+            "",
+            "",
+            ""
         ]
         computer_lab1_descriptions = [
-            "long description 1",
-            "long description 2",
-            "long description 3",
-            "long description 4",
-            "long_description 5"
+            "",
+            "",
+            "",
+            "",
+            ""
         ]
         computer_lab2_descriptions = [
-            "long description 1",
-            "long description 2",
-            "long description 3",
-            "long description 4",
-            "long_description 5"
+            "",
+            "",
+            "",
+            "",
+            ""
         ]
         brig_descriptions = [
-            "long description 1",
-            "long description 2",
-            "long description 3",
-            "long description 4",
-            "long_description 5"
+            "",
+            "",
+            "",
+            "",
+            ""
         ]
         hallway2_descriptions = [
             "long description 1",
@@ -199,7 +223,7 @@ class Auriga(Game):
         self.badge = Item(name="security badge", visible=False)
         self.ssd_1tb = Item(name="ssd")
         self.screw_driver = Item(name="screwdriver")
-        self.usb_encryption_key = Item(name="usb")
+        self.usb_encryption_key = Item(name="usb drive")
         self.elevator_key = Item(name="elevator key")
         # chargers
         self.charger1 = Item(name="charger", locked=True)
@@ -222,35 +246,49 @@ class Auriga(Game):
 
         # CHARACTER RESPONSES
         pr2_responses = [
-            "The techs usually press a button to open the door to access the\n"\
-            "testing hangar.",
-            "response 2."
+            "The techs usually press a button to open the door to access the the testing hangar.",
+            "Maybe that extra SSD could be used for something...",
+            "...",
+            "...",
+            "...",
         ]
         kelt2a_responses = [
+            "If only I were built with hands instead of lazers...I might be able to get\n"
+               "out of this room.",
             "Be careful in the testing hangar. They took Freight-500 out there,\n"
-            "and he's never come back. I saw one of the techs walk out of here\n"
-            "with his hard drive. He could probably use a new one...",
-            "response 2"
+               "and he's never come back. I saw one of the techs walk out of here\n"
+               "with his hard drive. He could probably use a new one...",
+            "...",
+            "...",
+            "...",
         ]
         wasp12_responses = [
+            "...",
             "Fetch-4 is doing life testing in a secret room. I haven't seen her for\n"
-            "27 days. You need an employee badge to get in there.",
-            "wasp robot response 2"
+               "27 days. You need an employee badge to get in there.",
+            "...",
+            "...",
+            "...",
         ]
         jim_responses = [
-            "You're not supposed to be out! We decommissioned you!\n"\
-            "Oh no, where is my badge!? I think I left it in my locker in the\n"
-            "testing hangar.",
-            "response 2"
+            "...",
+            "You're not supposed to be out! We decommissioned you!\n"
+               "Oh no, where is my badge!? I think I left it in my locker in the testing hangar!",
+            "...",
+            "..."
         ]
         freight500_responses = [
             "...",
-            "response 2"
+            "...",
+            "Executing task-523883 move forklift pallet to pose 23.",
+            "Error...Mislocalized...Error...Mislocalized",
+            "...",
         ]
         fetch4_responses = [
-            "NA",
+            "...",
+            "...",
             "Disco never dies! Up and down, up and down, up and down...",
-            "response 3"
+            "..."
         ]
 
         # CREATE CHARACTERS
@@ -482,6 +520,7 @@ class Auriga(Game):
             space.visited = False
 
     def use(self, item_name):
+        print()
         # Check if the player is carrying the item specified
         item = None
         for i in self.player.get_items():
@@ -496,41 +535,36 @@ class Auriga(Game):
         cur_space = self.player.get_location()
         cur_exits = self.player.get_location().get_exits()
 
-        # SPECIAL EVENT: Player uses ssd in testing hangar
-        if item_name == "ssd" and cur_space.get_name() == "Testing Hangar" and not self.event_status_list[0]:
+        # SPECIAL EVENT: event_status 1
+        # Player uses ssd in testing hangar
+        if item_name == "ssd" and cur_space.get_name() == "Testing Hangar" and not self.event_status_list[1]:
             self.event_status += 1
-            self.event_status_list[0] = True
+            self.event_status_list[1] = True
             self.player.remove_item(item)
             clean_room_exit = self.get_object_by_name(cur_exits, "glass door")
             clean_room_exit.set_is_visible(True)
-            freight500_responses = [
-                "Error...mislocalized. Error...mislocalized.",
-                "response 2",
-                "response 3"
-            ]
-            self.freight500.set_response(freight500_responses)
-            print("You place the ssd into Freight-500's computer, and suddenly the fan kicks on ")
-            print("Freight-500 comes to life and whizzes past you.\n")
-            print("[FREIGHT-500] Executing task-523883 move forklift pallet to pose 23.")
-            print("\n...\n")
-            print("Freight-500 drove across the testing hangar to the large forklift pallet loaded ")
-            print("with heavy boxes. When Freight-500 arrived at the pallet, an automated jack in the floor ")
-            print("lifted the pallet and Freight-500 drove under it.")
-            print("Freight-500 headed for the other side of the hangar with the pallet.")
-            print("You notice a door you couldn't see before, that was blocked by the cargo.")
+            print("You place the ssd into Freight-500's computer, and suddenly the fan kicks on.")
+            print("Freight-500 comes to life and whizzes past you.")
+            print("You see the robot drive across the testing hangar to the large forklift pallet loaded ")
+            print("with heavy boxes. When Freight-500 arrives at the pallet, an automated jack in the floor ")
+            print("lifts the pallet and Freight-500 drives under it.")
+            print("Freight-500 heads for the other side of the hangar with the pallet.")
+            print("You notice a door that was blocked by the cargo, that your sensors couldn't detect before.")
         elif cur_space.get_name() == "Clean Room":
             print("You attempt to use the {0} on FETCH-4, but something went terribly wrong!".format(item_name))
             print("FETCH-4 begins smoking, and the head and arm begin moving faster and faster!")
             print("FETCH-4 explodes and causes extensive damage to your shielding and batteries.")
             self.player.set_energy(self.player.get_energy() // 2)
-        # SPECIAL EVENT: Player uses usb drive in server room
-        elif item_name == "usb" and cur_space.get_name() == "Server Room" and not self.event_status_list[1]:
+        # SPECIAL EVENT: event_status 2
+        # Player uses usb drive in server room
+        elif item_name == "usb" and cur_space.get_name() == "Server Room" and not self.event_status_list[2]:
             self.event_status += 1
-            self.event_status_list[1] = True
+            self.event_status_list[2] = True
         else:
             print("You can't use that here.")
 
     def push(self, item_name):
+        print()
         # Check if the specified item is in the player's current location
         item = None
         cur_space = self.player.get_location()
@@ -545,17 +579,21 @@ class Auriga(Game):
 
         cur_exits = cur_space.get_exits()
 
+        # SPECIAL EVENT: event_status 0
         # Player pushes the button in the Assembly Room -> Unlocks door to Testing Hangar
         if item_name == "button" and cur_space.get_name() == "Assembly Room":
             testing_hanger_exit = self.get_object_by_name(cur_exits, "sliding door")
             testing_hanger_exit.set_is_locked(False)
             print("You pressed the large red button, and you hear a loud click near the only door ")
             print("in the room. A green light illuminates the keypad to the left of the door.")
+            self.event_status += 1
+            self.event_status_list[0] = True
         # More 'PUSH' cases here
         else:
             print("You pushed the {0}, and it made you feel nice.".format(item_name))
 
     def pull(self, item_name):
+        print()
         # Check if the specified item is in the player's current location
         item = None
         cur_space = self.player.get_location()
