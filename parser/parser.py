@@ -79,8 +79,9 @@ class Parser:
             "opening":              "opening",
             }
 
-    ITEMS = ["security badge", "usb drive", "ssd", "small bucket", "large bucket", "elevator key",
-            "button", "screwdriver", "camera", "ac adapter", "usb cord", "HMI 25", "HMI 50"]
+    ITEMS = ["security badge", "usb drive", "ssd", "small bucket", "large bucket",
+             "elevator key", "button", "screwdriver", "camera", "ac adapter",
+             "usb cord", "HMI 25", "HMI 50"]
 
     ALT_ITEM_NAMES = {
             # SECURITY BADGE
@@ -155,7 +156,7 @@ class Parser:
             "charging cord":            "usb cord",
             "charging cable":           "usb cord",
             "cable":                    "usb cord",
-            # "usb cable":                "usb cord",
+            "usb cable":                "usb cord",
             "power cord":               "usb cord",
             "power cable":              "usb cord",
             "adapter cord":             "usb cord",
@@ -178,7 +179,7 @@ class Parser:
             }
 
     CHARACTERS = ["stuffed robot bear", "collapsed robot", "pr2",
-            "kelt2a", "wasp12", "jim", "freight500", "fetch71", "fetch-4"]
+            "kelt2a", "wasp12", "jim", "freight500", "fetch71", "fetch4"]
 
     ALT_CHAR_NAMES = {
             # STUFFED ROBOT BEAR
@@ -195,26 +196,26 @@ class Parser:
 
 
             # KELT-2A
-            "kelt2a":                   "kelt-2a",
-            "kelt 2a":                  "kelt-2a",
-            "kelt-2a":                  "kelt-2a",
+            "kelt2a":                   "kelt2a",
+            "kelt 2a":                  "kelt2a",
+            "kelt-2a":                  "kelt2a",
 
 
             # WASP-12
-            "wasp-12":                  "wasp-12",
-            "wasp12":                   "wasp-12",
-            "wasp 12":                  "wasp-12",
+            "wasp-12":                  "wasp12",
+            "wasp12":                   "wasp12",
+            "wasp 12":                  "wasp12",
 
             # JIM
             "jim":                      "jim",
 
             # FREIGHT-500
-            "freight500":               "freight-500",
-            "freight-500":              "freight-500",
+            "freight500":               "freight500",
+            "freight-500":              "freight500",
 
             # FETCH-4
-            "fetch4":                   "fetch-4",
-            "fetch-4":                  "fetch-4",
+            "fetch4":                   "fetch4",
+            "fetch-4":                  "fetch4",
 
             # FETCH-71
             }
@@ -273,7 +274,7 @@ class Parser:
             "energize":     "recharge",
             "reenergize":   "recharge",
             "re-energize":  "recharge",
-            "charge":       "charge",
+            "charge":       "recharge",
 
             # TAKE
             "take":         "take",
@@ -382,6 +383,9 @@ class Parser:
 
         :return str: the canonical name for an action, or None
         """
+        if len(input_list) == 0:
+            return None
+
         action = input_list[0]
         verb = None
 
