@@ -26,13 +26,6 @@ class Auriga(Game):
     def __init__(self, player=None):
         Game.__init__(self, player)
 
-    # def check_event_status(self):
-    #     pass
-
-    # def set_all_spaces_to_unvisited(self):
-    #     for space in self.spaces:
-    #         space.visited = False
-
     def use(self, item_name):
         print()
         # Check if the player is carrying the item specified
@@ -134,7 +127,7 @@ class Auriga(Game):
             self.player.set_energy(self.player.get_energy() - 1)
 
 def main():
-    # # Create an instance of the Auriga game
+    # Create an instance of the Auriga game
     auriga = Auriga()
 
     # Load Game Menu

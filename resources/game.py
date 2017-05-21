@@ -75,7 +75,6 @@ class Game(object):
             self.check_upgrades()
             self.check_energy()
             cur_location = self.player.get_location()
-            self.check_event_status()
             print_space_info(cur_location, self.event_status)
             print_player_info(self.player)
             cur_location.set_visited(True)
@@ -139,13 +138,21 @@ class Game(object):
                 self.player.print_inventory()
 
             elif cmd_action == LOADGAME:
-                self.load_game()
+                saved_games_dir = os.path.join(os.getcwd(), "saved_games")
+
+                # Print Available Saved Games
+                print("Enter the number of the game you want to load.")
+                saved_games = [game for game in os.listdir(saved_games_dir)]
+                for index, sg in enumerate(saved_games):
+                    print("{0}. {1}".format(index + 1, sg))
+
+                # TODO error checking on user input
+                user_game_selection = input(">")
+                user_game = saved_games[int(user_game_selection) - 1]
+                print("Loading game: {0}".format(user_game))
+                self.load_game(os.path.join(saved_games_dir, user_game))
             else:
                 print("Huh? That doesn't make any sense.")
-
-
-    def check_event_status(self):
-        print("check_event_status() should be overridden in the child class.")
 
     def get_event_status(self):
         return self.event_status
@@ -256,7 +263,6 @@ class Game(object):
             with open(spaces_dir + s.get_name() + "_" + str(s.get_id()) + ".json", "w") as file_handle:
                 spaces_dict = s.to_json_dict()
                 json.dump(spaces_dict, file_handle)
-            # print("saving space: {}".format(s.get_name()))
 
         # Exits
         exits_dir = save_dir + "exits/"
@@ -267,14 +273,6 @@ class Game(object):
                 json.dump(exits_dict, file_handle)
 
     def load_game(self, load_dir):
-        print("Loading game from {}".format(load_dir))
-
-        # Dicts for mapping old object ids to new auto-generated ids
-        # # {old_id: new_id}
-        # item_ids = {}
-        # character_ids = {}
-        # exit_ids = {}
-
         # Set Game data
         game_space_ids = []
         game_character_ids = []
@@ -321,7 +319,6 @@ class Game(object):
                 i = Item(new_id=item_id, name=item_name, visible=item_visible, locked=item_locked,
                          weight=item_weight, description=item_description)
                 self.items.append(i)
-
 
         # Create Characters
         character_files = os.listdir(os.path.join(load_dir, "characters"))
@@ -415,10 +412,6 @@ class Game(object):
             exit.unlock_item = None
             exit.space = self.get_object_by_id(self.spaces, space_id)
             exit.unlock_item = self.get_object_by_id(self.items, item_id)
-
-
-
-            print("{0}: items: {1}, characters: {2}, exits: {3}".format(space.name, [i.name for i in space.items], [c.name for c in space.characters], [e.name for e in space.exits]))
 
     def help(self):
         print("GAME HELP")
