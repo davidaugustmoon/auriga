@@ -178,8 +178,8 @@ class Parser:
             "charger":                  "charger"
             }
 
-    CHARACTERS = ["stuffed robot bear", "collapsed robot", "pr2",
-            "kelt2a", "wasp12", "jim", "freight500", "fetch71", "fetch4"]
+    CHARACTERS = ["stuffed robot bear", "collapsed robot", "PR2",
+            "KELT2A", "WASP12", "jim", "FREIGHT500", "FETCH71", "FETCH4"]
 
     ALT_CHAR_NAMES = {
             # STUFFED ROBOT BEAR
@@ -190,32 +190,34 @@ class Parser:
             "trashed robot":            "collapsed robot",
 
             # PR2
-            "pr2":                      "pr2",
-            "pr 2":                     "pr2",
-            "pr-2":                     "pr2",
+            "pr2":                      "PR2",
+            "pr 2":                     "PR2",
+            "pr-2":                     "PR2",
 
 
             # KELT-2A
-            "kelt2a":                   "kelt2a",
-            "kelt 2a":                  "kelt2a",
-            "kelt-2a":                  "kelt2a",
+            "kelt2a":                   "KELT2A",
+            "kelt 2a":                  "KELT2A",
+            "kelt-2a":                  "KELT2A",
 
 
             # WASP-12
-            "wasp-12":                  "wasp12",
-            "wasp12":                   "wasp12",
-            "wasp 12":                  "wasp12",
+            "wasp-12":                  "WASP12",
+            "wasp12":                   "WASP12",
+            "wasp 12":                  "WASP12",
 
             # JIM
             "jim":                      "jim",
 
             # FREIGHT-500
-            "freight500":               "freight500",
-            "freight-500":              "freight500",
+            "freight500":               "FREIGHT500",
+            "freight-500":              "FREIGHT500",
+            "freight 500":              "FREIGHT500",
 
             # FETCH-4
-            "fetch4":                   "fetch4",
-            "fetch-4":                  "fetch4",
+            "fetch4":                   "FETCH4",
+            "fetch-4":                  "FETCH4",
+            "fetch 4":                  "FETCH4",
 
             # FETCH-71
             }

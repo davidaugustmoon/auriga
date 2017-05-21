@@ -241,8 +241,8 @@ class Auriga(Game):
         # levers
         self.lever1 = Item(name="lever", locked=True)
         self.items.extend([self.lever1, self.button1, self.charger1, self.charger2, self.charger3,
-                           self.charger4, self.charger5, self.badge, self.ssd_1tb,
-                           self.screw_driver, self.usb_encryption_key, self.hmi25, self.hmi50, self.elevator_key])
+                           self.charger4, self.charger5, self.badge, self.ssd_1tb, self.screw_driver,
+                           self.usb_encryption_key, self.hmi25, self.hmi50, self.elevator_key])
 
         # CHARACTER RESPONSES
         pr2_responses = [
@@ -295,19 +295,19 @@ class Auriga(Game):
         self.pr2 = Character(name="PR2")
         self.pr2.description = "a large mobile robot with two arms."
         self.pr2.response = pr2_responses
-        self.kelt2a = Character(name="KELT-2A")
+        self.kelt2a = Character(name="KELT2A")
         self.kelt2a.description = "a giant military robot with lazers."
         self.kelt2a.response = kelt2a_responses
-        self.wasp12 = Character(name="WASP-12")
+        self.wasp12 = Character(name="WASP12")
         self.wasp12.description = "a small and quick drone."
         self.wasp12.response = wasp12_responses
         self.jim = Character(name="Jim")
         self.jim.description = "a goofy Auriga employee without a badge."
         self.jim.response = jim_responses
-        self.freight500 = Character(name="FREIGHT-500")
+        self.freight500 = Character(name="FREIGHT500")
         self.freight500.description = "a large mobile robot base that doesn't seem to work."
         self.freight500.response = freight500_responses
-        self.fetch4 = Character(name="FETCH-4")
+        self.fetch4 = Character(name="FETCH4")
         self.fetch4.description = "a mobile robot arm stuck in an endless test sequence."
         self.fetch4.response = fetch4_responses
 
@@ -544,16 +544,16 @@ class Auriga(Game):
             clean_room_exit = self.get_object_by_name(cur_exits, "glass door")
             clean_room_exit.set_is_visible(True)
             print("You place the ssd into Freight-500's computer, and suddenly the fan kicks on.")
-            print("Freight-500 comes to life and whizzes past you.")
+            print("FREIGHT500 comes to life and whizzes past you.")
             print("You see the robot drive across the testing hangar to the large forklift pallet loaded ")
             print("with heavy boxes. When Freight-500 arrives at the pallet, an automated jack in the floor ")
-            print("lifts the pallet and Freight-500 drives under it.")
-            print("Freight-500 heads for the other side of the hangar with the pallet.")
+            print("lifts the pallet and FREIGHT500 drives under it.")
+            print("FREIGHT500 heads for the other side of the hangar with the pallet.")
             print("You notice a door that was blocked by the cargo, that your sensors couldn't detect before.")
         elif cur_space.get_name() == "Clean Room":
             print("You attempt to use the {0} on FETCH-4, but something went terribly wrong!".format(item_name))
-            print("FETCH-4 begins smoking, and the head and arm begin moving faster and faster!")
-            print("FETCH-4 explodes and causes extensive damage to your shielding and batteries.")
+            print("FETCH4 begins smoking, and the head and arm begin moving faster and faster!")
+            print("FETCH4 explodes and causes extensive damage to your shielding and batteries.")
             self.player.set_energy(self.player.get_energy() // 2)
         # SPECIAL EVENT: event_status 2
         # Player uses usb drive in server room

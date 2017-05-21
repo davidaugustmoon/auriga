@@ -10,9 +10,9 @@ This is a base class for a space. The space is intended to be used in
 a text adventure game.
 """
 class Space(object):
-    def __init__(self, name=DEFAULT_NAME, items=None, characters=None,
+    def __init__(self, new_id=None, name=DEFAULT_NAME, items=None, characters=None,
                  long_description=None, short_description=DEFAULT_SHORT_DESCRIPTION,
-                 visited=False):
+                 visited=False, exits=None):
         """
         :param id - int: An auto-generated unique id for this object.
         :param name - str: The name of this space.
@@ -34,7 +34,10 @@ class Space(object):
                Note: This can be used to not allow a player to enter a space
                      until they have accomplished some task.
         """
-        self.id = id(self)
+        if new_id:
+            self.id = new_id
+        else:
+            self.id = id(self)
         self.name = name
         if items:
             self.items = items
@@ -49,7 +52,10 @@ class Space(object):
         else:
             self.long_description = []
         self.short_description = short_description
-        self.exits = []
+        if exits:
+            self.exits = exits
+        else:
+            self.exits = []
         self.visited = False
     #TODO getters and setters for all properties above
 
@@ -60,6 +66,9 @@ class Space(object):
         :return int: The unique id of this object.
         """
         return self.id
+
+    def set_id(self, new_id):
+        self.id = new_id
 
     def get_name(self):
         return self.name
@@ -102,7 +111,6 @@ class Space(object):
 
     def add_character(self, character_to_add):
         self.characters.append(character_to_add)
-        character_to_add.location = self
 
     def remove_character(self, character_to_remove):
         if character_to_remove in self.characters:
@@ -153,6 +161,7 @@ class Space(object):
         json_dict['items'] = [i.get_id() for i in self.items]
         json_dict['short_description'] = self.short_description
         json_dict['exits'] = [e.get_id() for e in self.exits]
+        json_dict['visited'] = self.visited
         return json_dict
 
     def print_details(self, event_index):

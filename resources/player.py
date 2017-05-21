@@ -13,7 +13,7 @@ class Player(object):
     This is a base class for a player. It is intended to be used in a
     text adventure game.
     """
-    def __init__(self, name=DEFAULT_NAME, description=DEFAULT_DESCRIPTION,
+    def __init__(self, name=DEFAULT_NAME, description=DEFAULT_DESCRIPTION, items=None,
                  capacity=DEFAULT_CAPACITY, location=None, alive=True, energy=100):
         """
         :param name - str: The name of this player.
@@ -30,8 +30,14 @@ class Player(object):
         self.name = name
         self.description = description
         self.capacity = capacity
-        self.items = []
-        self.location = location
+        if items:
+            self.items = items
+        else:
+            self.items = []
+        if location:
+            self.location = location
+        else:
+            self.location = location
         self.alive = alive
         self.energy = energy
 

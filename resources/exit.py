@@ -7,7 +7,7 @@ DEFAULT_DESCRIPTION = "a flimsy wooden door."
 DIRECTIONS = ["north", "south", "east", "west", "up", "down"]
 
 class Exit(object):
-    def __init__(self, name=DEFAULT_NAME, description=DEFAULT_DESCRIPTION,
+    def __init__(self, new_id=None, name=DEFAULT_NAME, description=DEFAULT_DESCRIPTION,
                  space=None, locked=False, visible=True, unlock_item=None,
                  direction="north"):
         """
@@ -27,7 +27,10 @@ class Exit(object):
                exit.
         :param str - direction: The direction of the Exit from the Space it exits.
         """
-        self.id = id(self)
+        if new_id:
+            self.id = new_id
+        else:
+            self.id = id(self)
         self.name = name
         self.description = description
         self.space = space
@@ -43,6 +46,9 @@ class Exit(object):
         :return int: The unique id of this object.
         """
         return self.id
+
+    def set_id(self, new_id):
+        self.id = new_id
 
     def get_name(self):
         """
