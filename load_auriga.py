@@ -119,9 +119,14 @@ class Auriga(Game):
         # Player pulls the lever in the Testing Hanger -> Opens a locker to reveal a badge
         if item_name == "lever" and cur_space.get_name() == "Testing Hangar":
             badge_item = self.get_object_by_name(cur_items, "security badge")
-            badge_item.set_visible(True)
-            print("You pulled the small lever, and a locker popped open. In the locker you ")
-            print("see an Auriga worker's badge.")
+            # The badge item is revealed
+            if badge_item:
+                badge_item.set_visible(True)
+                print("You pulled the small lever, and a locker popped open. In the locker you ")
+                print("see an Auriga worker's badge.")
+            # The badge item has already been revealed
+            else:
+                print("You pulled the small lever, but nothing happens.")
         else:
             print("You pulled the {0} and you lost some energy.".format(item_name))
             self.player.set_energy(self.player.get_energy() - 1)
