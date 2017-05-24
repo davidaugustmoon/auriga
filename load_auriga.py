@@ -57,6 +57,7 @@ class Auriga(Game):
             print("lifts the pallet and Freight-500 drives under it.")
             print("Freight-500 heads for the other side of the hangar with the pallet.")
             print("You notice a door that was blocked by the cargo, that your sensors couldn't detect before.")
+            # TODO change freight 500's description to match being fixed
         elif cur_space.get_name() == "Clean Room":
             print("You attempt to use the {0} on FETCH-4, but something went terribly wrong!".format(item_name))
             print("FETCH-4 begins smoking, and the head and arm begin moving faster and faster!")

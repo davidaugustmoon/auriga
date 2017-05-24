@@ -177,11 +177,11 @@ class Game(object):
 
     def check_energy(self):
         if self.player.get_energy() <= 0:
-            print("Sorry, you ran out of energy and died.")
+            print("\nSorry, you ran out of energy and died.")
             print("Maybe the AI program will bring you back again...")
             sys.exit()
-        elif self.player.get_energy() < 25:
-            print("You're getting low on energy.")
+        elif self.player.get_energy() < 15:
+            print("\nYou're getting low on energy.")
             print("You'll need to find a charger quick!")
 
     def to_json_dict(self):

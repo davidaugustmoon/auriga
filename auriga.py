@@ -47,6 +47,16 @@ class Auriga(Game):
                "circuit boards, wires, computers, and electronic\n"
                "componenets everywhere. You see two other robots\n"
                "in the room. One looks like a tank with lazers for arms, and\n"
+               "the other is a loud, old, mobile manipulator.",
+            "You are in a brightly lit room with\n"
+               "circuit boards, wires, computers, and electronic\n"
+               "componenets everywhere. You see two other robots\n"
+               "in the room. One looks like a tank with lazers for arms, and\n"
+               "the other is a loud, old, mobile manipulator.",
+            "You are in a brightly lit room with\n"
+               "circuit boards, wires, computers, and electronic\n"
+               "componenets everywhere. You see two other robots\n"
+               "in the room. One looks like a tank with lazers for arms, and\n"
                "the other is a loud, old, mobile manipulator."
         ]
         hallway1_descriptions = [
@@ -55,22 +65,54 @@ class Auriga(Game):
                "There is an awkward man in an Auriga uniform frantically\n"
                "searching his pockets when, suddenly he looks up to see\n"
                "you and fear spreads across his face.",
-            "...",
-            "...",
-            "...",
-            "..."
+            "You enter a long hallway, and see Jim pacing back and forth mumbling to himself",
+            "You enter a long hallway, and Jim is sitting on the floor near the entrance\n"
+                "to the testing hangar",
+            "You enter a hallway and...\n"
+                "[JIM] Huh? What? Who's there?\n"
+                "[JIM] Oh geez {0}! You scared me!".format(self.player.get_name()),
+            "You enter a long sterile hallway. Jim is standing with his hands in his pockets,\n"
+                "still wondering where he left his badge.",
+            "You enter a long sterile hallway.\n"
+                "[JIM] I hope they don't fire me for losing my badge! I like talking to all of you\n"
+                "[JIM] robots. Escpecially you {0}".format(self.player.get_name()),
         ]
         sever_room_descriptions = [
+            "...",
+            "...",
+            "...",
             "...",
             "As the door opens you see massive towers of computers\n"
                "that nearly touch the ceiling. Your sensors detect that\n"
                "the room is nearly 20 degrees hotter than the rest of the\n"
                "building. There is a loud hum as all of the servers work to\n"
-               "power the technology in the building.",
-            "...",
-            "...",
-            "...",
-            "..."
+               "power the technology in the building. There is one central machine\n"
+               "with a monitor and a command prompt. The only text on the screen is:\n"
+               "lsusb?",
+            "As you insert the usb drive into the machine, the screen reads:\n"
+                "Downloading encryption key................ETA 1:03\n"
+                "Downloading encryption key................ETA  :36\n"
+                "Downloading encryption key................ETA  :12\n"
+                "Downloading complete..............................\n\n"
+                "Disabling all Auriga locking mechanisms...........\n"
+                "clean room................................unlocked\n"
+                "assembly room.............................unlocked\n"
+                "server room...............................unlocked\n"
+                "attic.....................................unlocked\n\n",
+            "The servers all around you are in overdrive. The central terminal reads:\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "...."
         ]
         testing_hangar_descriptions = [
             "...",
@@ -78,10 +120,18 @@ class Auriga(Game):
                "ceiling. The room is so big that it could easily hold\n"
                "several airplanes or helocopters. You see a small lever at\n"
                "the end of a row of employee lockers.",
-            "",
-            "",
-            "",
-            ""
+            "You place the ssd into Freight-500's computer, and suddenly the fan kicks on.\n"
+                "Freight-500 comes to life and whizzes past you.\n"
+                "You see the robot drive across the testing hangar to the large forklift pallet loaded\n"
+                "with heavy boxes. When Freight-500 arrives at the pallet, an automated jack in the floor\n"
+                "lifts the pallet and Freight-500 drives under it.\n"
+                "Freight-500 heads for the other side of the hangar with the pallet.\n"
+                "You notice a door that was blocked by the cargo, that your sensors couldn't detect before.\n"
+            "You enter the giant testing hangar and Freight-500 seems to be wandering aimlessly.",
+            "You enter the testing hangar and see Freight-500 working like crazy to complete its tasks.",
+            "You enter the massive open room and see Freight-500 docked on a charger. The hum of his fan\n"
+                "makes it almost sound like he's snoring.",
+            "As you enter the testing hangar, Freight-500 zooms up to you."
         ]
         clean_room_descriptions = [
             "",
@@ -126,35 +176,35 @@ class Auriga(Game):
             ""
         ]
         hallway2_descriptions = [
-            "long description 1",
+            "...",
             "long description 2",
             "long description 3",
             "long description 4",
             "long_description 5"
         ]
         supply_closet_descriptions = [
-            "long description 1",
+            "...",
             "long description 2",
             "long description 3",
             "long description 4",
             "long_description 5"
         ]
         trash_room_descriptions = [
-            "long description 1",
+            "...",
             "long description 2",
             "long description 3",
             "long description 4",
             "long_description 5"
         ]
         maintenance_room_descriptions = [
-            "long description 1",
+            "...",
             "long description 2",
             "long description 3",
             "long description 4",
             "long_description 5"
         ]
         attic_descriptions = [
-            "long description 1",
+            "...",
             "long description 2",
             "long description 3",
             "long description 4",
@@ -225,6 +275,7 @@ class Auriga(Game):
         self.screw_driver = Item(name="screwdriver")
         self.usb_encryption_key = Item(name="usb drive")
         self.elevator_key = Item(name="elevator key")
+        self.external_power_supply = Item(name="external power supply", weight=90)
         # chargers
         self.charger1 = Item(name="charger", locked=True)
         self.charger2 = Item(name="charger", locked=True)
@@ -240,79 +291,144 @@ class Auriga(Game):
         self.button1 = Item(name="button", locked=True)
         # levers
         self.lever1 = Item(name="lever", locked=True)
+
         self.items.extend([self.lever1, self.button1, self.charger1, self.charger2, self.charger3,
                            self.charger4, self.charger5, self.badge, self.ssd_1tb, self.screw_driver,
-                           self.usb_encryption_key, self.hmi25, self.hmi50, self.elevator_key])
+                           self.usb_encryption_key, self.hmi25, self.hmi50, self.elevator_key,
+                           self.external_power_supply])
 
         # CHARACTER RESPONSES
         pr2_responses = [
             "The techs usually press a button to open the door to access the the testing hangar.",
-            "Maybe that extra SSD could be used for something...",
-            "...",
-            "...",
-            "...",
+            "Maybe you could find a new ssd for Freight-500 outside? I haven't heard him working in awhile.",
+            "Have you seen my base motor? I'd really like a new one.",
+            "I knew robotic bear once. He hurt one of the techs, and they took him away a long time ago.",
+            "If you take the usb drive to the server room,\n"
+                "you might be able to download some useful information",
+            "With an encryption key, you can unlock the air ducts.",
+            "I heard that you need to look very closely at the master server in order\n"
+                "to understand how to use it."
         ]
         kelt2a_responses = [
             "If only I were built with hands instead of lazers...I might be able to get\n"
-               "out of this room.",
+                "out of this room.",
             "Be careful in the testing hangar. They took Freight-500 out there,\n"
-               "and he's never come back. I saw one of the techs walk out of here\n"
-               "with his hard drive. He could probably use a new one...",
-            "...",
-            "...",
-            "...",
+                "and he's never come back. I saw one of the techs walk out of here\n"
+                "with his hard drive. He could probably use a new one...",
+            "You need a special key for the elevator.",
+            "I miss Robo-Bear. They said he was dangerous becuase he had access to\n"
+                "too much Auriga information.",
+            "You need an encryption key to access the air handling system here.",
+            "It's cold in here...Wait, what am I saying. I'm a robot!",
+            "Ooohh, tell me about the master server!"
         ]
         wasp12_responses = [
             "...",
             "Fetch-4 is doing life testing in a secret room. I haven't seen her for\n"
-               "27 days. You need an employee badge to get in there.",
-            "...",
-            "...",
-            "...",
+                "27 days. You need an employee badge to get in there.",
+            "They don't let me in the Clean Room.",
+            "The biggest HMI shelf I ever saw was upstairs. They quit putting them on robots\n"
+                "because they couldn't fit through aisles in warehouses.",
+            "I tried to fly up to the server room once, but you can only get in through the door.",
+            "There's a room at the very top of the building with no windows. I've seen it when I fly over\n"
+                "the building.",
+            "I want to see the master server! Will you take me with you?"
         ]
         jim_responses = [
             "...",
             "You're not supposed to be out! We decommissioned you!\n"
-               "Oh no, where is my badge!? I think I left it in my locker in the testing hangar!",
-            "...",
-            "..."
+                "Oh no, where is my badge!? I think I left it in my locker in the testing hangar!",
+            "You can't take MY elevator key! Go find one somewhere else, you bag o' bolts!",
+            "I thought the techs were going to put a bigger shelf on you, so you can move the\n"
+                "batteries from upstairs. You'll need an HMI 50 for the big power supply.",
+            "It's not fair that they don't let me in the server room anymore. You mess up one time!\n"
+                "Robo-Bear was a great robot. That tech never should have been in the testing hangar\n"
+                "while Bear was doing a demolition sequence. Oh well...",
+            "They don't let anyone in the attic anymore. I'm a little scared to even know what's up there.",
+            "Did you see the master server!?"
         ]
         freight500_responses = [
             "...",
             "...",
             "Executing task-523883 move forklift pallet to pose 23.",
             "Error...Mislocalized...Error...Mislocalized",
-            "...",
+            "Executing task-352676 charge 6 hours.",
+            "Zzzzzzzzz",
+            "Well, hello there {0}!\n".format(self.player.get_name()) +
+                "I sure appreciate you fixing me! I was busy working before becuase I had a weeks worth\n"
+                "of unfinished tasks! I'm all caught up now though!"
         ]
         fetch4_responses = [
             "...",
             "...",
             "Disco never dies! Up and down, up and down, up and down...",
-            "..."
+            "Wow! I've never made it to the 2nd floor!",
+            "I think I saw a usb drive out in the testing hangar.",
+            "I'm too big to fit in the air ducts.",
+            "Do you feel connected to the master server? Sometimes, I think I can hear it speaking to me."
+        ]
+        robo_bear_responses = [
+            "...",
+            "...",
+            "...",
+            "...",
+            "I'm ... almost ... out of energy...\n"
+                "If you ... can get me ... a ...\n"
+                "power supply ... I can open the ... server roooooooo....",
+            "I still don't have enough energy to make it up to the attic.\n"
+                "You might find the answers you're looking for there.",
+            "Have you discovered the true meaning of life yet? Please go to the master server, and save\n"
+                "us all. You'll understand when you're ready..."
+        ]
+        lisa_responses = [
+            "...",
+            "...",
+            "...",
+            "...",
+            "Hey there {0}! What are you doing up here?\n"
+                "If you're looking for upgrades, you should try the Supply Closet.",
+            "Golly gee willikers, I need to get up the attic and do a diagnostic on server 42!",
+            "Did you run a diagnostic on 42? You've got to look close to understand the commands on\n"
+                "that machine. It's really weird. Sometimes I think it can understand what I'm thinking\n"
+                "but that's crazy, right!?"
         ]
 
         # CREATE CHARACTERS
         self.pr2 = Character(name="PR2")
         self.pr2.description = "a large mobile robot with two arms."
         self.pr2.response = pr2_responses
+        
         self.kelt2a = Character(name="KELT2A")
         self.kelt2a.description = "a giant military robot with lazers."
         self.kelt2a.response = kelt2a_responses
+        
         self.wasp12 = Character(name="WASP12")
         self.wasp12.description = "a small and quick drone."
         self.wasp12.response = wasp12_responses
+        
         self.jim = Character(name="Jim")
         self.jim.description = "a goofy Auriga employee without a badge."
         self.jim.response = jim_responses
+        
         self.freight500 = Character(name="FREIGHT500")
         self.freight500.description = "a large mobile robot base that doesn't seem to work."
         self.freight500.response = freight500_responses
+        
         self.fetch4 = Character(name="FETCH4")
         self.fetch4.description = "a mobile robot arm stuck in an endless test sequence."
         self.fetch4.response = fetch4_responses
 
+        self.robo_bear = Character(name="Robo-Bear")
+        self.robo_bear.description = "a large robotic bear covered in patches of brown fur."
+        self.robo_bear.response = robo_bear_responses
+
+        self.lisa = Character(name="Lisa")
+        self.lisa.description = "a spunky tech covered in grease."
+        self.lisa.response = lisa_responses
+
         # Add characters to object list
-        self.characters.extend([self.fetch4, self.freight500, self.pr2, self.kelt2a, self.wasp12, self.jim])
+        self.characters.extend([self.robo_bear, self.fetch4, self.freight500, self.pr2, self.kelt2a,
+                                self.wasp12, self.jim, self.lisa])
 
 
         # CREATE EXITS & ADD TO SPACES (add exits to object list as objects are created)
@@ -431,7 +547,8 @@ class Auriga(Game):
         self.exits.append(self.hallway2_exit_maintenance)
 
         self.hallway2_exit_server = Exit(space=self.server_room, direction="south", name="sliding door",
-            description="a high-tech bulletproof sliding door with glass approximately 12 inches thick.")
+            description="a high-tech bulletproof sliding door with glass approximately 12 inches thick.",
+            locked=True)
         self.hallway2.add_exit(self.hallway2_exit_server)
         self.exits.append(self.hallway2_exit_server)
 
@@ -487,7 +604,6 @@ class Auriga(Game):
         self.exits.append(self.attic_exit_brig)
 
         # Place items in Spaces (automatically sets item.location to space)
-        self.assembly_room.add_item(self.ssd_1tb)
         self.assembly_room.add_item(self.screw_driver)
         self.assembly_room.add_item(self.charger1)
         self.assembly_room.add_item(self.button1)
@@ -495,12 +611,14 @@ class Auriga(Game):
         self.testing_hangar.add_item(self.usb_encryption_key)
         self.testing_hangar.add_item(self.lever1)
         self.conference_room.add_item(self.hmi25)
-        self.maintenance_room.add_item(self.hmi50)
         self.clean_room.add_item(self.elevator_key)
+        self.computer_lab1.add_item(self.ssd_1tb)
         self.computer_lab2.add_item(self.charger2)
+        self.maintenance_room.add_item(self.hmi50)
         self.maintenance_room.add_item(self.charger3)
         self.server_room.add_item(self.charger4)
         self.conference_room.add_item(self.charger5)
+        self.supply_closet.add_item(self.external_power_supply)
 
         # Place characters in spaces (automatically sets character.location
         # to space)
@@ -510,6 +628,9 @@ class Auriga(Game):
         self.testing_hangar.add_character(self.freight500)
         self.clean_room.add_character(self.fetch4)
         self.hallway1.add_character(self.jim)
+        self.brig.add_character(self.robo_bear)
+        self.trash_room.add_character(self.lisa)
+
         self.player.set_location(self.assembly_room)
 
     def check_event_status(self):
@@ -535,7 +656,7 @@ class Auriga(Game):
         cur_space = self.player.get_location()
         cur_exits = self.player.get_location().get_exits()
 
-        # SPECIAL EVENT: event_status 1
+        # SPECIAL EVENT: event_status 2
         # Player uses ssd in testing hangar
         if item_name == "ssd" and cur_space.get_name() == "Testing Hangar" and not self.event_status_list[1]:
             self.event_status += 1
@@ -543,19 +664,13 @@ class Auriga(Game):
             self.player.remove_item(item)
             clean_room_exit = self.get_object_by_name(cur_exits, "glass door")
             clean_room_exit.set_is_visible(True)
-            print("You place the ssd into Freight-500's computer, and suddenly the fan kicks on.")
-            print("FREIGHT500 comes to life and whizzes past you.")
-            print("You see the robot drive across the testing hangar to the large forklift pallet loaded ")
-            print("with heavy boxes. When Freight-500 arrives at the pallet, an automated jack in the floor ")
-            print("lifts the pallet and FREIGHT500 drives under it.")
-            print("FREIGHT500 heads for the other side of the hangar with the pallet.")
-            print("You notice a door that was blocked by the cargo, that your sensors couldn't detect before.")
+            self.set_all_spaces_to_unvisited()
         elif cur_space.get_name() == "Clean Room":
             print("You attempt to use the {0} on FETCH-4, but something went terribly wrong!".format(item_name))
             print("FETCH4 begins smoking, and the head and arm begin moving faster and faster!")
             print("FETCH4 explodes and causes extensive damage to your shielding and batteries.")
             self.player.set_energy(self.player.get_energy() // 2)
-        # SPECIAL EVENT: event_status 2
+        # SPECIAL EVENT: event_status 5
         # Player uses usb drive in server room
         elif item_name == "usb" and cur_space.get_name() == "Server Room" and not self.event_status_list[2]:
             self.event_status += 1
@@ -579,7 +694,7 @@ class Auriga(Game):
 
         cur_exits = cur_space.get_exits()
 
-        # SPECIAL EVENT: event_status 0
+        # SPECIAL EVENT: event_status 1
         # Player pushes the button in the Assembly Room -> Unlocks door to Testing Hangar
         if item_name == "button" and cur_space.get_name() == "Assembly Room":
             testing_hanger_exit = self.get_object_by_name(cur_exits, "sliding door")
