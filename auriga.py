@@ -121,10 +121,10 @@ class Auriga(Game):
                "several airplanes or helocopters. You see a small lever at\n"
                "the end of a row of employee lockers.",
             "You place the ssd into Freight-500's computer, and suddenly the fan kicks on.\n"
-                "Freight-500 comes to life and whizzes past you.\n"
+                "Freight-500 comes to life and whizzes past you.\n\n"
                 "You see the robot drive across the testing hangar to the large forklift pallet loaded\n"
                 "with heavy boxes. When Freight-500 arrives at the pallet, an automated jack in the floor\n"
-                "lifts the pallet and Freight-500 drives under it.\n"
+                "lifts the pallet and Freight-500 drives under it.\n\n"
                 "Freight-500 heads for the other side of the hangar with the pallet.\n"
                 "You notice a door that was blocked by the cargo, that your sensors couldn't detect before.\n"
             "You enter the giant testing hangar and Freight-500 seems to be wandering aimlessly.",

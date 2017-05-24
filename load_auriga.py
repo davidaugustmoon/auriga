@@ -16,6 +16,7 @@ from resources.game import Game
 Event list:
 push assembly room button
 use ssd on freight-500
+player uses external power supply on Robo-Bear
 """
 
 class Auriga(Game):
@@ -25,6 +26,10 @@ class Auriga(Game):
     """
     def __init__(self, player=None):
         Game.__init__(self, player)
+
+    def set_all_spaces_to_unvisited(self):
+        for space in self.spaces:
+            space.visited = False
 
     def use(self, item_name):
         print()
@@ -50,14 +55,9 @@ class Auriga(Game):
             self.player.remove_item(item)
             clean_room_exit = self.get_object_by_name(cur_exits, "glass door")
             clean_room_exit.set_is_visible(True)
-            print("You place the ssd into Freight-500's computer, and suddenly the fan kicks on.")
-            print("Freight-500 comes to life and whizzes past you.")
-            print("You see the robot drive across the testing hangar to the large forklift pallet loaded ")
-            print("with heavy boxes. When Freight-500 arrives at the pallet, an automated jack in the floor ")
-            print("lifts the pallet and Freight-500 drives under it.")
-            print("Freight-500 heads for the other side of the hangar with the pallet.")
-            print("You notice a door that was blocked by the cargo, that your sensors couldn't detect before.")
-            # TODO change freight 500's description to match being fixed
+            self.set_all_spaces_to_unvisited()
+            freight500 = self.get_object_by_name(self.characters, "FREIGHT500")
+            freight500.description = "a practical warehouse logistics robot, excellent for moving heavy goods."
         elif cur_space.get_name() == "Clean Room":
             print("You attempt to use the {0} on FETCH-4, but something went terribly wrong!".format(item_name))
             print("FETCH-4 begins smoking, and the head and arm begin moving faster and faster!")
