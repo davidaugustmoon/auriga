@@ -183,8 +183,8 @@ class Parser:
 
     ALT_CHAR_NAMES = {
             # STUFFED ROBOT BEAR
-            "robobear":                 "stuffed robot bear",
-            "robo-bear":                "stuffed robot bear",
+            # "robobear":                 "stuffed robot bear",
+            # "robo-bear":                "stuffed robot bear",
 
             # COLLAPSED ROBOT
             "trashed robot":            "collapsed robot",
@@ -219,6 +219,7 @@ class Parser:
             "fetch-4":                  "FETCH4",
             "fetch 4":                  "FETCH4",
 
+            # ROBOT BEAR
             "Robo-Bear":                "Robo-Bear",
             "robo bear":                "Robo-Bear",
             "robobear":                 "Robo-Bear",
