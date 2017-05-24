@@ -5,7 +5,6 @@ import resources.space
 
 DEFAULT_NAME = "PLAYER 1"
 DEFAULT_DESCRIPTION = "This is a player."
-MAX_ENERGY = 100
 DEFAULT_CAPACITY = 50
 
 class Player(object):
@@ -40,6 +39,7 @@ class Player(object):
             self.location = location
         self.alive = alive
         self.energy = energy
+        self.max_energy = energy
 
     def get_name(self):
         """
@@ -284,12 +284,14 @@ class Player(object):
         if item:
             self.location.add_item(item)
             self.remove_item(item)
+            self.energy -= 1
             print("{0} dropped the {1}.".format(self.name, item_name))
         else:
             print("You can't drop that.")
 
     def look(self, event_status):
         print(self.location.print_long_description(event_status))
+        self.energy -= 1
 
     def look_at(self, item_name):
         item = None
@@ -301,6 +303,7 @@ class Player(object):
         if item:
             print("You looked at the {0}".format(item_name))
             print(item.get_description())
+            self.energy -= 1
         else:
             print("{0} isn't here...".format(item_name))
 
@@ -314,12 +317,13 @@ class Player(object):
 
         if is_charger:
             print("Feel the snake bite enter your veins!")
-            self.set_energy(MAX_ENERGY)
+            self.set_energy(self.max_energy)
         else:
             print("Sorry, there is no charger here.\nYou are probably going to die...")
 
     def listen(self):
-        print("You hear nothing...")
+        print("You hear nothing...but the rest is good.")
+        self.energy += 1
 
     def print_inventory(self):
         if self.items:
@@ -329,6 +333,7 @@ class Player(object):
             print()
         else:
             print("You're not carrying anything...")
+        self.energy -= 1
 
     def print_details(self):
         """
@@ -342,7 +347,7 @@ class Player(object):
         print("Is alive: {}".format(self.alive))
 
     def print_energy(self):
-        energy_level = "+" * int(self.energy / 2)
+        energy_level = "+" * int(self.energy)
         print("Energy: {}".format(energy_level))
 
     def to_json_dict(self):
