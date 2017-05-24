@@ -40,7 +40,7 @@ class Game(object):
         if player:
             self.player = player
         self.event_status = 0 # set accordingly for player achievments
-        self.event_status_list = [False, False, False, False, False]
+        self.event_status_list = [False, False, False, False, False, False, False, False]
         self.spaces = []
         self.characters = []
         self.exits = []
@@ -174,6 +174,9 @@ class Game(object):
 
     def set_event_status(self, new_event_status):
         self.event_status = new_event_status
+
+    def check_event_status(self):
+        pass
 
     def check_energy(self):
         if self.player.get_energy() <= 0:

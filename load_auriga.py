@@ -31,6 +31,14 @@ class Auriga(Game):
         for space in self.spaces:
             space.visited = False
 
+    def check_event_status(self):
+        # SPECIAL EVENT 3
+        # Player makes it to 2nd floor
+        if self.player.get_location().get_name() == "Hallway 2" and not self.event_status_list[3]:
+            self.event_status += 1
+            self.event_status_list[3] = True
+            self.set_all_spaces_to_unvisited()
+
     def use(self, item_name):
         print()
         # Check if the player is carrying the item specified
@@ -47,11 +55,11 @@ class Auriga(Game):
         cur_space = self.player.get_location()
         cur_exits = self.player.get_location().get_exits()
 
-        # SPECIAL EVENT: event_status 1
-        # Player uses ssd in testing hangar
-        if item_name == "ssd" and cur_space.get_name() == "Testing Hangar" and not self.event_status_list[1]:
+        # SPECIAL EVENT 2
+        # Player uses ssd in testing hangar on Freight-500
+        if item_name == "ssd" and cur_space.get_name() == "Testing Hangar" and not self.event_status_list[2]:
             self.event_status += 1
-            self.event_status_list[1] = True
+            self.event_status_list[2] = True
             self.player.remove_item(item)
             clean_room_exit = self.get_object_by_name(cur_exits, "glass door")
             clean_room_exit.set_is_visible(True)
@@ -63,11 +71,14 @@ class Auriga(Game):
             print("FETCH-4 begins smoking, and the head and arm begin moving faster and faster!")
             print("FETCH-4 explodes and causes extensive damage to your shielding and batteries.")
             self.player.set_energy(self.player.get_energy() // 2)
-        # SPECIAL EVENT: event_status 2
+        # SPECIAL EVENT 5
         # Player uses usb drive in server room
-        elif item_name == "usb" and cur_space.get_name() == "Server Room" and not self.event_status_list[2]:
+        elif item_name == "usb" and cur_space.get_name() == "Server Room" and not self.event_status_list[5]:
             self.event_status += 1
-            self.event_status_list[2] = True
+            self.event_status_list[5] = True
+        elif item_name == "external power supply" and cur_space.get_name() == "Brig" and not self.event_status_list[5]:
+            self.event_status += 1
+            self.event_status_list[5] = True
         else:
             print("You can't use that here.")
 
@@ -87,7 +98,7 @@ class Auriga(Game):
 
         cur_exits = cur_space.get_exits()
 
-        # SPECIAL EVENT: event_status 0
+        # SPECIAL EVENT 1:
         # Player pushes the button in the Assembly Room -> Unlocks door to Testing Hangar
         if item_name == "button" and cur_space.get_name() == "Assembly Room":
             testing_hanger_exit = self.get_object_by_name(cur_exits, "sliding door")
@@ -95,7 +106,7 @@ class Auriga(Game):
             print("You pressed the large red button, and you hear a loud click near the only door ")
             print("in the room. A green light illuminates the keypad to the left of the door.")
             self.event_status += 1
-            self.event_status_list[0] = True
+            self.event_status_list[1] = True
         # More 'PUSH' cases here
         else:
             print("You pushed the {0}, and it made you feel nice.".format(item_name))

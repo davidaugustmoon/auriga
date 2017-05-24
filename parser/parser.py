@@ -178,8 +178,8 @@ class Parser:
             "charger":                  "charger"
             }
 
-    CHARACTERS = ["stuffed robot bear", "collapsed robot", "PR2",
-            "KELT2A", "WASP12", "jim", "FREIGHT500", "FETCH71", "FETCH4"]
+    CHARACTERS = ["Robo-Bear", "collapsed robot", "PR2",
+            "KELT2A", "WASP12", "jim", "FREIGHT500", "FETCH71", "FETCH4", "lisa"]
 
     ALT_CHAR_NAMES = {
             # STUFFED ROBOT BEAR
@@ -218,6 +218,12 @@ class Parser:
             "fetch4":                   "FETCH4",
             "fetch-4":                  "FETCH4",
             "fetch 4":                  "FETCH4",
+
+            "Robo-Bear":                "Robo-Bear",
+            "robo bear":                "Robo-Bear",
+            "robobear":                 "Robo-Bear",
+
+            "Lisa":                     "lisa",
 
             # FETCH-71
             }
