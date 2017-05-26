@@ -6,6 +6,7 @@ from parser import Parser
 class TestParser(unittest.TestCase):
 
     def test_remove_articles(self):
+
         self.assertTrue('a' not in Parser.remove_articles(['a', 'big', 'day']))
         self.assertTrue('big' in Parser.remove_articles(['a', 'big', 'day']))
         self.assertTrue('day' in Parser.remove_articles(['a', 'big', 'day']))
@@ -22,6 +23,7 @@ class TestParser(unittest.TestCase):
 
 
     def test_get_verb_invalid(self):
+
         self.assertIsNone(Parser.get_verb(['', 'sail', 'home']))
         self.assertIsNone(Parser.get_verb(['dear', 'me']))
         self.assertIsNone(Parser.get_verb([]))
@@ -30,6 +32,7 @@ class TestParser(unittest.TestCase):
 
 
     def test_get_verb_valid(self):
+
         CANONICAL_ACTIONS = [
                 'drop', 'go', 'listen', 'look', 'pull', 'push', 'recharge',
                 'take', 'talk', 'use', 'wait', 'help', 'inventory',
@@ -50,6 +53,7 @@ class TestParser(unittest.TestCase):
 
 
     def test_get_verb_len(self):
+
         lst = []
         Parser.get_verb(lst)
         self.assertEqual(0, len(lst))
@@ -80,6 +84,7 @@ class TestParser(unittest.TestCase):
 
 
     def test_get_prepositions(self):
+
         self.assertNotIn('an', Parser.get_prepositions(
             ['read', 'em', 'an', 'weep']))
         self.assertIn('up', Parser.get_prepositions(
@@ -94,6 +99,7 @@ class TestParser(unittest.TestCase):
   
 
     def test_get_exit_type(self):
+
         self.assertEqual('sliding door', Parser.get_exit_type(
             ['sliding', 'door']))
 
@@ -131,6 +137,7 @@ class TestParser(unittest.TestCase):
 
 
     def test_get_item(self):
+
         self.assertIsNone(Parser.get_item(['read', 'my', 'lips', 'no', 'new']))
         self.assertIsNone(Parser.get_item([]))
         self.assertIsNone(Parser.get_item(['']))
@@ -159,29 +166,31 @@ class TestParser(unittest.TestCase):
             ['usb', 'cable']))
 
     def test_get_character(self):
+
         self.assertIsNone(Parser.get_character(['read', 'my', 'lips', 'no', 'new']))
         self.assertIsNone(Parser.get_character([]))
         self.assertIsNone(Parser.get_character(['']))
         
-        self.assertEqual('wasp12', Parser.get_character(['wasp-12']))
-        self.assertEqual('wasp12', Parser.get_character(['wasp12']))
-        self.assertEqual('wasp12', Parser.get_character(['wasp', '12']))
-        self.assertEqual('wasp12', Parser.get_character(['it\'s', 'wasp12']))
+        self.assertEqual('WASP12', Parser.get_character(['wasp-12']))
+        self.assertEqual('WASP12', Parser.get_character(['wasp12']))
+        self.assertEqual('WASP12', Parser.get_character(['wasp', '12']))
+        self.assertEqual('WASP12', Parser.get_character(['it\'s', 'wasp12']))
 
-        self.assertNotEqual('wasp12', Parser.get_character(['was-p12']))
-        self.assertNotEqual('wasp12', Parser.get_character(['wasp1']))
-        self.assertNotEqual('wasp12', Parser.get_character(['wasp-12 ']))
-        self.assertNotEqual('wasp12', Parser.get_character(['wasp', 'to', '12']))
+        self.assertNotEqual('WASP12', Parser.get_character(['was-p12']))
+        self.assertNotEqual('WASP12', Parser.get_character(['wasp1']))
+        self.assertNotEqual('WASP12', Parser.get_character(['wasp-12 ']))
+        self.assertNotEqual('WASP12', Parser.get_character(['wasp', 'to', '12']))
 
-        self.assertEqual('stuffed robot bear', Parser.get_character(
+        self.assertEqual('Robo-Bear', Parser.get_character(
             ['one', 'stuffed', 'robot', 'bear']))
-        self.assertEqual('stuffed robot bear', Parser.get_character(
+        self.assertEqual('Robo-Bear', Parser.get_character(
             ['one', 'robobear']))
-        self.assertEqual('stuffed robot bear', Parser.get_character(
+        self.assertEqual('Robo-Bear', Parser.get_character(
             ['the', 'holy', 'robo-bear']))
 
 
     def test_get_direction(self):
+
         self.assertEqual('north', Parser.get_direction(['n']))
         self.assertEqual('down', Parser.get_direction(['below']))
         self.assertEqual('south', Parser.get_direction(['south']))
@@ -204,7 +213,96 @@ class TestParser(unittest.TestCase):
 
 
     def test_get_identity(self):
-        pass
+
+        # canonical food names
+        core_list = ['jolly ranchers', 'french fries', 'greens',
+                'tacos', 'sizzling rice soup']
+
+        # aliases for above food names
+        alt_list = {
+                # JOLLY RANCHERS
+                'candy':            'jolly ranchers',
+                'hard candy':       'jolly ranchers',
+                'jolly ranchers':   'jolly ranchers',
+                # FRENCH FRIES
+                'fries':            'french fries',
+                'fried potatoes':   'french fries',
+                'taters':           'french fries',
+                # GREENS
+                'green salad':      'greens',
+                'salad':            'greens',
+                'lettuce':          'greens',
+                'mixed greens':     'greens',
+                'garden mix':       'greens',
+                'lettuces':         'greens',
+                # TACOS
+                'tacos':            'tacos',
+                'tortillas':        'tacos',
+                'taco':             'tacos',
+                # SIZZLING RICE SOUP
+                'porridge':         'sizzling rice soup',
+                'rice soup':        'sizzling rice soup',
+                'rice porridge':    'sizzling rice soup'
+                }
+
+        input_list = ['i', 'want', 'candy']
+        self.assertEqual('jolly ranchers',
+                Parser.get_identity(input_list, core_list, alt_list))
+        input_list = ['candy']
+        self.assertEqual('jolly ranchers',
+                Parser.get_identity(input_list, core_list, alt_list))
+        input_list = ['jolly', 'ranchers']
+        self.assertEqual('jolly ranchers',
+                Parser.get_identity(input_list, core_list, alt_list))
+        input_list = ['jolly ranchers']
+        self.assertNotEqual('jolly ranchers',
+                Parser.get_identity(input_list, core_list, alt_list))
+        input_list = ['ranchers', 'jolly']
+        self.assertNotEqual('jolly ranchers',
+                Parser.get_identity(input_list, core_list, alt_list))
+
+        input_list = ['eat', 'moar', 'fries']
+        self.assertEqual('french fries',
+                Parser.get_identity(input_list, core_list, alt_list))
+        input_list = ['eat', 'fewer', 'french', 'fries']
+        self.assertEqual('french fries',
+                Parser.get_identity(input_list, core_list, alt_list))
+        input_list = ['fried', 'potatoes']
+        self.assertEqual('french fries',
+                Parser.get_identity(input_list, core_list, alt_list))
+        input_list = ['fried', 'potato']
+        self.assertNotEqual('french fries',
+                Parser.get_identity(input_list, core_list, alt_list))
+        input_list = ['', 'taters']
+        self.assertEqual('french fries',
+                Parser.get_identity(input_list, core_list, alt_list))
+
+        input_list = ['ten', 'green', 'salads']
+        self.assertNotEqual('greens',
+                Parser.get_identity(input_list, core_list, alt_list))
+        input_list = ['salad', 'greens']
+        self.assertEqual('greens',
+                Parser.get_identity(input_list, core_list, alt_list))
+        input_list = ['garden', 'bell', 'mix']
+        self.assertNotEqual('greens',
+                Parser.get_identity(input_list, core_list, alt_list))
+
+        input_list = ['taco', 'is', 'your', 'friend']
+        self.assertEqual('tacos',
+                Parser.get_identity(input_list, core_list, alt_list))
+        input_list = ['attack', 'of', 'the', 'tacos ']
+        self.assertNotEqual('tacos',
+                Parser.get_identity(input_list, core_list, alt_list))
+
+        input_list = ['rice', 'sizzling', 'soup']
+        self.assertNotEqual('sizzling rice soup',
+                Parser.get_identity(input_list, core_list, alt_list))
+        input_list = ['sizzling rice soup']
+        self.assertNotEqual('sizzling rice soup',
+                Parser.get_identity(input_list, core_list, alt_list))
+        input_list = ['sizzling', 'rice', 'soup']
+        self.assertEqual('sizzling rice soup',
+                Parser.get_identity(input_list, core_list, alt_list))
 
 
     def test_action_requested(self):

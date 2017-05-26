@@ -182,10 +182,6 @@ class Parser:
             "KELT2A", "WASP12", "jim", "FREIGHT500", "FETCH71", "FETCH4", "lisa"]
 
     ALT_CHAR_NAMES = {
-            # STUFFED ROBOT BEAR
-            # "robobear":                 "stuffed robot bear",
-            # "robo-bear":                "stuffed robot bear",
-
             # COLLAPSED ROBOT
             "trashed robot":            "collapsed robot",
 
@@ -195,13 +191,13 @@ class Parser:
             "pr-2":                     "PR2",
 
 
-            # KELT-2A
+            # KELT2A
             "kelt2a":                   "KELT2A",
             "kelt 2a":                  "KELT2A",
             "kelt-2a":                  "KELT2A",
 
 
-            # WASP-12
+            # WASP12
             "wasp-12":                  "WASP12",
             "wasp12":                   "WASP12",
             "wasp 12":                  "WASP12",
@@ -209,24 +205,25 @@ class Parser:
             # JIM
             "jim":                      "jim",
 
-            # FREIGHT-500
+            # FREIGHT500
             "freight500":               "FREIGHT500",
             "freight-500":              "FREIGHT500",
             "freight 500":              "FREIGHT500",
 
-            # FETCH-4
+            # FETCH4
             "fetch4":                   "FETCH4",
             "fetch-4":                  "FETCH4",
             "fetch 4":                  "FETCH4",
 
-            # ROBOT BEAR
-            "Robo-Bear":                "Robo-Bear",
+            # ROBO-BEAR
+            "robo-bear":                "Robo-Bear",
             "robo bear":                "Robo-Bear",
             "robobear":                 "Robo-Bear",
+            "stuffed robot bear":       "Robo-Bear",
 
-            "Lisa":                     "lisa",
+            "lisa":                     "lisa",
 
-            # FETCH-71
+            # FETCH71
             }
 
     # verbs and corresponding methods
