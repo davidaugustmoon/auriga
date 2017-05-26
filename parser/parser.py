@@ -20,40 +20,42 @@ class Parser:
 
     ### LITERALS ###
 
+    literals_dir = os.getcwd() + '/parser/literals/'
+
     # words to completely ignore
-    with open('literals/articles.json', 'r') as a:
+    with open(literals_dir + 'articles.json', 'r') as a:
         ARTICLES = json.load(a)
 
     # these six directions represent the location of a possible space exit
-    with open('literals/directions.json', 'r') as d:
+    with open(literals_dir + 'directions.json', 'r') as d:
         DIRECTIONS = json.load(d)
-    with open('literals/directions_alt.json', 'r') as d:
+    with open(literals_dir + 'directions_alt.json', 'r') as d:
         ALT_DIR_NAMES = json.load(d)
 
     # these canonical names actually represent types of exits
-    with open('literals/exits.json', 'r') as e:
+    with open(literals_dir + 'exits.json', 'r') as e:
         EXITS = json.load(e)
 
-    with open('literals/exits_alt.json', 'r') as e:
+    with open(literals_dir + 'exits_alt.json', 'r') as e:
         ALT_EXIT_NAMES = json.load(e)
 
-    with open('literals/items.json', 'r') as i:
+    with open(literals_dir + 'items.json', 'r') as i:
         ITEMS = json.load(i)
 
-    with open('literals/items_alt.json', 'r') as i:
+    with open(literals_dir + 'items_alt.json', 'r') as i:
         ALT_ITEM_NAMES = json.load(i)
 
-    with open('literals/characters.json', 'r') as c:
+    with open(literals_dir + 'characters.json', 'r') as c:
         CHARACTERS = json.load(c)
 
-    with open('literals/characters_alt.json', 'r') as c:
+    with open(literals_dir + 'characters_alt.json', 'r') as c:
         ALT_CHAR_NAMES = json.load(c)
 
     # commands
-    with open('literals/actions.json', 'r') as a:
+    with open(literals_dir + 'actions.json', 'r') as a:
         ACTIONS = json.load(a)
 
-    with open('literals/prepositions.json', 'r') as p:
+    with open(literals_dir + 'prepositions.json', 'r') as p:
         PREPOSITIONS = json.load(p)
 
 
@@ -269,16 +271,16 @@ class Parser:
     
 
     def action_requested(cmd_str):
-    '''
-    Return disambiguated command request parsed from user input in the form of 
-    a five-tuple: (action, location, direction, item, character)
-    
-    action =     command name or actual method pointer, None if invalid
-    exit =       identity name of exit type to use, or None
-    direction =  cardinal direction name specifying location of exit, or None
-    item =       identity name of item action applied to, or None
-    character =  identity name of character action applied to, or None
-    '''
+        '''
+        Return disambiguated command request parsed from user input in the form of 
+        a five-tuple: (action, location, direction, item, character)
+        
+        action =     command name or actual method pointer, None if invalid
+        exit =       identity name of exit type to use, or None
+        direction =  cardinal direction name specifying location of exit, or None
+        item =       identity name of item action applied to, or None
+        character =  identity name of character action applied to, or None
+        '''
 
         if cmd_str is None:
             return (None, None, None, None, None)
