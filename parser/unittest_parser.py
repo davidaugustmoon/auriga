@@ -305,9 +305,196 @@ class TestParser(unittest.TestCase):
                 Parser.get_identity(input_list, core_list, alt_list))
 
 
-    def test_action_requested(self):
-        # this will actually be broken into a number of test functions
-        pass
+    def test_action_requested_go(self):
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'go out the sliding door')
+        self.assertEqual(action, 'go')
+        self.assertEqual(exit, 'sliding door')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'go sliding door')
+        self.assertEqual(action, 'go')
+        self.assertEqual(exit, 'sliding door')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'go out the slide door')
+        self.assertEqual(action, 'go')
+        self.assertEqual(exit, 'sliding door')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'go up to the sliding door')
+        self.assertIsNone(action)
+        self.assertIsNone(exit)
+        self.assertIsNone(direction)
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'go sliding into door')
+        self.assertIsNone(action)
+        self.assertIsNone(exit)
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'go out the sliding door')
+        self.assertEqual(action, 'go')
+        self.assertEqual(exit, 'sliding door')
+        
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'go door')
+        self.assertIsNone(action)
+        self.assertIsNone(exit)
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'out the sliding door')
+        self.assertEqual(action, 'go')
+        self.assertEqual(exit, 'sliding door')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'sliding door')
+        self.assertEqual(action, 'go')
+        self.assertEqual(exit, 'sliding door')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'out the slide door')
+        self.assertEqual(action, 'go')
+        self.assertEqual(exit, 'sliding door')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'up to the sliding door')
+        self.assertIsNone(action)
+        self.assertIsNone(exit)
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'sliding into door')
+        self.assertIsNone(action)
+        self.assertIsNone(exit)
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'out the sliding door')
+        self.assertEqual(action, 'go')
+        self.assertEqual(exit, 'sliding door')
+        
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'door')
+        self.assertIsNone(action)
+        self.assertIsNone(exit)
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'don\'t go')
+        self.assertIsNone(action)
+
+
+    def test_action_requested_other(self):
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'drop the security badge')
+        self.assertEqual(action, 'drop')
+        self.assertEqual(item, 'security badge')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'drop security badge')
+        self.assertEqual(action, 'drop')
+        self.assertEqual(item, 'security badge')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'drop the badge')
+        self.assertEqual(action, 'drop')
+        self.assertEqual(item, 'security badge')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'throw the security badge')
+        self.assertEqual(action, 'drop')
+        self.assertEqual(item, 'security badge')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'use the security badge on jim')
+        self.assertEqual(action, 'use')
+        self.assertEqual(item, 'security badge')
+        self.assertEqual(character, 'jim')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'utilize pin jim')
+        self.assertEqual(action, 'use')
+        self.assertEqual(item, 'security badge')
+        self.assertEqual(character, 'jim')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'utilize jim pin')
+        self.assertEqual(action, 'use')
+        self.assertEqual(item, 'security badge')
+        self.assertEqual(character, 'jim')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'look at jim')
+        self.assertEqual(action, 'look at')
+        self.assertEqual(character, 'jim')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'look at pin')
+        self.assertEqual(action, 'look at')
+        self.assertEqual(item, 'security badge')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'look over at badge')
+        self.assertEqual(action, 'look at')
+        self.assertEqual(item, 'security badge')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'look')
+        self.assertEqual(action, 'look')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'view the room')
+        self.assertEqual(action, 'look')
+        self.assertIsNone(item)
+        self.assertIsNone(character)
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'boost up the battery')
+        self.assertEqual(action, 'recharge')
+        self.assertIsNone(item)
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'clutch into robobear')
+        self.assertEqual(action, 'take')
+        self.assertEqual(character, 'Robo-Bear')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'look over at')
+        self.assertEqual(action, 'look at')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'don\'t quit')
+        self.assertIsNone(action)
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                '')
+        self.assertIsNone(action)
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'is what it is')
+        self.assertIsNone(action)
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'LOOK OUT!')
+        self.assertEqual(action, 'look')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'grab the usb cord')
+        self.assertEqual(action, 'take')
+        self.assertEqual(item, 'usb cord')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'grab the usb cable')
+        self.assertEqual(action, 'take')
+        self.assertEqual(item, 'usb cord')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'grab the usb')
+        self.assertEqual(action, 'take')
+        self.assertEqual(item, 'usb drive')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                ' Look ')
+        self.assertEqual(action, 'look')
+
 
 if __name__ == '__main__':
     unittest.main(exit = False)
