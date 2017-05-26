@@ -18,363 +18,43 @@ class Parser:
     A basic natural-language command parser for Auriga user input.
     """
 
-    ### CONSTANTS ###
+    ### LITERALS ###
 
     # words to completely ignore
-    #ARTICLES = ["a", "an", "the", "some", "this", "that", "these", "those"]
     with open('literals/articles.json', 'r') as a:
         ARTICLES = json.load(a)
 
     # these six directions represent the location of a possible space exit
-    # classes using the Parser will need to verify that there is a valid
-    # exit in the direction specified inside the current room
     with open('literals/directions.json', 'r') as d:
         DIRECTIONS = json.load(d)
-    #DIRECTIONS = ["north", "east", "south", "west", "up", "down"]
-
     with open('literals/directions_alt.json', 'r') as d:
         ALT_DIR_NAMES = json.load(d)
-    # ALT_DIR_NAMES = {
-    #         "n":        "north",
-    #         "e":        "east",
-    #         "s":        "south",
-    #         "w":        "west",
-    #         "above":    "up",
-    #         "below":    "down"
-    #         }
 
     # these canonical names actually represent types of exits
-    # classes using the Parser will need to verify that there is a valid
-    # exit of the type specified inside the current room
     with open('literals/exits.json', 'r') as e:
         EXITS = json.load(e)
-    # EXITS = ["sliding door", "saloon doors", "air duct", "hallway",
-    #         "elevator", "steel door", "glass door", "opening"]
 
     with open('literals/exits_alt.json', 'r') as e:
         ALT_EXIT_NAMES = json.load(e)
-#     ALT_EXIT_NAMES = {
-#             # SLIDING DOOR
-#             "slide door":           "sliding door",
-# #            "sliding door":         "sliding door",
-
-#             # SALOON DOORS
-#             "saloon":               "saloon doors",
-#             "saloon door":          "saloon doors",
-#             "swinging door":        "saloon doors",
-#             "swinging doors":       "saloon doors",
-#  #           "saloon doors":         "saloon doors",
-
-#             # AIR DUCT
-#             "airway":               "air duct",
-#             "duct":                 "air duct",
-#             "airduct":              "air duct",
-#             "vent":                 "air duct",
-#             "air vent":             "air duct",
-#             "air duct tunnel":      "air duct",
-#             "airduct tunnel":       "air duct",
-#             "tunnel":               "air duct",
-#             "air tunnel":           "air duct",
-
-#             # STEEL DOOR
-#             "steel":                "steel door",
-
-#             # HALLWAY
-#             "hall way":             "hallway",
-#             "hall":                 "hallway",
-
-#             # ELEVATOR
-#             "elevator shaft":       "elevator",
-
-#             # GLASS DOOR
-# #            "glass door":           "glass door",
-#             "glass":                "glass door",
-
-#             # OPENING
-#  #           "opening":              "opening",
-#             }
 
     with open('literals/items.json', 'r') as i:
         ITEMS = json.load(i)
-    # ITEMS = ["security badge", "usb drive", "ssd", "small bucket", "large bucket",
-    #          "elevator key", "button", "screwdriver", "camera", "ac adapter",
-    #          "usb cord", "hmi-25", "hmi-50"]
 
     with open('literals/items_alt.json', 'r') as i:
         ALT_ITEM_NAMES = json.load(i)
-#     ALT_ITEM_NAMES = {
-#             # SECURITY BADGE
-#             "badge":                    "security badge",
-#             "engineer badge":           "security badge",
-#             "employee badge":           "security badge",
-#             "pin badge":                "security badge",
-#             "pin":                      "security badge",
-#             "keycard":                  "security badge",
-
-#             # ELEVATOR KEY
-#   #          "elevator key":             "elevator key",
-#             "elevator":                 "elevator key",
-#             "key":                      "elevator key",
-
-#             # USB DRIVE
-#             "external":                 "usb drive",
-#             "external drive":           "usb drive",
-#             "external hard drive":      "usb drive",
-#             "flash drive":              "usb drive",
-#             "flashdrive":               "usb drive",
-#             "thumb drive":              "usb drive",
-#             "thumbdrive":               "usb drive",
-#             "usb":                      "usb drive",
-
-#             # SOLID STATE DRIVE
-#             "solid state drive":        "ssd",
-#             "solid state":              "ssd",
-#             "ss drive":                 "ssd",
-#             "hard drive":               "ssd",
-#             "drive":                    "ssd",
-#             "hard disk":                "ssd",
-#             "ss disk":                  "ssd",
-#             "solid state disk":         "ssd",
-
-#             # SMALL BUCKET
-#             "small backpack":           "small bucket",
-#             "small pail":               "small bucket",
-#             "tiny bucket":              "small bucket",
-            
-#             # LARGE BUCKET
-#             "large backpack":           "large bucket",
-#             "large pail":               "large bucket",
-#             "big bucket":               "large bucket",
-
-#             # BUTTON
-#             "switch":                   "button",
-#             "wall button":              "button",
-#             "wall switch":              "button",
-#             "wall panel":               "button",
-#             "panel":                    "button",
-            
-#             # SCREWDRIVER
-#             "tool":                     "screwdriver",
-            
-#             # CAMERA
-#             "cam":                      "camera",
-#             "video camera":             "camera",
-#             "videocam":                 "camera",
-#             "cctv":                     "camera",
-#             "surveillance camera":      "camera",
-            
-#             # AC ADAPTER
-#             "power adapter":            "ac adapter",
-#             "adapter":                  "ac adapter",
-#             "adaptor":                  "ac adapter",
-            
-#             # USB CORD
-#             "cord":                     "usb cord",
-#             "charge cord":              "usb cord",
-#             "charge cable":             "usb cord",
-#             "charging cord":            "usb cord",
-#             "charging cable":           "usb cord",
-#             "cable":                    "usb cord",
-#             "usb cable":                "usb cord",
-#             "power cord":               "usb cord",
-#             "power cable":              "usb cord",
-#             "adapter cord":             "usb cord",
-#             "adapter cable":            "usb cord",
-
-#             # HMI SHELVES
-#             "hmi25":                    "hmi-25",
-#  #           "hmi-25":                   "hmi-25",
-#             "hmi 25":                   "hmi-25",
-
-#             "hmi50":                    "hmi-50",
-#  #           "hmi-50":                   "hmi-50",
-#             "hmi 50":                   "hmi-50",
-
-#             # LEVER
-#             "lever":                    "lever",
-
-#             # CHARGER
-#    #         "charger":                  "charger"
-#             }
 
     with open('literals/characters.json', 'r') as c:
         CHARACTERS = json.load(c)
-    # CHARACTERS = ["robo-bear", "collapsed robot", "PR2",
-    #         "kelt-2a", "wasp-12", "jim", "freight-500",
-    #         "fetch-71", "fetch-4", "lisa"]
 
     with open('literals/characters_alt.json', 'r') as c:
         ALT_CHAR_NAMES = json.load(c)
-#     ALT_CHAR_NAMES = {
-#             # COLLAPSED ROBOT
-#             "trashed robot":            "collapsed robot",
 
-#             # PR2
-#             "pr2":                      "pr-2",
-#             "pr 2":                     "pr-2",
-#  #           "pr-2":                     "pr-2",
-
-
-#             # KELT2A
-#             "kelt2a":                   "kelt-2a",
-#             "kelt 2a":                  "kelt-2a",
-#  #           "kelt-2a":                  "kelt-2a",
-
-
-#             # WASP12
-# #            "wasp-12":                  "wasp-12",
-#             "wasp12":                   "wasp-12",
-#             "wasp 12":                  "wasp-12",
-
-#             # JIM
-#  #           "jim":                      "jim",
-
-#             # FREIGHT500
-#             "freight500":               "freight-500",
-#  #           "freight-500":              "freight-500",
-#             "freight 500":              "freight-500",
-
-#             # FETCH4
-#             "fetch4":                   "fetch-4",
-#  #           "fetch-4":                  "fetch-4",
-#             "fetch 4":                  "fetch-4",
-
-#             # ROBO-BEAR
-#   #          "robo-bear":                "robo-bear",
-#             "robo bear":                "robo-bear",
-#             "robobear":                 "robo-bear",
-#             "stuffed robot bear":       "robo-bear",
-
-#    #         "lisa":                     "lisa",
-
-#             # FETCH71
-#             "fetch71":                   "fetch-71",
-#  #           "fetch-71":                  "fetch-71",
-#             "fetch 71":                  "fetch-71",
-#             }
-
-    # verbs and corresponding methods
+    # commands
     with open('literals/actions.json', 'r') as a:
         ACTIONS = json.load(a)
-    # ACTIONS = {
-    #         ## ACTION FUNCTIONS ##
-
-    #         # DROP
-    #         "drop":         "drop",
-    #         "deposit":      "drop",
-    #         "leave":        "drop",
-    #         "place":        "drop",
-    #         "put":          "drop",
-    #         "set":          "drop",
-    #         "throw":        "drop",
-            
-    #         # GO
-    #         "go":           "go",
-    #         "move":         "go",
-    #         "walk":         "go",
-    #         "enter":        "go",
-    #         "leave":        "go",
-
-    #         # LISTEN
-    #         "listen":       "listen",
-    #         "hear":         "listen",
-    #         "ears":         "listen",
-            
-    #         # LOOK (AROUND)
-    #         "look":         "look",         # preposition could change this
-    #         "view":         "look",
-
-    #         # LOOK AT
-    #         "check":        "look at",
-    #         "inspect":      "look at",
-
-    #         # PULL
-    #         "pull":         "pull",
-    #         "tug":          "pull",
-    #         "yank":         "pull",
-
-    #         # PUSH
-    #         "push":         "push",
-    #         "press":        "push",
-    #         "lean":         "push",
-
-    #         # RECHARGE
-    #         "recharge":     "recharge",
-    #         "power":        "recharge",
-    #         "plug":         "recharge",
-    #         "boost":        "recharge",
-    #         "reboost":      "recharge",
-    #         "restore":      "recharge",
-    #         "battery":      "recharge",
-    #         "energize":     "recharge",
-    #         "reenergize":   "recharge",
-    #         "re-energize":  "recharge",
-    #         "charge":       "recharge",
-
-    #         # TAKE
-    #         "take":         "take",
-    #         "clutch":       "take",
-    #         "gather":       "take",
-    #         "grab":         "take",
-    #         "pick":         "take",
-    #         "pilfer":       "take",
-    #         "steal":        "take",
-
-    #         # TALK
-    #         "talk":         "talk",
-    #         "say":          "talk",
-    #         "speak":        "talk",
-    #         "tell":         "talk",
-
-    #         # USE
-    #         "use":          "use",
-    #         "utilize":      "use",
-
-    #         # WAIT
-    #         "wait":         "wait",
-    #         "chill":        "wait",
-    #         "nap":          "wait",
-    #         "pause":        "wait",
-    #         "relax":        "wait",
-    #         "rest":         "wait",
-    #         "sleep":        "wait",
-
-
-    #         ## UTILITY FUNCTIONS ##
-
-    #         # HELP
-    #         "help":         "help",
-    #         "h":            "help",
-    #         "?":            "help",
-
-    #         # INVENTORY
-    #         "inventory":    "inventory",
-    #         "list":         "inventory",
-
-    #         #LOADGAME
-    #         "loadgame":     "loadgame",
-    #         "load":         "loadgame",
-
-    #         # SAVEGAME
-    #         "savegame":     "savegame",
-    #         "save":         "savegame",
-
-    #         # QUIT
-    #         "quit":         "quit",
-    #         "bye":          "quit",
-    #         "exit":         "quit"
-    #         }
 
     with open('literals/prepositions.json', 'r') as p:
         PREPOSITIONS = json.load(p)
-    # PREPOSITIONS = ["about", "above", "across", "after", "against",
-    #         "along", "among", "around", "at", "before", "behind",
-    #         "below", "beneath", "beside", "between", "by", "down",
-    #         "during", "except", "for", "from", "front", "in", "inside",
-    #         "instead", "into", "like", "near", "of", "off", "on",
-    #         "onto", "out", "outside", "over", "past", "since", "through",
-    #         "to", "top", "toward", "under", "underneath", "until", "up",
-    #         "upon", "with", "within", "without"]
 
 
     def create_multiword_list(string):
@@ -587,18 +267,18 @@ class Parser:
         return direction
 
     
-    ## prototype of method to return disambiguated request parsed
-    ## from user input in the form of a five-tuple:
-    ## (action, location, direction, item, character)
-    ##
-    ## action =     command name or actual method pointer, None if invalid
-    ## exit =       identity name of exit type to use, or None
-    ## direction =  cardinal direction name specifying location of exit, or None
-    ## item =       identity name of item action applied to, or None
-    ## character =  identity name of character action applied to, or None
-    ##
-    ## this method will use the logic of the run_action() method defined below
+
     def action_requested(cmd_str):
+    '''
+    Return disambiguated command request parsed from user input in the form of 
+    a five-tuple: (action, location, direction, item, character)
+    
+    action =     command name or actual method pointer, None if invalid
+    exit =       identity name of exit type to use, or None
+    direction =  cardinal direction name specifying location of exit, or None
+    item =       identity name of item action applied to, or None
+    character =  identity name of character action applied to, or None
+    '''
 
         if cmd_str is None:
             return (None, None, None, None, None)
@@ -653,32 +333,6 @@ class Parser:
 
 
 def main():
-    # with open('literals/articles.json', 'w') as fb:
-    #     json.dump(sorted(Parser.ARTICLES), fb, indent=4)
-    with open('literals/actions.json', 'w') as fb:
-        json.dump(Parser.ACTIONS, fb, indent=4, sort_keys=True)
-    # with open('literals/characters_alt.json', 'w') as fb:
-    #     json.dump(Parser.ALT_CHAR_NAMES, fb, indent=4, sort_keys=True)        
-    # with open('literals/characters.json', 'w') as fb:
-    #     json.dump(sorted(Parser.CHARACTERS), fb, indent=4)
-    # with open('literals/directions_alt.json', 'w') as fb:
-    #     json.dump(Parser.ALT_DIR_NAMES, fb, indent=4, sort_keys=True)
-    # with open('literals/directions.json', 'w') as fb:
-    #     json.dump(sorted(Parser.DIRECTIONS), fb, indent=4)
-    # with open('literals/exits_alt.json', 'w') as fb:
-    #     json.dump(Parser.ALT_EXIT_NAMES, fb, indent=4, sort_keys=True)
-    # with open('literals/exits.json', 'w') as fb:
-    #     json.dump(sorted(Parser.EXITS), fb, indent=4)
-    # with open('literals/items_alt.json', 'w') as fb:
-    #     json.dump(Parser.ALT_ITEM_NAMES, fb, indent=4, sort_keys=True)
-    # with open('literals/items.json', 'w') as fb:
-    #     json.dump(sorted(Parser.ITEMS), fb, indent=4)
-    # with open('literals/prepositions.json', 'w') as fb:
-    #     json.dump(sorted(Parser.PREPOSITIONS), fb, indent=4)
-
-
-
-def main2():
     while True:
         print()
         cmd = input("What do you want to do? (q to quit)\n")
