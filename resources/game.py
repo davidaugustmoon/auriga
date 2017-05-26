@@ -445,7 +445,7 @@ class Game(object):
     def get_object_by_name(self, object_list, object_name):
         obj = None
         for i in object_list:
-            if i.get_name() == object_name:
+            if i.get_name().lower() == object_name.lower():
                 obj = i
                 break
         return obj
@@ -459,9 +459,9 @@ class Game(object):
         return obj
 
     def check_upgrades(self):
-        if "HMI 25" in self.player.get_item_names():
+        if "hmi-25" in self.player.get_item_names():
             self.player.set_capacity(DEFAULT_CAPACITY + 25)
-        if "HMI 50" in self.player.get_item_names():
+        if "hmi-50" in self.player.get_item_names():
             self.player.set_capacity(DEFAULT_CAPACITY + 50)
 
 # Obviously these will all be completely re-done by the parser, this is 

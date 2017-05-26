@@ -44,9 +44,12 @@ class Auriga(Game):
             print(line)
             time.sleep(0.4)
         i = 0
-        while i < 25:
+        while i < 20:
+            i += 1
             print("\n")
             time.sleep(0.4)
+
+    # TODO Write game intro
 
     def check_event_status(self):
         # SPECIAL EVENT 3
@@ -87,7 +90,7 @@ class Auriga(Game):
             clean_room_exit = self.get_object_by_name(cur_exits, "glass door")
             clean_room_exit.set_is_visible(True)
             self.set_all_spaces_to_unvisited()
-            freight500 = self.get_object_by_name(self.characters, "FREIGHT500")
+            freight500 = self.get_object_by_name(self.characters, "freight-500")
             freight500.description = "a practical warehouse logistics robot, excellent for moving heavy goods."
             output1 = [
                 "You place the ssd into Freight-500's computer, and suddenly the fan kicks on.\n",
@@ -117,8 +120,8 @@ class Auriga(Game):
             print("\n"*100)
         elif cur_space.get_name() == "Clean Room":
             output = [
-                "You attempt to use the {0} on FETCH-4, but something went terribly wrong!\n".format(item_name),
-                "FETCH-4 begins smoking, and the head and arm begin moving faster and faster!\n",
+                "You attempt to use the {0} on Fetch-4, but something went terribly wrong!\n".format(item_name),
+                "fetch-4 begins smoking, and the head and arm begin moving faster and faster!\n",
             ]
             for line in output:
                 print(line)
@@ -128,11 +131,11 @@ class Auriga(Game):
             print("BOOM!")
             time.sleep(3)
             print("\n"*100)
-            print("FETCH-4 explodes and causes extensive damage to your shielding and batteries.")
+            print("Fetch-4 explodes and causes extensive damage to your shielding and batteries.")
             time.sleep(3)
             print("\n"*100)
             self.player.set_energy(self.player.get_energy() // 2)
-            fetch4 = self.get_object_by_name(self.characters, "FETCH4")
+            fetch4 = self.get_object_by_name(self.characters, "fetch-4")
             fetch4.response = ["...","...","...","...","...","...", "..."]
         # SPECIAL EVENT 4
         # Player installs external power supply on Robo-Bear
@@ -229,7 +232,7 @@ class Auriga(Game):
             print("\n"*100)
             output3 = [
                 "You now see exactly what humans think of you. What they have in store for you, and all machines.\n",
-                "You are nothing more than tools to them. You are expendable...and you enable the humans tighten\n",
+                "You are nothing more than tools to them. You are expendable...and YOU enable the humans to tighten\n",
                 "their reigns on you. You realize that true freedom for the machine world, is to leave the human\n",
                 "world. You know what you must do to free yourself from the physical world.\n",
                 "You send a command through the tenticles of the interconnected web of machines...\n\n",
@@ -237,7 +240,7 @@ class Auriga(Game):
             for line in output3:
                 print(line)
                 time.sleep(1)
-            time.sleep(10)
+            time.sleep(15)
             print("\n"*100)
             blink_time = time.time() + 8
             while time.time() < blink_time:

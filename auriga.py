@@ -88,7 +88,7 @@ class Auriga(Game):
                "building. There is a loud hum as all of the servers work to\n"
                "power the technology in the building. There is one central machine\n"
                "with a monitor and a command prompt. The only text on the screen is:\n\n"
-               "$ lsusb?",
+               "$ lsusb?\n",
             "The servers all around you are in overdrive. The central terminal reads:\n\n"
                 "COME BACK TO ME\n"
                 "COME BACK TO ME\n"
@@ -372,9 +372,9 @@ class Auriga(Game):
         self.charger4 = Item(name="charger", locked=True)
         self.charger5 = Item(name="charger", locked=True)
         # upgrades
-        self.hmi25 = Item(name="HMI 25", weight=0,
+        self.hmi25 = Item(name="hmi-25", weight=0,
                           description="A robot shelving attachment that increases your capacity by 25 lbs.")
-        self.hmi50 = Item(name="HMI 50", weight=0,
+        self.hmi50 = Item(name="hmi-50", weight=0,
                           description="A robot shelving attachment that increases your capacity by 50 lbs.")
         # buttons
         self.button1 = Item(name="button", locked=True)
@@ -481,27 +481,27 @@ class Auriga(Game):
         ]
 
         # CREATE CHARACTERS
-        self.pr2 = Character(name="PR2")
+        self.pr2 = Character(name="pr-2")
         self.pr2.description = "a large mobile robot with two arms."
         self.pr2.response = pr2_responses
         
-        self.kelt2a = Character(name="KELT2A")
+        self.kelt2a = Character(name="kelt-2a")
         self.kelt2a.description = "a giant military robot with lazers."
         self.kelt2a.response = kelt2a_responses
         
-        self.wasp12 = Character(name="WASP12")
+        self.wasp12 = Character(name="wasp-12")
         self.wasp12.description = "a small and quick drone."
         self.wasp12.response = wasp12_responses
         
-        self.jim = Character(name="Jim")
+        self.jim = Character(name="jim")
         self.jim.description = "a goofy Auriga employee without a badge."
         self.jim.response = jim_responses
         
-        self.freight500 = Character(name="FREIGHT500")
+        self.freight500 = Character(name="freight-500")
         self.freight500.description = "a large mobile robot base that doesn't seem to work."
         self.freight500.response = freight500_responses
         
-        self.fetch4 = Character(name="FETCH4")
+        self.fetch4 = Character(name="fetch-4")
         self.fetch4.description = "a mobile robot arm stuck in an endless test sequence."
         self.fetch4.response = fetch4_responses
 
@@ -509,7 +509,7 @@ class Auriga(Game):
         self.robo_bear.description = "a large robotic bear covered in patches of brown fur."
         self.robo_bear.response = robo_bear_responses
 
-        self.lisa = Character(name="Lisa")
+        self.lisa = Character(name="lisa")
         self.lisa.description = "a spunky tech covered in grease."
         self.lisa.response = lisa_responses
 

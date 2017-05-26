@@ -58,5 +58,9 @@
     "videocam": "camera",
     "wall button": "button",
     "wall panel": "button",
-    "wall switch": "button"
+    "wall switch": "button",
+    "battery": "external power supply",
+    "power supply": "external power supply",
+    "external supply": "external power supply",
+    "ethernet": "ethernet cable"
 }
