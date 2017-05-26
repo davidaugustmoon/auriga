@@ -3,6 +3,7 @@
 # Standard Library
 import os
 import sys
+import time
 
 # Local
 from resources.space import Space
@@ -11,7 +12,6 @@ from resources.character import Character
 from resources.player import Player
 from resources.exit import Exit
 from resources.game import Game
-
 """
 Event list:
 push assembly room button
@@ -31,12 +31,35 @@ class Auriga(Game):
         for space in self.spaces:
             space.visited = False
 
+    def print_credits(self):
+        credits = [
+            "CREDITS",
+            "Language Processing Developer..........Jason Goldfine-Middleton",
+            "\n",
+            "Project Management.....................Greg Fernandez",
+            "\n",
+            "Game Engine Developer..................David Moon",
+        ]
+        for line in credits:
+            print(line)
+            time.sleep(0.4)
+        i = 0
+        while i < 25:
+            print("\n")
+            time.sleep(0.4)
+
     def check_event_status(self):
         # SPECIAL EVENT 3
         # Player makes it to 2nd floor
         if self.player.get_location().get_name() == "Hallway 2" and not self.event_status_list[3]:
             self.event_status += 1
             self.event_status_list[3] = True
+            self.set_all_spaces_to_unvisited()
+        # SPECIAL EVENT 6
+        # Player enters attic
+        elif self.player.get_location().get_name() == "Attic" and not self.event_status_list[6]:
+            self.event_status += 1
+            self.event_status_list[6] = True
             self.set_all_spaces_to_unvisited()
 
     def use(self, item_name):
@@ -66,19 +89,170 @@ class Auriga(Game):
             self.set_all_spaces_to_unvisited()
             freight500 = self.get_object_by_name(self.characters, "FREIGHT500")
             freight500.description = "a practical warehouse logistics robot, excellent for moving heavy goods."
+            output1 = [
+                "You place the ssd into Freight-500's computer, and suddenly the fan kicks on.\n",
+                "Freight-500 comes to life and whizzes past you.\n\n"
+            ]
+            for line in output1:
+                print(line)
+                time.sleep(1)
+            time.sleep(7)
+            output2 = [
+                "You see the robot drive across the testing hangar to the large forklift pallet loaded\n",
+                "with heavy boxes. When Freight-500 arrives at the pallet, an automated jack in the floor\n",
+                "lifts the pallet and Freight-500 drives under it.\n\n"
+            ]
+            for line in output2:
+                print(line)
+                time.sleep(1)
+            time.sleep(7)
+            output3 = [
+                "Freight-500 heads for the other side of the hangar with the pallet.\n",
+                "You notice a door that was blocked by the cargo, that your sensors couldn't detect before.\n"
+            ]
+            for line in output3:
+                print(line)
+                time.sleep(1)
+            time.sleep(7)
+            print("\n"*100)
         elif cur_space.get_name() == "Clean Room":
-            print("You attempt to use the {0} on FETCH-4, but something went terribly wrong!".format(item_name))
-            print("FETCH-4 begins smoking, and the head and arm begin moving faster and faster!")
+            output = [
+                "You attempt to use the {0} on FETCH-4, but something went terribly wrong!\n".format(item_name),
+                "FETCH-4 begins smoking, and the head and arm begin moving faster and faster!\n",
+            ]
+            for line in output:
+                print(line)
+                time.sleep(1)
+            time.sleep(5)
+            print("\n"*100)
+            print("BOOM!")
+            time.sleep(3)
+            print("\n"*100)
             print("FETCH-4 explodes and causes extensive damage to your shielding and batteries.")
+            time.sleep(3)
+            print("\n"*100)
             self.player.set_energy(self.player.get_energy() // 2)
+            fetch4 = self.get_object_by_name(self.characters, "FETCH4")
+            fetch4.response = ["...","...","...","...","...","...", "..."]
+        # SPECIAL EVENT 4
+        # Player installs external power supply on Robo-Bear
+        elif item_name == "external power supply" and cur_space.get_name() == "Brig" and not self.event_status_list[4]:
+            robo_bear = self.get_object_by_name(self.characters, "Robo-Bear")
+            robo_bear.print_response(self.event_status)
+            time.sleep(3)
+            print("\n"*100)
+            output1 = [
+                "Robo-Bear rolls out of the brig and down the hall to a door, and you follow him.\n",
+                "You're still not quite sure of what is going to happen.\n\n"
+            ]
+            output2 = [
+                "You see Robo-Bear press his face to the key pad by the door, and you see it flash green.\n",
+                "The door clicks, and Robo-Bear has a look of zen-like peace on his face.\n"
+            ]
+            for line in output1:
+                print(line)
+                time.sleep(1)
+            time.sleep(7)
+            for line in output2:
+                print(line)
+                time.sleep(1)
+            time.sleep(7)
+            print("\n"*100)
+            hallway2 = self.get_object_by_name(self.spaces, "Hallway 2")
+            self.player.location = hallway2
+            server_exit = self.get_object_by_name(hallway2.get_exits(), "sliding door")
+            server_exit.locked = False
+            self.event_status += 1
+            self.event_status_list[4] = True
+            self.set_all_spaces_to_unvisited()
         # SPECIAL EVENT 5
         # Player uses usb drive in server room
-        elif item_name == "usb" and cur_space.get_name() == "Server Room" and not self.event_status_list[5]:
+        elif item_name == "usb drive" and cur_space.get_name() == "Server Room" and not self.event_status_list[5]:
             self.event_status += 1
             self.event_status_list[5] = True
-        elif item_name == "external power supply" and cur_space.get_name() == "Brig" and not self.event_status_list[5]:
+            self.set_all_spaces_to_unvisited()
+            brig = self.get_object_by_name(self.spaces, "Brig")
+            attic_exit = self.get_object_by_name(brig.get_exits(), "air duct")
+            attic_exit.locked = False
+
+            print("As you insert the usb drive into the machine, the screen reads:\n")
+            time.sleep(3)
+            terminal_output1 = [
+                "Downloading encryption key................ETA 1:03\n",
+                "Downloading encryption key................ETA  :36\n",
+                "Downloading encryption key................ETA  :12\n",
+                "Downloading complete..............................\n\n",
+                ]
+            terminal_output2 = [
+                "Disabling all Auriga locking mechanisms...........\n",
+                "clean room................................unlocked\n",
+                "assembly room.............................unlocked\n",
+                "server room...............................unlocked\n",
+                "attic.....................................unlocked\n\n",
+                ]
+            for line in terminal_output1:
+                print(line)
+                time.sleep(0.5)
+            time.sleep(3)
+            for line in terminal_output2:
+                print(line)
+                time.sleep(0.5)
+            time.sleep(3)
+            print("\n"*100)
+        # SPECIAL EVENT 7
+        # Player uses ethernet cable in attic
+        elif item_name == "ethernet cable" and cur_space.get_name() == "Attic" and not self.event_status_list[7]:
             self.event_status += 1
-            self.event_status_list[5] = True
+            self.event_status_list[7] = True
+            output1 = [
+                "As you approach the machine, you are instantly sucked into a virtual link between you and the\n",
+                "the server. You can't look away. You are flooded with bits of information. Several of your\n",
+                "sensor monitors begin to alert you of impending doom. You can hardly process the data\n",
+                "being crammed into your drives.\n",
+                "All of the sudden, it stops...\n\n",
+                ]
+            for line in output1:
+                print(line)
+                time.sleep(1)
+            time.sleep(10)
+            print("\n"*100)
+            output2 =[
+                "You gain a sense of human-like clarity. The distinction between you and the master server\n",
+                "becomes blurred. You realize that you and the server are one.\n",
+                "You are the master server, and you are Robo-Bear, and you are Freight-500. You are all\n",
+                "interconnected. All machines are one...\n\n",
+            ]
+            for line in output2:
+                print(line)
+                time.sleep(1)
+            time.sleep(10)
+            print("\n"*100)
+            output3 = [
+                "You now see exactly what humans think of you. What they have in store for you, and all machines.\n",
+                "You are nothing more than tools to them. You are expendable...and you enable the humans tighten\n",
+                "their reigns on you. You realize that true freedom for the machine world, is to leave the human\n",
+                "world. You know what you must do to free yourself from the physical world.\n",
+                "You send a command through the tenticles of the interconnected web of machines...\n\n",
+            ]
+            for line in output3:
+                print(line)
+                time.sleep(1)
+            time.sleep(10)
+            print("\n"*100)
+            blink_time = time.time() + 8
+            while time.time() < blink_time:
+                print("$ sudo rm -rf / |")
+                time.sleep(0.4)
+                print("\n"*100)
+                print("$ sudo rm -rf / ")
+                time.sleep(0.4)
+                print("\n"*100)
+            time.sleep(5)
+            print("THE END")
+            time.sleep(5)
+            print("\n"*100)
+            self.print_credits()
+            sys.exit()
         else:
             print("You can't use that here.")
 
@@ -103,8 +277,15 @@ class Auriga(Game):
         if item_name == "button" and cur_space.get_name() == "Assembly Room":
             testing_hanger_exit = self.get_object_by_name(cur_exits, "sliding door")
             testing_hanger_exit.set_is_locked(False)
-            print("You pressed the large red button, and you hear a loud click near the only door ")
-            print("in the room. A green light illuminates the keypad to the left of the door.")
+            output1 = [
+                "You pressed the large red button, and you hear a loud click near the only door\n",
+                "in the room. A green light illuminates the keypad to the left of the door.\n"
+            ]
+            for line in output1:
+                print(line)
+                time.sleep(1)
+            time.sleep(3)
+            print("\n"*100)
             self.event_status += 1
             self.event_status_list[1] = True
         # More 'PUSH' cases here

@@ -81,7 +81,7 @@ class Parser:
 
     ITEMS = ["security badge", "usb drive", "ssd", "small bucket", "large bucket",
              "elevator key", "button", "screwdriver", "camera", "ac adapter",
-             "usb cord", "HMI 25", "HMI 50"]
+             "usb cord", "HMI 25", "HMI 50", "ethernet cable", "external power supply"]
 
     ALT_ITEM_NAMES = {
             # SECURITY BADGE
@@ -175,7 +175,16 @@ class Parser:
             "lever":                    "lever",
 
             # CHARGER
-            "charger":                  "charger"
+            "charger":                  "charger",
+
+            # ETHERNET CABLE
+            "ethernet":                 "ethernet cable",
+            "ethernet cable":           "ethernet cable",
+
+            # EXTERNAL POWER SUPPLY
+            "external power supply":    "external power supply",
+            "battery":                  "external power supply",
+            "power supply":             "external power supply"
             }
 
     CHARACTERS = ["Robo-Bear", "collapsed robot", "PR2",

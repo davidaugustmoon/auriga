@@ -74,10 +74,12 @@ class Game(object):
         while playing:
             self.check_upgrades()
             self.check_energy()
+            self.check_event_status()
             cur_location = self.player.get_location()
             print_space_info(cur_location, self.event_status)
             print_player_info(self.player)
             cur_location.set_visited(True)
+            print("Current event status: {}".format(self.event_status))
 
             player_command = get_command()
             cmd_action, cmd_exit, cmd_direction, cmd_item, cmd_character = Parser.action_requested(player_command)

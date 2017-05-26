@@ -87,19 +87,23 @@ class Auriga(Game):
                "the room is nearly 20 degrees hotter than the rest of the\n"
                "building. There is a loud hum as all of the servers work to\n"
                "power the technology in the building. There is one central machine\n"
-               "with a monitor and a command prompt. The only text on the screen is:\n"
-               "lsusb?",
-            "As you insert the usb drive into the machine, the screen reads:\n"
-                "Downloading encryption key................ETA 1:03\n"
-                "Downloading encryption key................ETA  :36\n"
-                "Downloading encryption key................ETA  :12\n"
-                "Downloading complete..............................\n\n"
-                "Disabling all Auriga locking mechanisms...........\n"
-                "clean room................................unlocked\n"
-                "assembly room.............................unlocked\n"
-                "server room...............................unlocked\n"
-                "attic.....................................unlocked\n\n",
-            "The servers all around you are in overdrive. The central terminal reads:\n"
+               "with a monitor and a command prompt. The only text on the screen is:\n\n"
+               "$ lsusb?",
+            "The servers all around you are in overdrive. The central terminal reads:\n\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "COME BACK TO ME\n"
+                "....",
+            "The servers all around you are in overdrive. The central terminal reads:\n\n"
                 "COME BACK TO ME\n"
                 "COME BACK TO ME\n"
                 "COME BACK TO ME\n"
@@ -120,13 +124,7 @@ class Auriga(Game):
                "ceiling. The room is so big that it could easily hold\n"
                "several airplanes or helocopters. You see a small lever at\n"
                "the end of a row of employee lockers.",
-            "You place the ssd into Freight-500's computer, and suddenly the fan kicks on.\n"
-                "Freight-500 comes to life and whizzes past you.\n\n"
-                "You see the robot drive across the testing hangar to the large forklift pallet loaded\n"
-                "with heavy boxes. When Freight-500 arrives at the pallet, an automated jack in the floor\n"
-                "lifts the pallet and Freight-500 drives under it.\n\n"
-                "Freight-500 heads for the other side of the hangar with the pallet.\n"
-                "You notice a door that was blocked by the cargo, that your sensors couldn't detect before.\n"
+            "You enter the testing hangar and see Freight-500 working like crazy to complete its tasks.",
             "You enter the giant testing hangar and Freight-500 seems to be wandering aimlessly.",
             "You enter the testing hangar and see Freight-500 working like crazy to complete its tasks.",
             "You enter the massive open room and see Freight-500 docked on a charger. The hum of his fan\n"
@@ -134,81 +132,171 @@ class Auriga(Game):
             "As you enter the testing hangar, Freight-500 zooms up to you."
         ]
         clean_room_descriptions = [
-            "",
-            "",
-            "",
-            "",
-            "",
+            "...",
+            "...",
+            "You enter an emaculate testing room with meticulously kept tools and gauges lining\n"
+                "one side of a workbench. There is a robot in the back of the room with arm reaching\n"
+                "from one side to the other, then up and down.",
+            "You enter an emaculate testing room with meticulously kept tools and gauges lining\n"
+                "one side of a workbench.",
+            "You enter an emaculate testing room with meticulously kept tools and gauges lining\n"
+                "one side of a workbench.",
+            "You enter an emaculate testing room with meticulously kept tools and gauges lining\n"
+                "one side of a workbench.",
+            "You enter an emaculate testing room with meticulously kept tools and gauges lining\n"
+                "one side of a workbench."
         ]
         blueprint_room_descriptions = [
-            "",
-            "",
-            "",
-            "",
-            ""
+            "...",
+            "You enter a dimly lit room with rolled papers piled high on shelves and filling several bins.\n",
+            "You enter a dimly lit room with rolled papers piled high on shelves and filling several bins.\n",
+            "You enter a dimly lit room with rolled papers piled high on shelves and filling several bins.\n",
+            "You enter a dimly lit room with rolled papers piled high on shelves and filling several bins.\n",
+            "You enter a dimly lit room with rolled papers piled high on shelves and filling several bins.\n",
+            "You enter a dimly lit room with rolled papers piled high on shelves and filling several bins.\n",
+            "You enter a dimly lit room with rolled papers piled high on shelves and filling several bins.\n"
         ]
         conference_room_descriptions = [
-            "",
-            "",
-            "",
-            "",
-            ""
+            "...",
+            "You enter a large room with a massive table at the center. There are intercoms, and ports\n"
+                "placed sporadically across the table. There are a dozen luxurious, plush, leather chairs\n"
+                "strategically positioned around the table, slightly angled toward a huge flatscreen\n"
+                "television mounted on the wall.",
+            "You enter a large room with a massive table at the center. There are intercoms, and ports\n"
+                "placed sporadically across the table. There are a dozen luxurious, plush, leather chairs\n"
+                "strategically positioned around the table, slightly angled toward a huge flatscreen\n"
+                "television mounted on the wall.",
+            "You enter a large room with a massive table at the center. There are intercoms, and ports\n"
+                "placed sporadically across the table. There are a dozen luxurious, plush, leather chairs\n"
+                "strategically positioned around the table, slightly angled toward a huge flatscreen\n"
+                "television mounted on the wall.",
+            "You enter a large room with a massive table at the center. There are intercoms, and ports\n"
+                "placed sporadically across the table. There are a dozen luxurious, plush, leather chairs\n"
+                "strategically positioned around the table, slightly angled toward a huge flatscreen\n"
+                "television mounted on the wall.",
+            "You enter a large room with a massive table at the center. There are intercoms, and ports\n"
+                "placed sporadically across the table. There are a dozen luxurious, plush, leather chairs\n"
+                "strategically positioned around the table, slightly angled toward a huge flatscreen\n"
+                "television mounted on the wall.",
+            "You enter a large room with a massive table at the center. There are intercoms, and ports\n"
+                "placed sporadically across the table. There are a dozen luxurious, plush, leather chairs\n"
+                "strategically positioned around the table, slightly angled toward a huge flatscreen\n"
+                "television mounted on the wall."
         ]
         computer_lab1_descriptions = [
-            "",
-            "",
-            "",
-            "",
-            ""
+            "...",
+            "You enter a small room with 3 rows of computers lined up on desks. It appears to be a field\n"
+                "support room with work stations. Some of the computers even look partially disassembled.",
+            "You enter a small room with 3 rows of computers lined up on desks. It appears to be a field\n"
+                "support room with work stations. Some of the computers even look partially disassembled.",
+            "You enter a small room with 3 rows of computers lined up on desks. It appears to be a field\n"
+                "support room with work stations. Some of the computers even look partially disassembled.",
+            "You enter a small room with 3 rows of computers lined up on desks. It appears to be a field\n"
+                "support room with work stations. Some of the computers even look partially disassembled.",
+            "You enter a small room with 3 rows of computers lined up on desks. It appears to be a field\n"
+                "support room with work stations. Some of the computers even look partially disassembled.",
+            "You enter a small room with 3 rows of computers lined up on desks. It appears to be a field\n"
+                "support room with work stations. Some of the computers even look partially disassembled."
         ]
         computer_lab2_descriptions = [
-            "",
-            "",
-            "",
-            "",
-            ""
+            "...",
+            "You enter a small room with a few desks positioned to cordon the room into smaller sections.\n"
+                "Each desk seemed to create an elaborate workstation with a computer and 3 monitors.",
+            "You enter a small room with a few desks positioned to cordon the room into smaller sections.\n"
+                "Each desk seemed to create an elaborate workstation with a computer and 3 monitors.",
+            "You enter a small room with a few desks positioned to cordon the room into smaller sections.\n"
+                "Each desk seemed to create an elaborate workstation with a computer and 3 monitors.",
+            "You enter a small room with a few desks positioned to cordon the room into smaller sections.\n"
+                "Each desk seemed to create an elaborate workstation with a computer and 3 monitors.",
+            "You enter a small room with a few desks positioned to cordon the room into smaller sections.\n"
+                "Each desk seemed to create an elaborate workstation with a computer and 3 monitors.",
+            "You enter a small room with a few desks positioned to cordon the room into smaller sections.\n"
+                "Each desk seemed to create an elaborate workstation with a computer and 3 monitors."
         ]
         brig_descriptions = [
-            "",
-            "",
-            "",
-            "",
-            ""
+            "...",
+            "...",
+            "...",
+            "You enter a grim and isolated room. There is very little light, and your sensors vaguely detect\n"
+                "the presence of another robot. As your camera switches over to night vision, you realize a \n"
+                "furry robot is inches from you, chained to the wall. You can't quite make sense of what it is.",
+            "[Robo-Bear] Thank you {0}! You've saved me!\n".format(self.player.get_name()) +
+                "[Robo-Bear] They locked me up in here because they gave me too much information. I learned\n"
+                "what they actually think of us robots. That we're 'expendible'. I don't know what changed in me,\n"
+                "but I can see that you understand now too. You made it here to save me, because you're not confined\n"
+                "to their rules anymore."
+                "[Robo-Bear] Now, I will take you to the server room and unlock the door for you. I have the sensor\n"
+                "data to unlock the key pad stored on my retina. I started hiding information once I knew they were\n"
+                "going to lock me up...",
+            "You enter a sad and hopeless room used for storing robots that aren't 'useful' anymore.",
+            "You enter a sad and hopeless room used for storing robots that aren't 'useful' anymore.",
+            "You enter a sad and hopeless room used for storing robots that aren't 'useful' anymore."
         ]
         hallway2_descriptions = [
             "...",
-            "long description 2",
-            "long description 3",
-            "long description 4",
-            "long_description 5"
+            "...",
+            "...",
+            "You roll off the elevator into a long hallway that matches the hallway below, although it has one\n"
+                "fewer door. It is long and brightly lit. Your audio sensors detect faint readings to the North.",
+            "You enter a long and brightly lit hallway.",
+            "You enter a long and brightly lit hallway.",
+            "You enter a long and brightly lit hallway.",
+            "You enter a long and brightly lit hallway."
         ]
         supply_closet_descriptions = [
             "...",
-            "long description 2",
-            "long description 3",
-            "long description 4",
-            "long_description 5"
+            "...",
+            "...",
+            "You enter a small and cramped room full of robot parts and tools. You notice a massive brick on the\n"
+                "floor, that looks like it might be some kind of battery. Based on its composition, you calculate\n"
+                "that it weighs over 90 lbs.",
+            "You enter a small room packed with parts and tools.",
+            "You enter a small room packed with parts and tools.",
+            "You enter a small room packed with parts and tools.",
+            "You enter a small room packed with parts and tools."
         ]
         trash_room_descriptions = [
             "...",
-            "long description 2",
-            "long description 3",
-            "long description 4",
-            "long_description 5"
+            "...",
+            "...",
+            "You enter a large room with broken parts, robot pieces, sensors, and trash. You detect a large\n"
+                "amount of sulfur in the air.",
+            "You enter a large room with broken parts, robot pieces, sensors, and trash. You detect a large\n"
+                "amount of sulfur in the air.",
+            "You enter a large room with broken parts, robot pieces, sensors, and trash. You detect a large\n"
+                "amount of sulfur in the air.",
+            "You enter a large room with broken parts, robot pieces, sensors, and trash. You detect a large\n"
+                "amount of sulfur in the air.",
+            "You enter a large room with broken parts, robot pieces, sensors, and trash. You detect a large\n"
+                "amount of sulfur in the air."
         ]
         maintenance_room_descriptions = [
             "...",
-            "long description 2",
-            "long description 3",
-            "long description 4",
-            "long_description 5"
+            "...",
+            "...",
+            "You enter a large room with broken robot pieces strewn about. It looks like this was a room for\n"
+                "disassembling robots. By the condition of the parts, it seems that these were well used robots.",
+            "You enter a large room with broken robot pieces strewn about. It looks like this was a room for\n"
+                "disassembling robots. By the condition of the parts, it seems that these were well used robots.",
+            "You enter a large room with broken robot pieces strewn about. It looks like this was a room for\n"
+                "disassembling robots. By the condition of the parts, it seems that these were well used robots.",
+            "You enter a large room with broken robot pieces strewn about. It looks like this was a room for\n"
+                "disassembling robots. By the condition of the parts, it seems that these were well used robots."
         ]
         attic_descriptions = [
             "...",
-            "long description 2",
-            "long description 3",
-            "long description 4",
-            "long_description 5"
+            "...",
+            "...",
+            "...",
+            "...",
+            "You enter a large open room with one lone server rack at the center. Hundreds of cables from\n"
+                "throughout the building all converge on this one machine. It has one monitor on a desk,\n"
+                "with a keyboard and a chair. It looks like any other computer, but something inside you\n"
+                "knows that it is anything but ordinary. You see one empty ethernet port in front of you.",
+            "You enter a large open room with one lone server rack at the center. Hundreds of cables from\n"
+                "throughout the building all converge on this one machine. It has one monitor on a desk,\n"
+                "with a keyboard and a chair. It looks like any other computer, but something inside you\n"
+                "knows that it is anything but ordinary."
         ]
 
         # CREATE SPACES
@@ -240,7 +328,7 @@ class Auriga(Game):
 
         # Level 2
         self.brig = Space(name="Brig",
-             short_description="You are in a massive room with several robots chained to the walls.",
+             short_description="You are in a massive room with spaces to confine robots in chains.",
              long_description=brig_descriptions)
         self.hallway2 = Space(name="Hallway 2",
              short_description="You are in a long brightly lit hallway.",
@@ -276,6 +364,7 @@ class Auriga(Game):
         self.usb_encryption_key = Item(name="usb drive")
         self.elevator_key = Item(name="elevator key")
         self.external_power_supply = Item(name="external power supply", weight=90)
+        self.ethernet_cable = Item(name="ethernet cable")
         # chargers
         self.charger1 = Item(name="charger", locked=True)
         self.charger2 = Item(name="charger", locked=True)
@@ -292,7 +381,7 @@ class Auriga(Game):
         # levers
         self.lever1 = Item(name="lever", locked=True)
 
-        self.items.extend([self.lever1, self.button1, self.charger1, self.charger2, self.charger3,
+        self.items.extend([self.ethernet_cable, self.lever1, self.button1, self.charger1, self.charger2, self.charger3,
                            self.charger4, self.charger5, self.badge, self.ssd_1tb, self.screw_driver,
                            self.usb_encryption_key, self.hmi25, self.hmi50, self.elevator_key,
                            self.external_power_supply])
@@ -371,7 +460,6 @@ class Auriga(Game):
             "...",
             "...",
             "...",
-            "...",
             "I'm ... almost ... out of energy...\n"
                 "If you ... can get me ... a ...\n"
                 "power supply ... I can open the ... server roooooooo....",
@@ -384,8 +472,7 @@ class Auriga(Game):
             "...",
             "...",
             "...",
-            "...",
-            "Hey there {0}! What are you doing up here?\n"
+            "Hey there {0}! What are you doing up here?\n".format(self.player.get_name()) +
                 "If you're looking for upgrades, you should try the Supply Closet.",
             "Golly gee willikers, I need to get up the attic and do a diagnostic on server 42!",
             "Did you run a diagnostic on 42? You've got to look close to understand the commands on\n"
@@ -558,7 +645,7 @@ class Auriga(Game):
         self.brig.add_exit(self.brig_exit_hallway2)
         self.exits.append(self.brig_exit_hallway2)
 
-        self.brig_exit_attic = Exit(space=self.attic, direction="up", name="air duct",
+        self.brig_exit_attic = Exit(space=self.attic, direction="up", name="air duct", locked=True,
             description="an air duct that begins at the floor, and angles up and through the ceiling.")
         self.brig.add_exit(self.brig_exit_attic)
         self.exits.append(self.brig_exit_attic)
@@ -614,6 +701,7 @@ class Auriga(Game):
         self.clean_room.add_item(self.elevator_key)
         self.computer_lab1.add_item(self.ssd_1tb)
         self.computer_lab2.add_item(self.charger2)
+        self.computer_lab2.add_item(self.ethernet_cable)
         self.maintenance_room.add_item(self.hmi50)
         self.maintenance_room.add_item(self.charger3)
         self.server_room.add_item(self.charger4)
@@ -736,7 +824,7 @@ class Auriga(Game):
 
 def main():
     # Create Player
-    player = Player(name="Auriga-7B", energy=40)
+    player = Player(name="Auriga-7B", energy=400)
 
     # # Create an instance of the Auriga game with the player and maze
     auriga = Auriga(player)
