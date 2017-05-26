@@ -171,21 +171,21 @@ class TestParser(unittest.TestCase):
         self.assertIsNone(Parser.get_character([]))
         self.assertIsNone(Parser.get_character(['']))
         
-        self.assertEqual('WASP12', Parser.get_character(['wasp-12']))
-        self.assertEqual('WASP12', Parser.get_character(['wasp12']))
-        self.assertEqual('WASP12', Parser.get_character(['wasp', '12']))
-        self.assertEqual('WASP12', Parser.get_character(['it\'s', 'wasp12']))
+        self.assertEqual('wasp-12', Parser.get_character(['wasp-12']))
+        self.assertEqual('wasp-12', Parser.get_character(['wasp12']))
+        self.assertEqual('wasp-12', Parser.get_character(['wasp', '12']))
+        self.assertEqual('wasp-12', Parser.get_character(['it\'s', 'wasp12']))
 
-        self.assertNotEqual('WASP12', Parser.get_character(['was-p12']))
-        self.assertNotEqual('WASP12', Parser.get_character(['wasp1']))
-        self.assertNotEqual('WASP12', Parser.get_character(['wasp-12 ']))
-        self.assertNotEqual('WASP12', Parser.get_character(['wasp', 'to', '12']))
+        self.assertNotEqual('wasp-12', Parser.get_character(['was-p12']))
+        self.assertNotEqual('wasp-12', Parser.get_character(['wasp1']))
+        self.assertNotEqual('wasp-12', Parser.get_character(['wasp-12 ']))
+        self.assertNotEqual('wasp-12', Parser.get_character(['wasp', 'to', '12']))
 
-        self.assertEqual('Robo-Bear', Parser.get_character(
+        self.assertEqual('robo-bear', Parser.get_character(
             ['one', 'stuffed', 'robot', 'bear']))
-        self.assertEqual('Robo-Bear', Parser.get_character(
+        self.assertEqual('robo-bear', Parser.get_character(
             ['one', 'robobear']))
-        self.assertEqual('Robo-Bear', Parser.get_character(
+        self.assertEqual('robo-bear', Parser.get_character(
             ['the', 'holy', 'robo-bear']))
 
 
@@ -343,6 +343,16 @@ class TestParser(unittest.TestCase):
         self.assertIsNone(exit)
 
         (action, exit, direction, item, character) = Parser.action_requested(
+                'go north')
+        self.assertEqual(action, 'go')
+        self.assertEqual(direction, 'north')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'go n')
+        self.assertEqual(action, 'go')
+        self.assertEqual(direction, 'north')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
                 'out the sliding door')
         self.assertEqual(action, 'go')
         self.assertEqual(exit, 'sliding door')
@@ -381,6 +391,15 @@ class TestParser(unittest.TestCase):
                 'don\'t go')
         self.assertIsNone(action)
 
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'north')
+        self.assertEqual(action, 'go')
+        self.assertEqual(direction, 'north')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'n')
+        self.assertEqual(action, 'go')
+        self.assertEqual(direction, 'north')
 
     def test_action_requested_other(self):
         (action, exit, direction, item, character) = Parser.action_requested(
@@ -454,7 +473,12 @@ class TestParser(unittest.TestCase):
         (action, exit, direction, item, character) = Parser.action_requested(
                 'clutch into robobear')
         self.assertEqual(action, 'take')
-        self.assertEqual(character, 'Robo-Bear')
+        self.assertEqual(character, 'robo-bear')
+
+        (action, exit, direction, item, character) = Parser.action_requested(
+                'clutch that little robo-bear')
+        self.assertEqual(action, 'take')
+        self.assertEqual(character, 'robo-bear')
 
         (action, exit, direction, item, character) = Parser.action_requested(
                 'look over at')

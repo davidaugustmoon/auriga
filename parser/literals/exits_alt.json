@@ -1,0 +1,21 @@
+{
+    "air duct tunnel": "air duct",
+    "air tunnel": "air duct",
+    "air vent": "air duct",
+    "airduct": "air duct",
+    "airduct tunnel": "air duct",
+    "airway": "air duct",
+    "duct": "air duct",
+    "elevator shaft": "elevator",
+    "glass": "glass door",
+    "hall": "hallway",
+    "hall way": "hallway",
+    "saloon": "saloon doors",
+    "saloon door": "saloon doors",
+    "slide door": "sliding door",
+    "steel": "steel door",
+    "swinging door": "saloon doors",
+    "swinging doors": "saloon doors",
+    "tunnel": "air duct",
+    "vent": "air duct"
+}
