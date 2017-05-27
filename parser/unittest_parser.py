@@ -468,7 +468,7 @@ class TestParser(unittest.TestCase):
         (action, exit, direction, item, character) = Parser.action_requested(
                 'boost up the battery')
         self.assertEqual(action, 'recharge')
-        self.assertIsNone(item)
+        self.assertIsNotNone(item)
 
         (action, exit, direction, item, character) = Parser.action_requested(
                 'clutch into robobear')

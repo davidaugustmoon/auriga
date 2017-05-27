@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 
-# utility function to check for enumerable non-string
-# cite: http://stackoverflow.com/a/19944281
 from collections import Iterable
 import json
 import os
 
+
 def enum_check(obj):
     """
     Verifies that _obj_ is an iterable object but not a string.
+    
+    Citation: http://stackoverflow.com/a/19944281
     """
     return not isinstance(obj, str) and isinstance(obj, Iterable)
 
@@ -320,7 +321,7 @@ class Parser:
         item = Parser.get_item(cmd_list)
         character = Parser.get_character(cmd_list)
 
-        # TODO: find more verbs that need prep to distinguish desired action
+        # store prepositions from command string
         preps = Parser.get_prepositions(cmd_list)
         
         # manually disambiguate certain verbs and automate detection for rest
@@ -362,6 +363,7 @@ def main():
 
         else:
             print("ERROR: Invalid command")
+
 
 if __name__ == "__main__":
     main()
