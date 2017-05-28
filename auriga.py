@@ -484,23 +484,23 @@ class Auriga(Game):
         self.pr2 = Character(name="pr-2")
         self.pr2.description = "a large mobile robot with two arms."
         self.pr2.response = pr2_responses
-        
+
         self.kelt2a = Character(name="kelt-2a")
         self.kelt2a.description = "a giant military robot with lazers."
         self.kelt2a.response = kelt2a_responses
-        
+
         self.wasp12 = Character(name="wasp-12")
         self.wasp12.description = "a small and quick drone."
         self.wasp12.response = wasp12_responses
-        
+
         self.jim = Character(name="jim")
         self.jim.description = "a goofy Auriga employee without a badge."
         self.jim.response = jim_responses
-        
+
         self.freight500 = Character(name="freight-500")
         self.freight500.description = "a large mobile robot base that doesn't seem to work."
         self.freight500.response = freight500_responses
-        
+
         self.fetch4 = Character(name="fetch-4")
         self.fetch4.description = "a mobile robot arm stuck in an endless test sequence."
         self.fetch4.response = fetch4_responses
@@ -560,12 +560,12 @@ class Auriga(Game):
             description="two saloon style doors that swing in and out.")
         self.hallway1.add_exit(self.hallway1_exit_blueprint)
         self.exits.append(self.hallway1_exit_blueprint)
-        
+
         self.hallway1_exit_conference = Exit(space=self.conference_room, direction="west", name="sliding door",
             description="a sliding wooden door that hides into the wall.")
         self.hallway1.add_exit(self.hallway1_exit_conference)
         self.exits.append(self.hallway1_exit_conference)
-        
+
         self.hallway1_exit_computer_lab2 = Exit(space=self.computer_lab2, direction="south", name="wooden door",
             description="a light wooden door with a twist door knob.")
         self.hallway1.add_exit(self.hallway1_exit_computer_lab2)
@@ -785,8 +785,8 @@ class Auriga(Game):
         # SPECIAL EVENT: event_status 1
         # Player pushes the button in the Assembly Room -> Unlocks door to Testing Hangar
         if item_name == "button" and cur_space.get_name() == "Assembly Room":
-            testing_hanger_exit = self.get_object_by_name(cur_exits, "sliding door")
-            testing_hanger_exit.set_is_locked(False)
+            testing_hangar_exit = self.get_object_by_name(cur_exits, "sliding door")
+            testing_hangar_exit.set_is_locked(False)
             print("You pressed the large red button, and you hear a loud click near the only door ")
             print("in the room. A green light illuminates the keypad to the left of the door.")
             self.event_status += 1

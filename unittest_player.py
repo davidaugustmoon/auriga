@@ -152,8 +152,22 @@ class TestPlayer(unittest.TestCase):
     def test_go_exit(self):
         test_player = Player()
         test_game = Auriga(test_player)
-        test_player.set_location(test_game.assembly_room)
-        self.assertIsNotNone(test_player.go_exit(0, direction="east"))
+        test_game_player = test_game.player
+        test_game_player.set_location(test_game.assembly_room)
+        self.assertIsNone(test_game_player.go_exit(0, direction="east"))
+
+        #TODO: Figure out how to get this to not return 'None'
+        assembly_room_exits = [i.name for i in test_game.assembly_room.get_exits()]
+        assembly_room_exits_status = [i.is_locked() for i in test_game.assembly_room.get_exits()]
+        print(assembly_room_exits)
+        print(assembly_room_exits_status)
+        test_game.push("button")
+
+        print(assembly_room_exits)
+        print(assembly_room_exits_status)
+        self.assertIsNotNone(test_game_player.go_exit(0, direction="east", exit_name="sliding_door"))
+
+
 
 
 
