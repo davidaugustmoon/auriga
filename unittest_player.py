@@ -8,13 +8,13 @@ class TestPlayer(unittest.TestCase):
     """Tests for player.py"""
 
     def test_set_name(self):
-        test_string = 'Logan'
+        test_string = "R2-D2"
         test_player = Player()
         test_player.set_name(test_string)
         self.assertEqual(test_player.get_name(), test_string)
 
     def test_set_description(self):
-        test_string = 'Dude who gives no fucks in cutting bitches up.'
+        test_string = "Adorable spunky droid"
         test_player = Player()
         test_player.set_description(test_string)
         self.assertEqual(test_player.get_description(), test_string)
@@ -26,9 +26,9 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(test_player.get_capacity(), test_int)
 
     def test_set_items(self):
-        test_item_one = Item(name='Shitty_Item_One', weight=2)
-        test_item_two = Item(name='Shitty_Item_Two', weight=4)
-        test_item_three = Item(name='Shitty_Item_Three', weight=8)
+        test_item_one = Item(name="Test_Item_One", weight=2)
+        test_item_two = Item(name="Test_Item_Two", weight=4)
+        test_item_three = Item(name="Test_Item_Three", weight=8)
         test_player = Player()
 
         test_list = [test_item_one]
@@ -44,9 +44,9 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(test_player.get_items(), test_list)
 
     def test_add_item(self):
-        test_item_one = Item(name='Shitty_Item_One', weight=2)
-        test_item_two = Item(name='Shitty_Item_Two', weight=4)
-        test_item_three = Item(name='Shitty_Item_Three', weight=8)
+        test_item_one = Item(name="Test_Item_One", weight=2)
+        test_item_two = Item(name="Test_Item_Two", weight=4)
+        test_item_three = Item(name="Test_Item_Three", weight=8)
 
         test_inventory = []
         test_player = Player(items=test_inventory)
@@ -62,9 +62,9 @@ class TestPlayer(unittest.TestCase):
         self.assertIn(test_item_three, test_player.get_items())
 
     def test_remove_item(self):
-        test_item_one = Item(name='Shitty_Item_One', weight=2)
-        test_item_two = Item(name='Shitty_Item_Two', weight=4)
-        test_item_three = Item(name='Shitty_Item_Three', weight=8)
+        test_item_one = Item(name="Test_Item_One", weight=2)
+        test_item_two = Item(name="Test_Item_Two", weight=4)
+        test_item_three = Item(name="Test_Item_Three", weight=8)
 
         test_inventory = [test_item_one, test_item_two, test_item_three]
         test_player = Player(items=test_inventory)
@@ -80,8 +80,8 @@ class TestPlayer(unittest.TestCase):
         self.assertNotIn(test_item_three, test_player.get_items())
 
     def test_get_item_names(self):
-        test_item_one = Item(name='Shitty_Item_One', weight=2)
-        test_item_two = Item(name='Shitty_Item_Two', weight=4)
+        test_item_one = Item(name="Test_Item_One", weight=2)
+        test_item_two = Item(name="Test_Item_Two", weight=4)
 
         test_inventory = []
         test_player = Player(items=test_inventory)
@@ -99,9 +99,9 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(test_player.get_item_names(), test_list)
 
     def test_get_items_total_weight(self):
-        test_item_one = Item(name='Shitty_Item_One', weight=2)
-        test_item_two = Item(name='Shitty_Item_Two', weight=4)
-        test_item_three = Item(name='Shitty_Item_Three', weight=8)
+        test_item_one = Item(name="Test_Item_One", weight=2)
+        test_item_two = Item(name="Test_Item_Two", weight=4)
+        test_item_three = Item(name="Test_Item_Three", weight=8)
         test_inventory = []
 
         test_player = Player(items=test_inventory)
@@ -167,8 +167,26 @@ class TestPlayer(unittest.TestCase):
         print(assembly_room_exits_status)
         self.assertIsNotNone(test_game_player.go_exit(0, direction="east", exit_name="sliding_door"))
 
+    def test_take(self):
+        test_player = Player()
+        test_game = Auriga(test_player)
+        test_game_player = test_game.player
+        test_game_player.set_location(test_game.assembly_room)
 
+        test_item = "screwdriver"
+        bad_item = "charger"
+        energy_before = test_game_player.get_energy()
+        test_game_player.take(test_item)
+        test_player_inventory = [i.name for i in test_game_player.get_items()]
+        self.assertIn(test_item, test_player_inventory)
+        self.assertNotIn(bad_item, test_player_inventory)
+        self.assertEqual(test_game_player.get_energy(), energy_before - 2)
 
+        test_item = "drive"
+        energy_before = test_game_player.get_energy()
+        test_game_player.take(test_item)
+        test_player_inventory = [i.name for i in test_game_player.get_items()]
+        self.assertNotIn(test_item, test_player_inventory)
 
 
 if __name__ == '__main__':
