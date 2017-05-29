@@ -165,7 +165,8 @@ class TestPlayer(unittest.TestCase):
 
         print(assembly_room_exits)
         print(assembly_room_exits_status)
-        self.assertIsNotNone(test_game_player.go_exit(0, direction="east", exit_name="sliding_door"))
+        self.assertIsNotNone(test_game_player.go_exit(0, direction="east",
+         exit_name="sliding_door"))
 
     def test_take(self):
         test_player = Player()
@@ -199,6 +200,35 @@ class TestPlayer(unittest.TestCase):
         test_game_player.talk(test_character, 0)
         self.assertEqual(test_game_player.get_energy(), energy_before - 1)
 
+        test_character = "c-3po"
+        energy_before = test_game_player.get_energy()
+        test_game_player.talk(test_character,0)
+        self.assertEqual(test_game_player.get_energy(), energy_before)
+
+    def test_drop(self):
+        test_player = Player()
+        test_game = Auriga(test_player)
+        test_game_player = test_game.player
+        test_room = test_game.assembly_room
+        test_game_player.set_location(test_room)
+
+        test_item = "screwdriver"
+        test_game_player.take(test_item)
+        energy_before = test_game_player.get_energy()
+        test_game_player.drop(test_item)
+        room_items = [i.name for i in test_room.get_items()]
+        player_items = [i.name for i in test_game_player.get_items()]
+        self.assertIn(test_item, room_items)
+        self.assertNotIn(test_item, player_items)
+        self.assertEqual(test_game_player.get_energy(), energy_before - 1)
+
+        test_item = "cables"
+        energy_before = test_game_player.get_energy()
+        test_game_player.drop(test_item)
+        room_items = [i.name for i in test_room.get_items()]
+        player_items = [i.name for i in test_game_player.get_items()]
+        self.assertNotIn(test_item, room_items)
+        self.assertEqual(test_game_player.get_energy(), energy_before)
 
 
 if __name__ == '__main__':
