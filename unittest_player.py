@@ -246,21 +246,38 @@ class TestPlayer(unittest.TestCase):
         self.assertNotEqual(test_game_player.get_energy(), energy_before)
 
     def test_look_at(self):
-         test_player = Player()
-         test_game = Auriga(test_player)
-         test_game_player = test_game.player
-         test_room = test_game.assembly_room
-         test_game_player.set_location(test_room)
+        test_player = Player()
+        test_game = Auriga(test_player)
+        test_game_player = test_game.player
+        test_room = test_game.assembly_room
+        test_game_player.set_location(test_room)
 
-         test_item = "screwdriver"
-         energy_before = test_game_player.get_energy()
-         test_game_player.look_at(test_item)
-         self.assertEqual(test_game_player.get_energy(), energy_before - 1)
+        test_item = "screwdriver"
+        energy_before = test_game_player.get_energy()
+        test_game_player.look_at(test_item)
+        self.assertEqual(test_game_player.get_energy(), energy_before - 1)
 
-         test_item = "cables"
-         energy_before = test_game_player.get_energy()
-         test_game_player.look_at(test_item)
-         self.assertEqual(test_game_player.get_energy(), energy_before)
+        test_item = "cables"
+        energy_before = test_game_player.get_energy()
+        test_game_player.look_at(test_item)
+        self.assertEqual(test_game_player.get_energy(), energy_before)
+
+    def test_charge(self):
+        test_player = Player()
+        test_game = Auriga(test_player)
+        test_game_player = test_game.player
+
+        test_room = test_game.assembly_room
+        test_game_player.set_location(test_room)
+        test_game_player.set_energy(80)
+        test_game_player.charge()
+        self.assertEqual(test_game_player.get_energy(), test_game_player.max_energy)
+
+        test_room = test_game.testing_hangar
+        test_game_player.set_location(test_room)
+        test_game_player.set_energy(80)
+        test_game_player.charge()
+        self.assertNotEqual(test_game_player.get_energy(), test_game_player.max_energy)
 
 if __name__ == '__main__':
     unittest.main()
