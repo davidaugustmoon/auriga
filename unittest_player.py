@@ -230,6 +230,23 @@ class TestPlayer(unittest.TestCase):
         self.assertNotIn(test_item, room_items)
         self.assertEqual(test_game_player.get_energy(), energy_before)
 
+    def test_look(self):
+        test_player = Player()
+        test_game = Auriga(test_player)
+        test_game_player = test_game.player
+        test_room = test_game.assembly_room
+        test_game_player.set_location(test_room)
+
+        energy_before = test_game_player.get_energy()
+        test_game_player.look(0)
+        self.assertEqual(test_game_player.get_energy(), energy_before - 1)
+
+        energy_before = test_game_player.get_energy()
+        test_game_player.look(1)
+        self.assertNotEqual(test_game_player.get_energy(), energy_before)
+
+    # def 
+
 
 if __name__ == '__main__':
     unittest.main()
