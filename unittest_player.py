@@ -279,5 +279,17 @@ class TestPlayer(unittest.TestCase):
         test_game_player.charge()
         self.assertNotEqual(test_game_player.get_energy(), test_game_player.max_energy)
 
+    def test_listen(self):
+        test_player = Player()
+        test_game = Auriga(test_player)
+        test_game_player = test_game.player
+        test_room = test_game.assembly_room
+        test_game_player.set_location(test_room)
+
+        test_game_player.set_energy(80)
+        energy_before = test_game_player.get_energy()
+        test_game_player.listen()
+        self.assertEqual(test_game_player.get_energy(), energy_before + 1)
+
 if __name__ == '__main__':
     unittest.main()
