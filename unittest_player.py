@@ -188,6 +188,18 @@ class TestPlayer(unittest.TestCase):
         test_player_inventory = [i.name for i in test_game_player.get_items()]
         self.assertNotIn(test_item, test_player_inventory)
 
+    def test_talk(self):
+        test_player = Player()
+        test_game = Auriga(test_player)
+        test_game_player = test_game.player
+        test_game_player.set_location(test_game.assembly_room)
+
+        test_character = "pr-2"
+        energy_before = test_game_player.get_energy()
+        test_game_player.talk(test_character, 0)
+        self.assertEqual(test_game_player.get_energy(), energy_before - 1)
+
+
 
 if __name__ == '__main__':
     unittest.main()
