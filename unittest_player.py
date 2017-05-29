@@ -117,7 +117,6 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(8, test_player.get_items_total_weight())
 
     def test_set_location(self):
-        #TODO: Finish these tests
         test_player = Player()
         test_game = Auriga(test_player)
 
@@ -154,19 +153,17 @@ class TestPlayer(unittest.TestCase):
         test_game = Auriga(test_player)
         test_game_player = test_game.player
         test_game_player.set_location(test_game.assembly_room)
-        self.assertIsNone(test_game_player.go_exit(0, direction="east"))
 
-        #TODO: Figure out how to get this to not return 'None'
-        assembly_room_exits = [i.name for i in test_game.assembly_room.get_exits()]
-        assembly_room_exits_status = [i.is_locked() for i in test_game.assembly_room.get_exits()]
-        print(assembly_room_exits)
-        print(assembly_room_exits_status)
+        previous_location = test_game_player.get_location().name
+        test_game_player.go_exit(0, direction="east", exit_name="sliding_door")
+        current_location = test_game_player.get_location().name
+        self.assertEqual(previous_location, current_location)
+        
         test_game.push("button")
-
-        print(assembly_room_exits)
-        print(assembly_room_exits_status)
-        self.assertIsNotNone(test_game_player.go_exit(0, direction="east",
-         exit_name="sliding_door"))
+        previous_location = test_game_player.get_location().name
+        test_game_player.go_exit(0, direction="east", exit_name="sliding_door")
+        current_location = test_game_player.get_location().name
+        self.assertNotEqual(previous_location, current_location)
 
     def test_take(self):
         test_player = Player()
