@@ -11,6 +11,17 @@ from auriga import Auriga
 class TestGame(unittest.TestCase):
     """Tests for game.py"""
 
+    """
+    Setup function
+    """
+
+    """
+    Test get_object_by_name()
+    1. empty list of objects -> return None
+    2. object not in list -> return None
+    3. empty string object name -> None
+    4. positive test of object name in list
+    """
     def test_get_object_by_name(self):
         rdm_player = Player(name="Rick")
         rdm_item = Item(name="Portal Gun")
