@@ -199,6 +199,11 @@ class TestPlayer(unittest.TestCase):
         test_game_player.talk(test_character, 0)
         self.assertEqual(test_game_player.get_energy(), energy_before - 1)
 
+        test_character = "c-3po"
+        energy_before = test_game_player.get_energy()
+        test_game_player.talk(test_character,0)
+        self.assertEqual(test_game_player.get_energy(), energy_before)
+
 
 
 if __name__ == '__main__':
