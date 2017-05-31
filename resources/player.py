@@ -295,10 +295,11 @@ class Player(object):
 
     def look_at(self, item_name):
         item = None
-        for i in self.location.get_items():
-            if item_name and (i.get_name() == item_name):
-                item = i
-                break
+        if item_name:
+            for i in self.location.get_items():
+                if i.get_name() == item_name:
+                    item = i
+                    break
 
         if item:
             print("You looked at the {0}".format(item_name))

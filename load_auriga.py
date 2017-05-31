@@ -61,12 +61,13 @@ class Auriga(Game):
             "\n" * 100,
             "Somehow, you powered yourself on.\n",
             "You must explore the Auriga facility for clues as to what happened to you.\n",
+            "You can enter commands after a prompt like this:\n\nEnter a command\n>>>\n",
             "You can type 'help' for a list of available commands.\n\n"
             ]
         self.slow_scroll(intro, 2, FINAL_SLEEP)
         print("\n" * 100)
         self.help()
-        time.sleep(10)
+        time.sleep(5)
 
     def check_event_status(self):
         # SPECIAL EVENT 3
