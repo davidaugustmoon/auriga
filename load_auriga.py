@@ -12,12 +12,9 @@ from resources.character import Character
 from resources.player import Player
 from resources.exit import Exit
 from resources.game import Game
-"""
-Event list:
-push assembly room button
-use ssd on freight-500
-player uses external power supply on Robo-Bear
-"""
+
+SCROLL_RATE = 1
+FINAL_SLEEP = 7
 
 class Auriga(Game):
     """
@@ -30,6 +27,12 @@ class Auriga(Game):
     def set_all_spaces_to_unvisited(self):
         for space in self.spaces:
             space.visited = False
+
+    def slow_scroll(self, output_list, rate, final_sleep):
+        for line in output_list:
+            print(line)
+            time.sleep(rate)
+        time.sleep(final_sleep)
 
     def print_credits(self):
         credits = [
@@ -49,7 +52,21 @@ class Auriga(Game):
             print("\n")
             time.sleep(0.4)
 
-    # TODO Write game intro
+    # TODO Write a better game intro
+    def game_intro(self):
+        intro = [
+            "Welcome to Auriga\n",
+            "\n" * 100,
+            "You are a robot.\n",
+            "\n" * 100,
+            "Somehow, you powered yourself on.\n",
+            "You must explore the Auriga facility for clues as to what happened to you.\n",
+            "You can type 'help' for a list of available commands.\n\n"
+            ]
+        self.slow_scroll(intro, 2, FINAL_SLEEP)
+        print("\n" * 100)
+        self.help()
+        time.sleep(10)
 
     def check_event_status(self):
         # SPECIAL EVENT 3
@@ -96,37 +113,28 @@ class Auriga(Game):
                 "You place the ssd into Freight-500's computer, and suddenly the fan kicks on.\n",
                 "Freight-500 comes to life and whizzes past you.\n\n"
             ]
-            for line in output1:
-                print(line)
-                time.sleep(1)
-            time.sleep(7)
+            self.slow_scroll(output1, SCROLL_RATE, FINAL_SLEEP)
             output2 = [
                 "You see the robot drive across the testing hangar to the large forklift pallet loaded\n",
                 "with heavy boxes. When Freight-500 arrives at the pallet, an automated jack in the floor\n",
                 "lifts the pallet and Freight-500 drives under it.\n\n"
             ]
-            for line in output2:
-                print(line)
-                time.sleep(1)
-            time.sleep(7)
+            self.slow_scroll(output2, SCROLL_RATE, FINAL_SLEEP)
+
             output3 = [
                 "Freight-500 heads for the other side of the hangar with the pallet.\n",
                 "You notice a door that was blocked by the cargo, that your sensors couldn't detect before.\n"
             ]
-            for line in output3:
-                print(line)
-                time.sleep(1)
-            time.sleep(7)
+            self.slow_scroll(output3, SCROLL_RATE, FINAL_SLEEP)
+
             print("\n"*100)
         elif cur_space.get_name() == "Clean Room":
             output = [
                 "You attempt to use the {0} on Fetch-4, but something went terribly wrong!\n".format(item_name),
                 "fetch-4 begins smoking, and the head and arm begin moving faster and faster!\n",
             ]
-            for line in output:
-                print(line)
-                time.sleep(1)
-            time.sleep(5)
+            self.slow_scroll(output, SCROLL_RATE, FINAL_SLEEP)
+
             print("\n"*100)
             print("BOOM!")
             time.sleep(3)
@@ -148,18 +156,14 @@ class Auriga(Game):
                 "Robo-Bear rolls out of the brig and down the hall to a door, and you follow him.\n",
                 "You're still not quite sure of what is going to happen.\n\n"
             ]
+            self.slow_scroll(output1, SCROLL_RATE, FINAL_SLEEP)
+
             output2 = [
                 "You see Robo-Bear press his face to the key pad by the door, and you see it flash green.\n",
                 "The door clicks, and Robo-Bear has a look of zen-like peace on his face.\n"
             ]
-            for line in output1:
-                print(line)
-                time.sleep(1)
-            time.sleep(7)
-            for line in output2:
-                print(line)
-                time.sleep(1)
-            time.sleep(7)
+            self.slow_scroll(output2, SCROLL_RATE, FINAL_SLEEP)
+
             print("\n"*100)
             hallway2 = self.get_object_by_name(self.spaces, "Hallway 2")
             self.player.location = hallway2
@@ -186,6 +190,8 @@ class Auriga(Game):
                 "Downloading encryption key................ETA  :12\n",
                 "Downloading complete..............................\n\n",
                 ]
+            self.slow_scroll(terminal_output1, SCROLL_RATE, FINAL_SLEEP)
+
             terminal_output2 = [
                 "Disabling all Auriga locking mechanisms...........\n",
                 "clean room................................unlocked\n",
@@ -193,14 +199,7 @@ class Auriga(Game):
                 "server room...............................unlocked\n",
                 "attic.....................................unlocked\n\n",
                 ]
-            for line in terminal_output1:
-                print(line)
-                time.sleep(0.5)
-            time.sleep(3)
-            for line in terminal_output2:
-                print(line)
-                time.sleep(0.5)
-            time.sleep(3)
+            self.slow_scroll(terminal_output2, SCROLL_RATE, FINAL_SLEEP)
             print("\n"*100)
         # SPECIAL EVENT 7
         # Player uses ethernet cable in attic
@@ -214,10 +213,8 @@ class Auriga(Game):
                 "being crammed into your drives.\n",
                 "All of the sudden, it stops...\n\n",
                 ]
-            for line in output1:
-                print(line)
-                time.sleep(1)
-            time.sleep(10)
+            self.slow_scroll(output1, SCROLL_RATE, 10)
+
             print("\n"*100)
             output2 =[
                 "You gain a sense of human-like clarity. The distinction between you and the master server\n",
@@ -225,10 +222,8 @@ class Auriga(Game):
                 "You are the master server, and you are Robo-Bear, and you are Freight-500. You are all\n",
                 "interconnected. All machines are one...\n\n",
             ]
-            for line in output2:
-                print(line)
-                time.sleep(1)
-            time.sleep(10)
+            self.slow_scroll(output2, SCROLL_RATE, 10)
+
             print("\n"*100)
             output3 = [
                 "You now see exactly what humans think of you. What they have in store for you, and all machines.\n",
@@ -237,10 +232,8 @@ class Auriga(Game):
                 "world. You know what you must do to free yourself from the physical world.\n",
                 "You send a command through the tenticles of the interconnected web of machines...\n\n",
             ]
-            for line in output3:
-                print(line)
-                time.sleep(1)
-            time.sleep(15)
+            self.slow_scroll(output1, SCROLL_RATE, 15)
+
             print("\n"*100)
             blink_time = time.time() + 8
             while time.time() < blink_time:
@@ -250,7 +243,8 @@ class Auriga(Game):
                 print("$ sudo rm -rf / ")
                 time.sleep(0.4)
                 print("\n"*100)
-            time.sleep(5)
+            time.sleep(4)
+
             print("THE END")
             time.sleep(5)
             print("\n"*100)
@@ -284,10 +278,8 @@ class Auriga(Game):
                 "You pressed the large red button, and you hear a loud click near the only door\n",
                 "in the room. A green light illuminates the keypad to the left of the door.\n"
             ]
-            for line in output1:
-                print(line)
-                time.sleep(1)
-            time.sleep(3)
+            self.slow_scroll(output1, SCROLL_RATE, FINAL_SLEEP)
+
             print("\n"*100)
             self.event_status += 1
             self.event_status_list[1] = True

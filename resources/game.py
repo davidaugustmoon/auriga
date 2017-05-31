@@ -66,8 +66,13 @@ class Game(object):
         print("Characters: {}".format([c.name for c in self.characters]))
         print("Items: {}".format([i.name for i in self.items]))
 
+    # def game_intro(self):
+    #     pass
+
     def start(self):
         p = Parser()
+        print("\n" * 100)
+        self.game_intro()
         print("\n" * 100)
 
         playing = True
@@ -79,7 +84,6 @@ class Game(object):
             print_space_info(cur_location, self.event_status)
             print_player_info(self.player)
             cur_location.set_visited(True)
-            print("Current event status: {}".format(self.event_status))
 
             player_command = get_command()
             cmd_action, cmd_exit, cmd_direction, cmd_item, cmd_character = Parser.action_requested(player_command)
@@ -471,9 +475,6 @@ def get_command():
     command = input("\nEnter a command\n>>> ")
     return command
 
-def parse_command(command):
-    return command.split(" ")
-
 def print_space_info(space, event_index):
     # print("\nSPACE INFO:")
     space.print_details(event_index)
@@ -483,4 +484,3 @@ def print_player_info(player):
     player.print_energy()
     print("Current location: {}".format(player.location.name))
     print("Carrying: {0}/{1}".format(player.get_items_total_weight(), player.get_capacity()))
-    # print("Items: {}".format(player.get_item_names()))
