@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from argparse import ArgumentParser
+
 from resources.space import Space
 from resources.item import Item
 from resources.character import Character
@@ -13,7 +15,7 @@ push assembly room button
 use ssd on freight-500
 """
 
-class Auriga(Game):
+class GenerateAuriga(Game):
     """
     This is a specialized case of a Game. It describes a text adventure game where a robot
     navigates a corporate facility.
@@ -721,114 +723,17 @@ class Auriga(Game):
 
         self.player.set_location(self.assembly_room)
 
-    def check_event_status(self):
-        pass
-
-    def set_all_spaces_to_unvisited(self):
-        for space in self.spaces:
-            space.visited = False
-
-    def use(self, item_name):
-        print()
-        # Check if the player is carrying the item specified
-        item = None
-        for i in self.player.get_items():
-            if item_name == i.get_name():
-                item = i
-                break
-
-        if not item:
-            print("You're not carrying that.")
-            return
-
-        cur_space = self.player.get_location()
-        cur_exits = self.player.get_location().get_exits()
-
-        # SPECIAL EVENT: event_status 2
-        # Player uses ssd in testing hangar
-        if item_name == "ssd" and cur_space.get_name() == "Testing Hangar" and not self.event_status_list[1]:
-            self.event_status += 1
-            self.event_status_list[1] = True
-            self.player.remove_item(item)
-            clean_room_exit = self.get_object_by_name(cur_exits, "glass door")
-            clean_room_exit.set_is_visible(True)
-            self.set_all_spaces_to_unvisited()
-        elif cur_space.get_name() == "Clean Room":
-            print("You attempt to use the {0} on FETCH-4, but something went terribly wrong!".format(item_name))
-            print("FETCH4 begins smoking, and the head and arm begin moving faster and faster!")
-            print("FETCH4 explodes and causes extensive damage to your shielding and batteries.")
-            self.player.set_energy(self.player.get_energy() // 2)
-        # SPECIAL EVENT: event_status 5
-        # Player uses usb drive in server room
-        elif item_name == "usb" and cur_space.get_name() == "Server Room" and not self.event_status_list[2]:
-            self.event_status += 1
-            self.event_status_list[2] = True
-        else:
-            print("You can't use that here.")
-
-    def push(self, item_name):
-        print()
-        # Check if the specified item is in the player's current location
-        item = None
-        cur_space = self.player.get_location()
-        for i in cur_space.get_items():
-            if item_name == i.get_name():
-                item = i
-                break
-
-        if not item:
-            print("That item is not here.")
-            return
-
-        cur_exits = cur_space.get_exits()
-
-        # SPECIAL EVENT: event_status 1
-        # Player pushes the button in the Assembly Room -> Unlocks door to Testing Hangar
-        if item_name == "button" and cur_space.get_name() == "Assembly Room":
-            testing_hangar_exit = self.get_object_by_name(cur_exits, "sliding door")
-            testing_hangar_exit.set_is_locked(False)
-            print("You pressed the large red button, and you hear a loud click near the only door ")
-            print("in the room. A green light illuminates the keypad to the left of the door.")
-            self.event_status += 1
-            self.event_status_list[0] = True
-        # More 'PUSH' cases here
-        else:
-            print("You pushed the {0}, and it made you feel nice.".format(item_name))
-
-    def pull(self, item_name):
-        print()
-        # Check if the specified item is in the player's current location
-        item = None
-        cur_space = self.player.get_location()
-        for i in cur_space.get_items():
-            if item_name == i.get_name():
-                item = i
-                break
-
-        if not item:
-            print("That item is not here.")
-            return
-
-        cur_exits = cur_space.get_exits()
-        cur_items = cur_space.get_items()
-
-        # Player pulls the lever in the Testing Hanger -> Opens a locker to reveal a badge
-        if item_name == "lever" and cur_space.get_name() == "Testing Hangar":
-            badge_item = self.get_object_by_name(cur_items, "security badge")
-            badge_item.set_visible(True)
-            print("You pulled the small lever, and a locker popped open. In the locker you ")
-            print("see an Auriga worker's badge.")
-        else:
-            print("You pulled the {0} and you lost some energy.".format(item_name))
-            self.player.set_energy(self.player.get_energy() - 1)
-
 def main():
+    parser = ArgumentParser()
+    parser.add_argument("name", help="The name of the game instance to create")
+    args = parser.parse_args()
+
     # Create Player
     player = Player(name="Auriga-7B", energy=400)
 
     # # Create an instance of the Auriga game with the player and maze
-    auriga = Auriga(player)
-    auriga.start()
+    auriga = GenerateAuriga(player)
+    auriga.save(args.name)
 
 if __name__ == "__main__":
     main()
