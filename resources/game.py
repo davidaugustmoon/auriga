@@ -436,7 +436,7 @@ class Game(object):
         print("{0}:\t\t\t\t{1}".format(LISTEN, "Listen more closely to the sounds around you."))
         print("{0} <{1}>:\t\t\t{2}".format(PULL, "item", "Pull an item."))
         print("{0} <{1}>:\t\t\t{2}".format(PUSH, "item", "Push an item."))
-        print("{0}:\t\t\t\t{1}".format(CHARGE, "Charge your batteries in a charger."))
+        print("{0}:\t\t\t{1}".format(CHARGE, "Charge your batteries in a charger."))
         print("{0} <{1}>:\t\t\t{2}".format(USE, "item", "Use an item you are carrying."))
         print("{0}:\t\t\t\t{1}".format(WAIT, "Wait for something to happen."))
         print("{0}:\t\t\t\t{1}".format(HELP, "Print this help message."))
