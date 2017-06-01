@@ -25,16 +25,30 @@ class Auriga(Game):
         Game.__init__(self, player)
 
     def set_all_spaces_to_unvisited(self):
+        """Set all spaces in the game to unvisited
+        """
         for space in self.spaces:
             space.visited = False
 
     def slow_scroll(self, output_list, rate, final_sleep):
+        """Prints to the console with pauses between each line, and also
+        sets the amount of time to wait after all lines have printed.
+
+        output_list - list of str: A list of strings to print to the console
+        rate - float: The time in seconds to delay between each line printed
+                      to the console
+        final_sleep - float: The amount of time in seconds to sleep after
+                      all lines have printed to the console
+        """
         for line in output_list:
             print(line)
             time.sleep(rate)
         time.sleep(final_sleep)
 
     def print_credits(self):
+        """Scroll the credits for the game across the screen, from bottom to
+        top.
+        """
         credits = [
             "CREDITS",
             "Language Processing Developer..........Jason Goldfine-Middleton",
@@ -52,8 +66,10 @@ class Auriga(Game):
             print("\n")
             time.sleep(0.4)
 
-    # TODO Write a better game intro
     def game_intro(self):
+        """Print the game intro to the console, followed by the player help
+        menu.
+        """
         intro = [
             "Welcome to Auriga\n",
             "\n" * 100,
@@ -70,6 +86,8 @@ class Auriga(Game):
         time.sleep(5)
 
     def check_event_status(self):
+        """Checks to see if the player has achieved specific tasks.
+        """
         # SPECIAL EVENT 3
         # Player makes it to 2nd floor
         if self.player.get_location().get_name() == "Hallway 2" and not self.event_status_list[3]:
@@ -84,6 +102,10 @@ class Auriga(Game):
             self.set_all_spaces_to_unvisited()
 
     def use(self, item_name):
+        """Player uses an item
+
+        item_name - str: The name of the item to use
+        """
         print()
         # Check if the player is carrying the item specified
         item = None
@@ -255,6 +277,10 @@ class Auriga(Game):
             print("You can't use that here.")
 
     def push(self, item_name):
+        """Player pushes an item.
+
+        item_name - str: The name of the item to push
+        """
         print()
         # Check if the specified item is in the player's current location
         item = None
@@ -289,6 +315,10 @@ class Auriga(Game):
             print("You pushed the {0}, and it made you feel nice.".format(item_name))
 
     def pull(self, item_name):
+        """Player pulls an item.
+
+        item_name - str: The name of the item to pull
+        """
         print()
         # Check if the specified item is in the player's current location
         item = None
@@ -321,6 +351,10 @@ class Auriga(Game):
             self.player.set_energy(self.player.get_energy() - 1)
 
 def main():
+    """Instantiates an Auriga object, and begins gameplay. Prompts the user
+    if they want to start a new game, or load a saved game. The user menu
+    uses integer input from the command line.
+    """
     # Create an instance of the Auriga game
     auriga = Auriga()
 
@@ -341,25 +375,31 @@ def main():
                 break
             elif user_selection == "2":
                 saved_games_dir = os.path.join(os.getcwd(), "saved_games")
-
-                # Print Available Saved Games
-                print("Enter the number of the game you want to load.")
                 saved_games = [game for game in os.listdir(saved_games_dir)]
-                for index, sg in enumerate(saved_games):
-                    print("{0}. {1}".format(index + 1, sg))
+                if not saved_games:
+                    print("There are no saved games to load.")
+                    print("You must start a new game.\n\n")
+                else:
+                    # Print Available Saved Games
+                    print("Enter the number of the game you want to load.")
+                    for index, sg in enumerate(saved_games):
+                        print("{0}. {1}".format(index + 1, sg))
 
-                # TODO error checking on user input
-                user_game_selection = input(">")
-                user_game = saved_games[int(user_game_selection) - 1]
-                print("Loading game: {0}".format(user_game))
-                auriga.load_game(os.path.join(saved_games_dir, user_game))
-                break
+                    user_game_selection = input(">")
+                    if user_game_selection >= 1 and user_game_selection <= len(saved_games):
+                        user_game = saved_games[int(user_game_selection) - 1]
+                        print("Loading game: {0}".format(user_game))
+                        auriga.load_game(os.path.join(saved_games_dir, user_game))
+                        break
+                    else:
+                        print("You entered an invalid selection.")
+                        print("Enter a number between {0} and {1}.\n\n".format(1, len(saved_games)))
             elif user_selection == "q":
                 sys.exit()
             else:
-                print("You've entered invalid input.")
+                print("You've entered invalid input.\n\n")
         else:
-            print("{0} is not a valid input.".format(user_selection))
+            print("{0} is not a valid input.\n\n".format(user_selection))
 
     auriga.start()
 
