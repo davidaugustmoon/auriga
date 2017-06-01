@@ -35,47 +35,58 @@ class Character(object):
             self.response = []
 
     def get_id(self):
-        """
-        Get the unique id of this object
-
-        :return int: The unique id of this object.
+        """Return the unique id for this character.
         """
         return self.id
 
     def set_id(self, new_id):
+        """Set the unique id for this character.
+
+        new_id - str: The unique id to set for this character.
+        """
         self.id = new_id
 
     def get_name(self):
+        """Return the name of this character.
+        """
         return self.name
 
     def set_name(self, new_name):
+        """Set the name of this character.
+
+        new_name - str: The name to set for this character
+        """
         self.name = new_name
 
     def get_description(self):
+        """Return a description of this character.
+        """
         return self.description
 
     def set_description(self, new_description):
+        """Set the description of this character.
+
+        new_description - str: The description to set for this character
+        """
         self.description = new_description
 
-    # def get_capacity(self):
-    #     return self.capacity
-
-    # def set_capacity(self, new_capacity):
-    #     self.capacity = new_capacity
-
-    # def get_location(self):
-    #     return self.location
-
-    # def set_location(self, new_location):
-    #     self.location = new_location
-
     def get_response(self):
+        """Return a list of this character's responses. The index in the
+        response list corresponds to the event_status int in a game object.
+        """
         return self.response
 
     def set_response(self, response_list):
+        """Set the response list for this character.
+
+        response_list - list of str: The list of repsonses for this character
+                                     in a game
+        """
         self.response = response_list
 
     def to_json_dict(self):
+        """Write the fields of this character to a json dict.
+        """
         json_dict = {}
         json_dict['id'] = self.id
         json_dict['name'] = self.name
@@ -84,7 +95,7 @@ class Character(object):
         return json_dict
 
     def print_details(self):
-        """
+        """Print details about this character.
         For testing
         """
         print("Id: {}".format(self.id))
@@ -92,4 +103,8 @@ class Character(object):
         print("Description: {}".format(self.description))
 
     def print_response(self, index):
+        """Print this character's reponse for the given index.
+
+        index - int: The index of the response to print
+        """
         print("\n[{0}] {1}".format(self.name.upper(), self.response[index]))
