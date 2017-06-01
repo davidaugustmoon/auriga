@@ -40,87 +40,79 @@ class Exit(object):
         self.direction = direction
 
     def get_id(self):
-        """
-        Get the unique id of this object
-
-        :return int: The unique id of this object.
+        """Return the unique id of this exit.
         """
         return self.id
 
     def set_id(self, new_id):
+        """Set the unique id of this exit.
+
+        new_id - str: The unique id to set for this exit
+        """
         self.id = new_id
 
     def get_name(self):
-        """
-        Get the name of the exit.
-
-        :return str: The name of the exit.
+        """Return the name of this exit. This is intended to be a short
+        description of the exit. "steel door", "hole", "large opening", etc.
         """
         return self.name
 
     def set_name(self, new_name):
-        """
-        Set the name of the exit.
+        """Set the name of the exit.
 
-        :param str - new_name: The name to set the exit to.
+        new_name - str: The name to set for this exit.
         """
         self.name = new_name
 
     def get_description(self):
-        """
-        Get a detailed description of the exit.
-
-        :return str: A detailed description of the exit.
+        """Return a description of this exit.
         """
         return self.description
 
     def get_space(self):
-        """
-        Get the space that this exit leads to.
-
-        :return Space: The Space that this exit leads to.
+        """Return the space that this exit leads to.
         """
         return self.space
 
     def is_locked(self):
-        """
-        Get whether this exit is locked.
-
-        :return Bool: True if the exit is locked; False if the exit is not locked.
+        """Return if this exit is locked to a player.
         """
         return self.locked
 
     def set_is_locked(self, lock_value):
+        """Set whether this exit is locked to the player.
+
+        lock_value - Bool: Whether this exit is locked to the player
+        """
         self.locked = lock_value
 
     def is_visible(self):
-        """
-        Get whether this exit is visible.
-
-        :return Bool: True if the exit is visible; False if the exit is not visible.
+        """Return whether this exit is visible to the player.
         """
         return self.visible
 
     def set_is_visible(self, visible_value):
+        """Set whether this exit is visible to the player.
+
+        visible_value - Bool: Whether this exit is visible to the player
+        """
         self.visible = visible_value
 
     def get_unlock_item(self):
-        """
-        Get the item required to unlock this exit.
-
-        :return Item: The Item required to unlock this exit.
+        """Return the item required to unlock this exit to the player.
         """
         return self.unlock_item
 
     def get_direction(self):
-        """
-        Get the cardinal direction of this exit in a Space.
-
-        :return str: The cardinal direction of this exit in a Space.
+        """Return the cardinal direction of this exit. (north, south,
+        east, west, up, down)
         """
         return self.direction
 
     def to_json_dict(self):
+        """Write the fields of this exit to a json dict. Writes any object's
+        id to the dict.
+        """
         json_dict = {}
         json_dict['id'] = self.id
         json_dict['name'] = self.name
