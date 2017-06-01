@@ -38,40 +38,62 @@ class Item(object):
         self.visible = visible
         self.locked = locked
 
-    #TODO setters for all properties above.
     def get_id(self):
-        """
-        Get the unique id of this object
-
-        :return int: The unique id of this object.
+        """Return the unique id of this item.
         """
         return self.id
 
     def set_id(self, new_id):
+        """Set the unique id of this item.
+
+        new_id - str: A unique id for this item
+        """
         self.id = new_id
 
     def get_name(self):
+        """Return the name of this item.
+        """
         return self.name
 
     def get_weight(self):
+        """Return the weight of this item.
+        """
         return self.weight
 
     def get_description(self):
+        """Return a description of this item.
+        """
         return self.description
 
     def get_visible(self):
+        """Return whether this item is visible to the player.
+        """
         return self.visible
 
     def set_visible(self, visible_value):
+        """Set whether this item is visible to the player.
+        
+        visible_value - Bool: Whether the player can see this item
+        """
         self.visible = visible_value
 
     def get_locked(self):
+        """Return whether this item is locked to the player.
+        True  --> Player cannot pick up the item
+        False --> Player can pick up the item
+        """
         return self.locked
 
     def set_locked(self, locked_value):
+        """Set whether the player can pick up this item.
+
+        locked_value - Bool: Whether the player can pick up this item
+        """
         self.locked = locked_value
 
     def to_json_dict(self):
+        """Write the fields of this item to a json dict.
+        """
         json_dict = {}
         json_dict['id'] = self.id
         json_dict['name'] = self.name
@@ -82,7 +104,7 @@ class Item(object):
         return json_dict
 
     def print_details(self):
-        """
+        """Print details about this item.
         For testing
         """
         print("\nId: {}".format(self.id))
