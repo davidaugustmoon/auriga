@@ -42,146 +42,118 @@ class Player(object):
         self.max_energy = energy
 
     def get_name(self):
-        """
-        Get the name of the player
-
-        :return str: The name of the player
+        """Return the name of the player.
         """
         return self.name
 
     def set_name(self, new_name):
-        """
-        Set the name of the player
-        
-        :param str - new_name: The name to assign the player.
+        """Set the name of the player.
+
+        new_name - str: The name to set for the player
         """
         self.name = new_name
 
     def get_description(self):
-        """
-        Get the player description
-
-        :return str: A description of the player
+        """Return a description of the player.
         """
         return self.description
 
     def set_description(self, new_description):
-        """
-        Set the description of the player
+        """Set the description of the player.
 
-        :param str - new_description: The description to set for the player
+        new_description - str: The description to set for this player
         """
         self.description = new_description
 
     def get_capacity(self):
-        """
-        Get the player's maximum carrying capacity
-
-        :return int: The maximum weight a player can carry.
+        """Return the capcity this player can carry.
         """
         return self.capacity
 
     def set_capacity(self, new_capacity):
-        """
-        Set the player's maximum carrying capacity
+        """Set the capacity this player can carry.
 
-        :param int - new_capacity: The maximum carrying capacity to set for the player
+        new_capacity - float: The capacity this player can carry.
         """
         self.capacity = new_capacity
 
     def get_items(self):
-        """
-        Get the list of items currently carried by the player
-
-        :return list of Item: The list of Item objects currently carried by the player
+        """Return the list of items carried by this player.
         """
         return self.items
 
     def set_items(self, new_items_list):
-        """
-        Set the list of Item objects currently carried by the player
+        """Set the list of items carried by this player.
 
-        :param list of Item - new_item_list: The new list of Item objects carried by the player
+        new_items_list - list of Item: The list of items to be carried by
+                                       this player
         """
         self.items = new_items_list
 
     def add_item(self, item_to_add):
-        """
-        Add an Item to the player's currently carried items
+        """Add an item to this player's currently carried items.
 
-        :param Item - item_to_add: The Item to add to the player's currently carried items
+        item_to_add - Item: The item to add to this player's currently
+                            carried items
         """
         self.items.append(item_to_add)
 
     def remove_item(self, item_to_remove):
-        """
-        Remove an Item from the player's currently carried items
+        """Remove an item from this player's currently carried items.
 
-        :param Item - item_to_remove: The Item to remove from the player's currently carried items
+        item_to_remove - Item: The item to remove from the player's carried
+                               items
         """
         if item_to_remove in self.items:
             self.items.remove(item_to_remove)
 
     def get_item_names(self):
-        """
-        Get a list of the names of all of the Item objects currently carried by the player
-
-        :return list of str: The list of Item names of all of the objects carried by the player
+        """Return a list of names of items currently carried by this player.
         """
         return [i.name for i in self.items]
 
     def get_items_total_weight(self):
+        """Return the total weight of items carried by this player.
+        """
         total_weight = 0
         for i in self.items:
             total_weight += i.get_weight()
         return total_weight
 
     def get_location(self):
-        """
-        Get the player's current location
-
-        :return Space: The Space the player currently occupies
+        """Return this player's current location.
         """
         return self.location
 
     def set_location(self, new_location):
-        """
-        Set the player's current location
+        """Set this player's current location.
 
-        :param Space - new_location: The new Space the player will occupy
+        new_location - Space: The location to set for this player's current
+                              location.
         """
         self.location = new_location
 
     def get_alive(self):
-        """
-        Get whether the player is currently alive.
-
-        :return Bool: True if the player is alive; False if the player is not alive
+        """Return whether this player is alive.
         """
         return self.alive
 
     def set_alive(self, new_alive):
-        """
-        Set whether the player is alive or not
+        """Set whether this player is alive.
 
-        :param Bool - new_alive: True will set the player to be alive; False will set
-                                 the player to not be alive
+        new_alive - Bool: Whether this player is alive.
         """
         self.alive = new_alive
 
     def get_energy(self):
-        """
-        Get a player's current energy level
-
-        :return int: The player's current energy level
+        """Return this player's energy level.
         """
         return self.energy
 
     def set_energy(self, new_energy):
-        """
-        Set a player's energy level
+        """Set the player's energy level.
 
-        :param int - new_energy: The energy level to set for the player
+        new_energy - float: The energy level to set for the player
         """
         if new_energy < 0:
             self.energy = 0
@@ -189,6 +161,16 @@ class Player(object):
             self.energy = new_energy
 
     def go_exit(self, event_status, direction=None, exit_name=None):
+        """An action to move the player from their current location to
+        another location.
+
+        event_status - int: The current status of events the player has
+                            achieved.
+        direction - str: The cardinal direction the player would like
+                         to move.
+        exit_name - str: The name (short description) of the exit the
+                         player would like to use
+        """
         exit = None
         possible_exits = []
 
@@ -236,10 +218,9 @@ class Player(object):
             return None
 
     def take(self, item_name):
-        """
-        Pick up an item from the player's current location.
+        """Take an item from the player's current location.
 
-        :param Item - item: The Item to take
+        item_name - str: The name of the item to take
         """
         print()
         item = None
@@ -263,7 +244,13 @@ class Player(object):
         else:
             print("That item is not here.")
 
-    def talk(self, character_name, game_state_index):
+    def talk(self, character_name, event_status):
+        """Talk to a character in the player's current location.
+
+        character_name - str: The name of the character to talk to
+        event_status - int: The current status of events the player has
+                            achieved.
+        """
         print()
         character = None
         for c in self.location.get_characters():
@@ -271,11 +258,16 @@ class Player(object):
                 character = c
         if character:
             self.energy -= 1
-            character.print_response(game_state_index)
+            character.print_response(event_status)
         else:
             print("That character is not here.")
 
     def drop(self, item_name):
+        """Drop an item currently carried by the player in the player's
+        current location.
+
+        item_name - str: The name of the item to drop
+        """
         print()
         item = None
         for i in self.items:
@@ -290,10 +282,19 @@ class Player(object):
             print("You can't drop that.")
 
     def look(self, event_status):
+        """Look at the player's current location.
+
+        event_status - int: The current status of events the player has
+                            achieved.
+        """
         print(self.location.print_long_description(event_status))
         self.energy -= 1
 
     def look_at(self, item_name):
+        """Look at an item.
+
+        item_name - str: The name of the item to look at
+        """
         item = None
         if item_name:
             for i in self.location.get_items():
@@ -309,6 +310,8 @@ class Player(object):
             print("{0} isn't here...".format(item_name))
 
     def charge(self):
+        """Fill the player's energy.
+        """
         is_charger = False
         # Check current location for charger
         for i in self.location.get_items():
@@ -323,10 +326,14 @@ class Player(object):
             print("Sorry, there is no charger here.\nYou are probably going to die...")
 
     def listen(self):
+        """Rest and refil a small amount of the player's energy.
+        """
         print("You hear nothing...but the rest is good.")
         self.energy += 1
 
     def print_inventory(self):
+        """Print the names of the items currently carried by the player.
+        """
         if self.items:
             print("Your Inventory (Item, Weight):")
             for i in self.items:
@@ -337,8 +344,7 @@ class Player(object):
         self.energy -= 1
 
     def print_details(self):
-        """
-        Print details about the player
+        """Print details about the player
         """
         print("\nName: {}".format(self.name.upper()))
         print("Description: {}".format(self.description))
@@ -348,10 +354,15 @@ class Player(object):
         print("Is alive: {}".format(self.alive))
 
     def print_energy(self):
+        """Print details about the player's energy level.
+        """
         energy_level = "+" * int(self.energy)
         print("Energy: {}".format(energy_level))
 
     def to_json_dict(self):
+        """Write the fields of this player to a json dict. For objects, ids
+        are written to the dict.
+        """
         json_dict = {}
         json_dict['name'] = self.name
         json_dict['description'] = self.description
