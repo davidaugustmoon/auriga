@@ -14,7 +14,7 @@ from resources.player import Player, DEFAULT_CAPACITY
 from resources.exit import Exit
 from parser.parser import Parser
 
-# The parser should determine one of the listed game commands based on the user input
+# The parser will determine one of the listed game commands based on the user input
 GO = "go"
 TAKE = "take"
 DROP = "drop"
@@ -47,29 +47,37 @@ class Game(object):
         self.items = []
 
     def get_spaces(self):
+        """Return all of the space objects in the game.
+        """
         return self.spaces
 
     def get_characters(self):
+        """Return all of the character objects in the game.
+        """
         return self.characters
 
     def get_exits(self):
+        """Return all of the exit objects in the game.
+        """
         return self.exits
 
     def get_items(self):
+        """Return all of the item objects in the game.
+        """
         return self.items
 
     def print_objects(self):
-        """
+        """Print all space names, character names, and item names in the game.
         for testing
         """
         print("Spaces: {}".format([s.name for s in self.spaces]))
         print("Characters: {}".format([c.name for c in self.characters]))
         print("Items: {}".format([i.name for i in self.items]))
 
-    # def game_intro(self):
-    #     pass
-
     def start(self):
+        """Start the game. This is the main game loop. This loop does not exit
+        until the game is finished.
+        """
         p = Parser()
         print("\n" * 100)
         self.game_intro()
@@ -161,30 +169,48 @@ class Game(object):
                 print("Huh? That doesn't make any sense.")
 
     def get_event_status(self):
+        """Return the event status that corresponds to the player's current
+        achievements.
+        """
         return self.event_status
 
     def set_player(self, new_player):
+        """Set the main player in the game.
+
+        new_player - Player: The player in the game
+        """
         self.player = new_player
 
     def get_player(self):
+        """ Return the main player in the game.
+        """
         return self.player
 
     def get_player_location(self):
+        """Return the player's current location.
+        """
         return self.player.location
 
     def get_player_items(self):
+        """Return a list of the player's currently held items.
+        """
         return self.player.items
 
-    def get_event_status(self):
-        return self.event_status
-
     def set_event_status(self, new_event_status):
+        """Set the event status of the game, that corresponds to the player's
+        current achievements.
+        """
         self.event_status = new_event_status
 
     def check_event_status(self):
+        """This should be over-written in a child class.
+        """
         pass
 
     def check_energy(self):
+        """Check the player's current energy level. If it is low, print a
+        warning. If the player runs out of energy, terminate the game.
+        """
         if self.player.get_energy() <= 0:
             print("\nSorry, you ran out of energy and died.")
             print("Maybe the AI program will bring you back again...")
@@ -194,6 +220,9 @@ class Game(object):
             print("You'll need to find a charger quick!")
 
     def to_json_dict(self):
+        """Write all of the game fields to a json dict. Writes the ids of
+        objects.
+        """
         json_dict = {}
         json_dict['event_status'] = self.event_status
         json_dict['event_status_list'] = self.event_status_list
@@ -282,6 +311,11 @@ class Game(object):
                 json.dump(exits_dict, file_handle)
 
     def load_game(self, load_dir):
+        """Load a game instance from json files.
+
+        load_dir - str: The full filepath to the game instance's top level
+                        directory.
+        """
         # Set Game data
         game_space_ids = []
         game_character_ids = []
@@ -423,6 +457,8 @@ class Game(object):
             exit.unlock_item = self.get_object_by_id(self.items, item_id)
 
     def help(self):
+        """Print a help menu for the player.
+        """
         print("GAME HELP")
         print("Command\t\t\t\tDescription\n")
         print("{0} <{1}> || <{2}>:\t{3}".format(GO, "direction", "exit", "Move through an exit."))
@@ -444,9 +480,14 @@ class Game(object):
         print("{0}:\t\t\t{1}".format(LOADGAME, "Load a previously saved game."))
 
     def use(self, item_name):
-        print("This function should be over-written in the child class.")
+        """Player uses an item, should be over-written in a child class.
+        """
+        pass
 
     def get_object_by_name(self, object_list, object_name):
+        """Return an object by its name. Intended to be used for retrieving
+        a character, item, or space in the game class.
+        """
         obj = None
         for i in object_list:
             if i.get_name().lower() == object_name.lower():
@@ -455,6 +496,9 @@ class Game(object):
         return obj
 
     def get_object_by_id(self, object_list, object_id):
+        """Return an object by its id. Intended to be use for retreiving
+        a character, item, or space in the game class.
+        """
         obj = None
         for i in object_list:
             if i.get_id() == object_id:
@@ -463,23 +507,33 @@ class Game(object):
         return obj
 
     def check_upgrades(self):
+        """Check if the player is carrying any items that give them an upgrade.
+        """
         if "hmi-25" in self.player.get_item_names():
             self.player.set_capacity(DEFAULT_CAPACITY + 25)
         if "hmi-50" in self.player.get_item_names():
             self.player.set_capacity(DEFAULT_CAPACITY + 50)
 
-# Obviously these will all be completely re-done by the parser, this is 
-# just to demonstrate a simple version of the game. This parser only 
-# handles input in the form 'go 1', 'talk 2', 'take 1', etc.
 def get_command():
+    """Get a single line command from the user.
+    """
     command = input("\nEnter a command\n>>> ")
     return command
 
 def print_space_info(space, event_index):
-    # print("\nSPACE INFO:")
+    """Print details about a particular space.
+
+    space - Space: The space to print details about
+    event_index - int: The int that corresponds to the player's current
+                       achievements
+    """
     space.print_details(event_index)
 
 def print_player_info(player):
+    """Print information about the player.
+
+    player - Player: The player to print information about
+    """
     print("\nPLAYER INFO:")
     player.print_energy()
     print("Current location: {}".format(player.location.name))
