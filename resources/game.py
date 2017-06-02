@@ -5,6 +5,8 @@ import sys
 import os
 import datetime
 import json
+import subprocess
+import time
 
 # Third Party
 from termios import tcflush, TCIFLUSH
@@ -81,6 +83,10 @@ class Game(object):
         """Start the game. This is the main game loop. This loop does not exit
         until the game is finished.
         """
+        # supress output from playing sound file
+        devnull = open(os.devnull, 'wb')
+        background_music = subprocess.Popen(["aplay", "sounds/dark_rumble.wav"],
+                                             stdout=subprocess.PIPE, stderr=devnull)
         p = Parser()
         if self.event_status < 1:
             print("\n" * 100)
@@ -89,6 +95,10 @@ class Game(object):
 
         playing = True
         while playing:
+            if not background_music:
+                devnull = open(os.devnull, 'wb')
+                background_music = subprocess.Popen(["aplay", "sounds/dark_rumble.wav"],
+                                                     stdout=subprocess.PIPE, stderr=devnull)
             self.check_upgrades()
             self.check_energy()
             self.check_event_status()
@@ -126,7 +136,8 @@ class Game(object):
 
             elif cmd_action == QUIT:
                 print("Exiting the game...")
-                sys.exit()
+                background_music.kill()
+                return
 
             elif cmd_action == LOOK_AT:
                 self.player.look_at(cmd_item)
