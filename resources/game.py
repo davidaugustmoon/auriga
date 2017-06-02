@@ -6,6 +6,9 @@ import os
 import datetime
 import json
 
+# Third Party
+from termios import tcflush, TCIFLUSH
+
 # Auriga
 from resources.space import Space
 from resources.item import Item
@@ -79,9 +82,10 @@ class Game(object):
         until the game is finished.
         """
         p = Parser()
-        print("\n" * 100)
-        self.game_intro()
-        print("\n" * 100)
+        if self.event_status < 1:
+            print("\n" * 100)
+            self.game_intro()
+            print("\n" * 100)
 
         playing = True
         while playing:
@@ -164,6 +168,7 @@ class Game(object):
                 user_game_selection = input(">")
                 user_game = saved_games[int(user_game_selection) - 1]
                 print("Loading game: {0}".format(user_game))
+                print("\n" * 100)
                 self.load_game(os.path.join(saved_games_dir, user_game))
             else:
                 print("Huh? That doesn't make any sense.")
@@ -316,6 +321,7 @@ class Game(object):
         load_dir - str: The full filepath to the game instance's top level
                         directory.
         """
+        self.reset_game_fields()
         # Set Game data
         game_space_ids = []
         game_character_ids = []
@@ -514,9 +520,21 @@ class Game(object):
         if "hmi-50" in self.player.get_item_names():
             self.player.set_capacity(DEFAULT_CAPACITY + 50)
 
+    def reset_game_fields(self):
+        """Reset all fields to empty.
+        """
+        self.player = None
+        self.event_status = 0 # set accordingly for player achievments
+        self.event_status_list = [False, False, False, False, False, False, False, False]
+        self.spaces = []
+        self.characters = []
+        self.exits = []
+        self.items = []
+
 def get_command():
     """Get a single line command from the user.
     """
+    tcflush(sys.stdin, TCIFLUSH)
     command = input("\nEnter a command\n>>> ")
     return command
 
