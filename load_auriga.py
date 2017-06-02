@@ -359,6 +359,7 @@ def main():
     auriga = Auriga()
 
     valid_choice = True
+    saved_games = True
 
     # Load Game Menu
     while True:
@@ -366,6 +367,10 @@ def main():
         if not valid_choice:
             print("What?? That's not a choice!\n\nSeriously though... ", end="")
             valid_choice = True
+        elif not saved_games:
+            print("There are no saved games to load. You must start a new game.\n")
+            saved_games = True
+
         print("Would you like to start a new game or load an existing saved game?")
         print("Enter the number of your choice.")
         print("1. New Game")
@@ -386,11 +391,7 @@ def main():
                     os.makedirs(saved_games_dir)
                 # Print an error if there are no saved games
                 saved_games = [game for game in os.listdir(saved_games_dir)]
-                if not saved_games:
-                    print("\n" * 100)
-                    print("There are no saved games to load.")
-                    print("You must start a new game.\n\n")
-                else:
+                if saved_games:
                     # Print Available Saved Games
                     print("\n" * 100)
                     print("Enter the number of the game you want to load.")
