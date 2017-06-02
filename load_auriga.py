@@ -358,16 +358,21 @@ def main():
     # Create an instance of the Auriga game
     auriga = Auriga()
 
+    valid_choice = True
+
     # Load Game Menu
     while True:
         print("\n" * 100)
-        print("Would you like to start a new game, or load an existing saved game?")
+        if not valid_choice:
+            print("What?? That's not a choice!\n\nSeriously though... ", end="")
+            valid_choice = True
+        print("Would you like to start a new game or load an existing saved game?")
         print("Enter the number of your choice.")
         print("1. New Game")
         print("2. Load Saved Game")
-        print("Enter 'q' to quit.")
-        valid_input = ["1", "2", "q"]
-        user_selection = input(">").lower()
+        print("3. Exit Game")
+        valid_input = ["1", "2", "3"]
+        user_selection = input("> ")
 
         if user_selection in valid_input:
             if user_selection == "1":
@@ -408,12 +413,10 @@ def main():
                         print("\n" * 100)
                         print("You entered an invalid selection.")
                         print("Enter a number between {0} and {1}.\n\n".format(1, len(saved_games)))
-            elif user_selection == "q":
+            elif user_selection == "3":
                 sys.exit()
-            else:
-                print("You've entered invalid input.\n\n")
         else:
-            print("{0} is not a valid input.\n\n".format(user_selection))
+            valid_choice = False
 
     auriga.start()
 
