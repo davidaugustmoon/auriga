@@ -95,7 +95,8 @@ class Game(object):
 
         playing = True
         while playing:
-            if not background_music:
+            if background_music.poll() is not None:
+                print("Starting background music again.")
                 devnull = open(os.devnull, 'wb')
                 background_music = subprocess.Popen(["aplay", "sounds/dark_rumble.wav"],
                                                      stdout=subprocess.PIPE, stderr=devnull)
