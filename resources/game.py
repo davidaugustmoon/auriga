@@ -40,6 +40,9 @@ LOADGAME = "loadgame"
 commands = [GO, TAKE, DROP, TALK, LOOK, SAVEGAME, QUIT, LOOK_AT, LISTEN,
             PULL, PUSH, CHARGE, USE, WAIT, HELP, INVENTORY, LOADGAME]
 
+BACKGROUND_MUSIC = "dark_rumble.wav"
+EVENT_MUSIC = "epic_combat.wav"
+
 class Game(object):
     def __init__(self, player=None):
         if player:
@@ -50,6 +53,8 @@ class Game(object):
         self.characters = []
         self.exits = []
         self.items = []
+        self.background_music = None
+        self.event_music = None
 
     def get_spaces(self):
         """Return all of the space objects in the game.
@@ -79,14 +84,33 @@ class Game(object):
         print("Characters: {}".format([c.name for c in self.characters]))
         print("Items: {}".format([i.name for i in self.items]))
 
+    def start_music(self, sound_file):
+        """Plays a music wav file.
+        Returns the pid of the subprocess that started the wav file.
+        """
+        # supress output from playing sound file
+        devnull = open(os.devnull, 'wb')
+        music = subprocess.Popen(["aplay", "sounds/" + sound_file],
+                                  stdout=subprocess.PIPE, stderr=devnull)
+        return music
+
+    def kill_music(self):
+        """Kills any music processes currently playing.
+        """
+        if self.background_music is not None \
+           and self.background_music.poll() is None:
+            self.background_music.kill()
+
+        if self.event_music is not None \
+           and self.event_music.poll() is None:
+            self.event_music.kill()
+
     def start(self):
         """Start the game. This is the main game loop. This loop does not exit
         until the game is finished.
         """
-        # supress output from playing sound file
-        devnull = open(os.devnull, 'wb')
-        background_music = subprocess.Popen(["aplay", "sounds/dark_rumble.wav"],
-                                             stdout=subprocess.PIPE, stderr=devnull)
+        self.background_music = self.start_music(BACKGROUND_MUSIC)
+
         p = Parser()
         if self.event_status < 1:
             print("\n" * 100)
@@ -95,10 +119,10 @@ class Game(object):
 
         playing = True
         while playing:
-            if background_music.poll() is not None:
-                devnull = open(os.devnull, 'wb')
-                background_music = subprocess.Popen(["aplay", "sounds/dark_rumble.wav"],
-                                                     stdout=subprocess.PIPE, stderr=devnull)
+            # If background music loop has stopped, restart it.
+            if self.background_music.poll() is not None:
+                self.background_music = self.start_music(BACKGROUND_MUSIC)
+
             self.check_upgrades()
             self.check_energy()
             self.check_event_status()
@@ -136,7 +160,7 @@ class Game(object):
 
             elif cmd_action == QUIT:
                 print("Exiting the game...")
-                background_music.kill()
+                self.kill_music()
                 return
 
             elif cmd_action == LOOK_AT:
