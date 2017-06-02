@@ -40,6 +40,7 @@
     "pull": "pull",
     "push": "push",
     "put": "drop",
+    "q": "quit",
     "quit": "quit",
     "re-energize": "recharge",
     "reboost": "recharge",
