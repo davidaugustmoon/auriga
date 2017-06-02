@@ -13,19 +13,19 @@ class Exit(object):
         """
         An exit to a Space.
         :param id - int: An auto-generated unique id for this object.
-        :param str - name: The name of the exit.
+        :param name - str: The name of the exit.
                e.g. "Door", "Tunnel"
-        :param str - description: A detailed description of the exit.
+        :param description - str: A detailed description of the exit.
                e.g. "A large steel door", "A long dark tunnel"
-        :param Space - space: The Space that this exit leads to.
-        :param bool - locked: True --> Exit is locked, and can't be used
+        :param space - Space: The Space that this exit leads to.
+        :param locked - bool: True --> Exit is locked, and can't be used
                unless the player holds/uses the 'unlock_item'
                False --> Exit is unlocked.
-        :param bool - visible: True --> Exit is visible to the player.
+        :param visible - bool: True --> Exit is visible to the player.
                False --> Exit is not visible to the player.
-        :param Item - unlock_item: The item that is required to unlock this
+        :param unlock_item - Item: The item that is required to unlock this
                exit.
-        :param str - direction: The direction of the Exit from the Space it exits.
+        :param direction - str: The direction of the Exit from the Space it exits.
         """
         if new_id:
             self.id = new_id
@@ -47,7 +47,7 @@ class Exit(object):
     def set_id(self, new_id):
         """Set the unique id of this exit.
 
-        new_id - str: The unique id to set for this exit
+        :param new_id - str: The unique id to set for this exit
         """
         self.id = new_id
 
@@ -60,7 +60,7 @@ class Exit(object):
     def set_name(self, new_name):
         """Set the name of the exit.
 
-        new_name - str: The name to set for this exit.
+        :param new_name - str: The name to set for this exit.
         """
         self.name = new_name
 
@@ -82,7 +82,7 @@ class Exit(object):
     def set_is_locked(self, lock_value):
         """Set whether this exit is locked to the player.
 
-        lock_value - Bool: Whether this exit is locked to the player
+        :param lock_value - bool: Whether this exit is locked to the player
         """
         self.locked = lock_value
 
@@ -94,7 +94,7 @@ class Exit(object):
     def set_is_visible(self, visible_value):
         """Set whether this exit is visible to the player.
 
-        visible_value - Bool: Whether this exit is visible to the player
+        :param visible_value - bool: Whether this exit is visible to the player
         """
         self.visible = visible_value
 
@@ -110,8 +110,8 @@ class Exit(object):
         return self.direction
 
     def to_json_dict(self):
-        """Write the fields of this exit to a json dict. Writes any object's
-        id to the dict.
+        """Write the fields of this exit to a JSON dict. Writes any object's
+        ID to the dict.
         """
         json_dict = {}
         json_dict['id'] = self.id

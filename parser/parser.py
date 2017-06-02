@@ -63,7 +63,7 @@ class Parser:
         """
         Split space-separated string into tokens.
         
-        :param str - string: raw string, possibly containing whitespace
+        :param string - str: raw string, possibly containing whitespace
 
         :return list: string tokens after separating at whitespace
         """
@@ -74,7 +74,7 @@ class Parser:
         """
         Wrapper for create_multiword_list().
 
-        :param str - string: command to parse
+        :param string - str: command to parse
 
         :return list: elements of command
         """
@@ -85,7 +85,7 @@ class Parser:
         """
         Returns list of strings after removing all occurrences of "a", "an", and "the".
 
-        :param list - input_list: list of strings
+        :param input_list - list of str: list of strings
 
         :return list: list of strings after removing articles
         """
@@ -98,7 +98,7 @@ class Parser:
         Returns the canonical name for an action either the Player or Game can execute,
         unless the list does not contain a valid synonym for any action.
 
-        :param list - input_list: list of strings
+        :param input_list - list of str: list of strings
 
         :return str: the canonical name for an action, or None
         """
@@ -119,7 +119,7 @@ class Parser:
         """
         Returns a list containing every preposition found in the input string list.
 
-        :param list - input_list: list of strings
+        :param input_list - list of str: list of strings
 
         :return list: a list of all strings determined to be prepositions
         """
@@ -143,10 +143,10 @@ class Parser:
         Citation: http://stackoverflow.com/a/2587419 for creating a new
             sorted list based on string length.
 
-        :param list - input_list: list containing strings to search for in
+        :param input_list - list of str: list containing strings to search for in
                other parameters
-        :param list - core_list: list with canonical names only
-        :param list - alt_list: dictionary with synonym names as keys mapped
+        :param core_list - list of str: list with canonical names only
+        :param alt_list - list of str: dictionary with synonym names as keys mapped
                to canonical names as values
 
         :return str: the matching/corresponding canonical name if found,
@@ -192,7 +192,7 @@ class Parser:
 
         Note: if multiple Exit names/synonyms are in input_list, the result is indeterminate.
 
-        :param list - input_list: parsed list of strings from command
+        :param input_list - list of str: parsed list of strings from command
 
         :return str: type of Exit, or None.
         """
@@ -207,7 +207,7 @@ class Parser:
 
         Note: if multiple Item names/synonyms are in input_list, the result is indeterminate.
 
-        :param list - input_list: parsed list of strings from command
+        :param input_list - list of str: parsed list of strings from command
 
         :return str: canonical name of matched Item, or None.
         """
@@ -222,7 +222,7 @@ class Parser:
 
         Note: if multiple Character names/synonyms are in input_list, the result is indeterminate.
 
-        :param list - input_list: parsed list of strings from command
+        :param input_list - list of str: parsed list of strings from command
 
         :return str: canonical name of matched Character, or None.
         """
@@ -242,7 +242,7 @@ class Parser:
         Note: if multiple direction names/synonyms are in input_list, the result is
         indeterminate.
 
-        :param list - input_list: parsed list of strings from command
+        :param input_list - list of str: parsed list of strings from command
 
         :return str: canonical name of matched direction, or None.
         """
@@ -274,12 +274,13 @@ class Parser:
         '''
         Return disambiguated command request parsed from user input in the form of 
         a five-tuple: (action, location, direction, item, character)
-        
-        action =     command name or actual method pointer, None if invalid
-        exit =       identity name of exit type to use, or None
-        direction =  cardinal direction name specifying location of exit, or None
-        item =       identity name of item action applied to, or None
-        character =  identity name of character action applied to, or None
+
+        :return tuple of str:
+            action =     command name or actual method pointer, None if invalid
+            exit =       identity name of exit type to use, or None
+            direction =  cardinal direction name specifying location of exit, or None
+            item =       identity name of item action applied to, or None
+            character =  identity name of character action applied to, or None
         '''
 
         if cmd_str is None:

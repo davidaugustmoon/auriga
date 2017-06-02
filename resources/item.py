@@ -19,11 +19,11 @@ class Item(object):
                relative to a player or character's capacity to hold items.
                i.e. lbs, kg, gallons, GB, etc.
         :param description - str: A description of this item."
-        :param visible - boolean: True --> This item is visible.
+        :param visible - bool: True --> This item is visible.
                False --> This item is not visible.
                Note: This can be used to hide an item from a player until
                      they have accomplished some task.
-        :param locked - boolean: True --> This item can be picked up.
+        :param locked - bool: True --> This item can be picked up.
                False --> This item cannot be picked up.
                Note: This can be used to not allow a player to pick up
                      an item until they have accomplished some task.
@@ -46,7 +46,7 @@ class Item(object):
     def set_id(self, new_id):
         """Set the unique id of this item.
 
-        new_id - str: A unique id for this item
+        :param new_id - str: A unique id for this item
         """
         self.id = new_id
 
@@ -73,7 +73,7 @@ class Item(object):
     def set_visible(self, visible_value):
         """Set whether this item is visible to the player.
         
-        visible_value - Bool: Whether the player can see this item
+        :param visible_value - bool: Whether the player can see this item
         """
         self.visible = visible_value
 
@@ -87,12 +87,12 @@ class Item(object):
     def set_locked(self, locked_value):
         """Set whether the player can pick up this item.
 
-        locked_value - Bool: Whether the player can pick up this item
+        :param locked_value - bool: Whether the player can pick up this item
         """
         self.locked = locked_value
 
     def to_json_dict(self):
-        """Write the fields of this item to a json dict.
+        """Write the fields of this item to a JSON dict.
         """
         json_dict = {}
         json_dict['id'] = self.id

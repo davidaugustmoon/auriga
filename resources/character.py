@@ -42,7 +42,7 @@ class Character(object):
     def set_id(self, new_id):
         """Set the unique id for this character.
 
-        new_id - str: The unique id to set for this character.
+        :param new_id - str: The unique id to set for this character.
         """
         self.id = new_id
 
@@ -54,7 +54,7 @@ class Character(object):
     def set_name(self, new_name):
         """Set the name of this character.
 
-        new_name - str: The name to set for this character
+        :param new_name - str: The name to set for this character
         """
         self.name = new_name
 
@@ -66,7 +66,7 @@ class Character(object):
     def set_description(self, new_description):
         """Set the description of this character.
 
-        new_description - str: The description to set for this character
+        :param new_description - str: The description to set for this character
         """
         self.description = new_description
 
@@ -79,13 +79,13 @@ class Character(object):
     def set_response(self, response_list):
         """Set the response list for this character.
 
-        response_list - list of str: The list of repsonses for this character
+        :param response_list - list of str: The list of repsonses for this character
                                      in a game
         """
         self.response = response_list
 
     def to_json_dict(self):
-        """Write the fields of this character to a json dict.
+        """Write the fields of this character to a JSON dict.
         """
         json_dict = {}
         json_dict['id'] = self.id
@@ -105,6 +105,6 @@ class Character(object):
     def print_response(self, index):
         """Print this character's reponse for the given index.
 
-        index - int: The index of the response to print
+        :param index - int: The index of the response to print
         """
         print("\n[{0}] {1}".format(self.name.upper(), self.response[index]))

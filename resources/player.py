@@ -49,7 +49,7 @@ class Player(object):
     def set_name(self, new_name):
         """Set the name of the player.
 
-        new_name - str: The name to set for the player
+        :param new_name - str: The name to set for the player
         """
         self.name = new_name
 
@@ -61,7 +61,7 @@ class Player(object):
     def set_description(self, new_description):
         """Set the description of the player.
 
-        new_description - str: The description to set for this player
+        :param new_description - str: The description to set for this player
         """
         self.description = new_description
 
@@ -73,7 +73,7 @@ class Player(object):
     def set_capacity(self, new_capacity):
         """Set the capacity this player can carry.
 
-        new_capacity - float: The capacity this player can carry.
+        :param new_capacity - float: The capacity this player can carry.
         """
         self.capacity = new_capacity
 
@@ -85,7 +85,7 @@ class Player(object):
     def set_items(self, new_items_list):
         """Set the list of items carried by this player.
 
-        new_items_list - list of Item: The list of items to be carried by
+        :param new_items_list - list of Item: The list of items to be carried by
                                        this player
         """
         self.items = new_items_list
@@ -93,7 +93,7 @@ class Player(object):
     def add_item(self, item_to_add):
         """Add an item to this player's currently carried items.
 
-        item_to_add - Item: The item to add to this player's currently
+        :param item_to_add - Item: The item to add to this player's currently
                             carried items
         """
         self.items.append(item_to_add)
@@ -101,7 +101,7 @@ class Player(object):
     def remove_item(self, item_to_remove):
         """Remove an item from this player's currently carried items.
 
-        item_to_remove - Item: The item to remove from the player's carried
+        :param item_to_remove - Item: The item to remove from the player's carried
                                items
         """
         if item_to_remove in self.items:
@@ -128,7 +128,7 @@ class Player(object):
     def set_location(self, new_location):
         """Set this player's current location.
 
-        new_location - Space: The location to set for this player's current
+        :param new_location - Space: The location to set for this player's current
                               location.
         """
         self.location = new_location
@@ -141,7 +141,7 @@ class Player(object):
     def set_alive(self, new_alive):
         """Set whether this player is alive.
 
-        new_alive - Bool: Whether this player is alive.
+        :param new_alive - bool: Whether this player is alive.
         """
         self.alive = new_alive
 
@@ -153,7 +153,7 @@ class Player(object):
     def set_energy(self, new_energy):
         """Set the player's energy level.
 
-        new_energy - float: The energy level to set for the player
+        :param new_energy - float: The energy level to set for the player
         """
         if new_energy < 0:
             self.energy = 0
@@ -164,11 +164,11 @@ class Player(object):
         """An action to move the player from their current location to
         another location.
 
-        event_status - int: The current status of events the player has
+        :param event_status - int: The current status of events the player has
                             achieved.
-        direction - str: The cardinal direction the player would like
+        :param direction - str: The cardinal direction the player would like
                          to move.
-        exit_name - str: The name (short description) of the exit the
+        :param exit_name - str: The name (short description) of the exit the
                          player would like to use
         """
         exit = None
@@ -220,7 +220,7 @@ class Player(object):
     def take(self, item_name):
         """Take an item from the player's current location.
 
-        item_name - str: The name of the item to take
+        :param item_name - str: The name of the item to take
         """
         print()
         item = None
@@ -247,8 +247,8 @@ class Player(object):
     def talk(self, character_name, event_status):
         """Talk to a character in the player's current location.
 
-        character_name - str: The name of the character to talk to
-        event_status - int: The current status of events the player has
+        :param character_name - str: The name of the character to talk to
+        :param event_status - int: The current status of events the player has
                             achieved.
         """
         print()
@@ -266,7 +266,7 @@ class Player(object):
         """Drop an item currently carried by the player in the player's
         current location.
 
-        item_name - str: The name of the item to drop
+        :param item_name - str: The name of the item to drop
         """
         print()
         item = None
@@ -284,7 +284,7 @@ class Player(object):
     def look(self, event_status):
         """Look at the player's current location.
 
-        event_status - int: The current status of events the player has
+        :param event_status - int: The current status of events the player has
                             achieved.
         """
         print(self.location.print_long_description(event_status))
@@ -293,7 +293,7 @@ class Player(object):
     def look_at(self, item_name):
         """Look at an item.
 
-        item_name - str: The name of the item to look at
+        :param item_name - str: The name of the item to look at
         """
         item = None
         if item_name:
@@ -360,7 +360,7 @@ class Player(object):
         print("Energy: {}".format(energy_level))
 
     def to_json_dict(self):
-        """Write the fields of this player to a json dict. For objects, ids
+        """Write the fields of this player to a JSON dict. For objects, IDs
         are written to the dict.
         """
         json_dict = {}

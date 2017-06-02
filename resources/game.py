@@ -182,7 +182,7 @@ class Game(object):
     def set_player(self, new_player):
         """Set the main player in the game.
 
-        new_player - Player: The player in the game
+        :param new_player - Player: The player in the game
         """
         self.player = new_player
 
@@ -318,7 +318,7 @@ class Game(object):
     def load_game(self, load_dir):
         """Load a game instance from json files.
 
-        load_dir - str: The full filepath to the game instance's top level
+        :param load_dir - str: The full filepath to the game instance's top level
                         directory.
         """
         self.reset_game_fields()
@@ -541,8 +541,8 @@ def get_command():
 def print_space_info(space, event_index):
     """Print details about a particular space.
 
-    space - Space: The space to print details about
-    event_index - int: The int that corresponds to the player's current
+    :param space - Space: The space to print details about
+    :param event_index - int: The int that corresponds to the player's current
                        achievements
     """
     space.print_details(event_index)
@@ -550,7 +550,7 @@ def print_space_info(space, event_index):
 def print_player_info(player):
     """Print information about the player.
 
-    player - Player: The player to print information about
+    :param player - Player: The player to print information about
     """
     print("\nPLAYER INFO:")
     player.print_energy()

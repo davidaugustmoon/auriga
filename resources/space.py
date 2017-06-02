@@ -23,13 +23,13 @@ class Space(object):
                of this space. A list of descriptions allows for indexing based
                on the state of the space.
         :param short_description - str: A brief description of this space.
-        :param exits - list of exits: A list of exits in this
+        :param exits - list of Exit: A list of exits in this
                space.
-        :param visible - boolean: True --> this space is visible;
+        :param visible - bool: True --> this space is visible;
                False --> this space is not visible.
                Note: This can be used to hide a space from a player until
                      they have accomplished some task.
-        :param locked - boolean: True --> this space is locked;
+        :param locked - bool: True --> this space is locked;
                False --> this space is unlocked
                Note: This can be used to not allow a player to enter a space
                      until they have accomplished some task.
@@ -66,7 +66,7 @@ class Space(object):
     def set_id(self, new_id):
         """Set the unique id of this space.
 
-        new_id - str: The unique id to set for this space
+        :param new_id - str: The unique id to set for this space
         """
         self.id = new_id
 
@@ -78,7 +78,7 @@ class Space(object):
     def set_name(self, name_to_set):
         """Set the name of this space.
 
-        name_to_set - str: The name to set for this space
+        :param name_to_set - str: The name to set for this space
         """
         self.name = name_to_set
 
@@ -90,7 +90,7 @@ class Space(object):
     def set_items(self, new_items_list):
         """Set the list of items in this space.
 
-        new_items_list - list of Item: The list of item objects in this
+        :param new_items_list - list of Item: The list of item objects in this
                                         space
         """
         self.items = new_items_list
@@ -98,7 +98,7 @@ class Space(object):
     def add_item(self, item_to_add):
         """Add an item to this space.
 
-        item_to_add - Item: The item to add to this space
+        :param item_to_add - Item: The item to add to this space
         """
         self.items.append(item_to_add)
         item_to_add.location = self
@@ -106,7 +106,7 @@ class Space(object):
     def remove_item(self, item_to_remove):
         """Remove an item from this space.
 
-        item_to_remove - Item: The item to remove from this space
+        :param item_to_remove - Item: The item to remove from this space
         """
         if item_to_remove in self.items:
             self.items.remove(item_to_remove)
@@ -119,7 +119,7 @@ class Space(object):
     def set_exits(self, new_exit_list):
         """Set the list of exits in this space.
 
-        new_exit_list - list of Exit: The list of exits to set for this
+        :param new_exit_list - list of Exit: The list of exits to set for this
                                       space
         """
         self.exits = new_exit_list
@@ -127,14 +127,14 @@ class Space(object):
     def add_exit(self, exit):
         """Add an exit to this space.
 
-        exit - Exit: The exit to add to this space
+        :param exit - Exit: The exit to add to this space
         """
         self.exits.append(exit)
 
     def remove_exit(self, exit_to_remove):
         """Remove an exit from this space.
 
-        exit_to_remove - Exit: The exit to remove from this space
+        :param exit_to_remove - Exit: The exit to remove from this space
         """
         if exit_to_remove in self.exits:
             self.exits.remove(exit_to_remove)
@@ -147,7 +147,7 @@ class Space(object):
     def set_characters(self, new_characters_list):
         """Set the list of characters in this space.
 
-        new_character_list - list of Character: The list of characters in
+        :param new_character_list - list of Character: The list of characters in
                                                 this space
         """
         self.characters = new_characters_list
@@ -155,14 +155,14 @@ class Space(object):
     def add_character(self, character_to_add):
         """Add a character to this space.
 
-        character_to_add - Character: The character to add to this space
+        :param character_to_add - Character: The character to add to this space
         """
         self.characters.append(character_to_add)
 
     def remove_character(self, character_to_remove):
         """Remove a character from this space.
 
-        character_to_remove - Character: The character to remove from this
+        :param character_to_remove - Character: The character to remove from this
                                          space
         """
         if character_to_remove in self.characters:
@@ -176,7 +176,7 @@ class Space(object):
     def set_visited(self, new_visited):
         """Set whether the player has visited this space.
 
-        new_visited - Bool: Whether the player has visited this space
+        :param new_visited - bool: Whether the player has visited this space
         """
         self.visited = new_visited
 
@@ -185,7 +185,7 @@ class Space(object):
         space has been visited, a short description is printed. If the space
         has not been visited, a more detailed description is printed.
 
-        index - int: The index of the description to print for this space
+        :param index - int: The index of the description to print for this space
         """
         if self.visited:
             print("\n{0}".format(self.short_description))
@@ -200,7 +200,7 @@ class Space(object):
     def print_long_description(self, index):
         """Print a detailed description of this space, for the given index.
 
-        index - int: The index of the description to print for this space
+        :param index - int: The index of the description to print for this space
         """
         print("\n{0}".format(self.long_description[index]))
 
@@ -230,8 +230,8 @@ class Space(object):
         print()
 
     def to_json_dict(self):
-        """Write the fields of this space to a json dict. For objects, their
-        ids are written to the dict.
+        """Write the fields of this space to a JSON dict. For objects, their
+        IDs are written to the dict.
         """
         json_dict = {}
         json_dict['id'] = self.id
