@@ -360,6 +360,7 @@ def main():
 
     # Load Game Menu
     while True:
+        print("\n" * 100)
         print("Would you like to start a new game, or load an existing saved game?")
         print("Enter the number of your choice.")
         print("1. New Game")
@@ -381,22 +382,30 @@ def main():
                 # Print an error if there are no saved games
                 saved_games = [game for game in os.listdir(saved_games_dir)]
                 if not saved_games:
+                    print("\n" * 100)
                     print("There are no saved games to load.")
                     print("You must start a new game.\n\n")
                 else:
                     # Print Available Saved Games
+                    print("\n" * 100)
                     print("Enter the number of the game you want to load.")
                     for index, sg in enumerate(saved_games):
                         print("{0}. {1}".format(index + 1, sg))
+                    print("Enter 'q' to go back.")
                     user_game_selection = input(">")
+                    if user_game_selection.lower() == "q":
+                        continue
                     # Valid user selection
-                    if user_game_selection >= 1 and user_game_selection <= len(saved_games):
+                    elif int(user_game_selection) >= 1 and int(user_game_selection) <= len(saved_games):
                         user_game = saved_games[int(user_game_selection) - 1]
+                        print("\n" * 100)
                         print("Loading game: {0}".format(user_game))
+                        print("\n" * 100)
                         auriga.load_game(os.path.join(saved_games_dir, user_game))
                         break
                     # Invalid user selection
                     else:
+                        print("\n" * 100)
                         print("You entered an invalid selection.")
                         print("Enter a number between {0} and {1}.\n\n".format(1, len(saved_games)))
             elif user_selection == "q":
