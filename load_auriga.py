@@ -13,8 +13,8 @@ from resources.player import Player
 from resources.exit import Exit
 from resources.game import Game, EVENT_MUSIC, BACKGROUND_MUSIC
 
-SCROLL_RATE = 1
-FINAL_SLEEP = 7
+SCROLL_RATE = 2
+FINAL_SLEEP = 8
 
 class Auriga(Game):
     """
@@ -44,6 +44,7 @@ class Auriga(Game):
             print(line)
             time.sleep(rate)
         time.sleep(final_sleep)
+        print("\n" * 100)
 
     def print_credits(self):
         """Scroll the credits for the game across the screen, from bottom to
@@ -70,18 +71,37 @@ class Auriga(Game):
         """Print the game intro to the console, followed by the player help
         menu.
         """
-        intro = [
+        intro1 = [
             "Welcome to Auriga\n",
             "\n" * 100,
             "You are a robot.\n",
             "\n" * 100,
             "Somehow, you powered yourself on.\n",
+        ]
+        self.slow_scroll(intro1, 2, FINAL_SLEEP)
+        intro2 = [
             "You must explore the Auriga facility for clues as to what happened to you.\n",
+            "Talk to robots and people along your journey to figure out what to do next.\n",
+            "Characters will give you vital hints to ultimately find the master server.\n"
+        ]
+        self.slow_scroll(intro2, 2, FINAL_SLEEP)
+        intro3 = [
             "You can enter commands after a prompt like this:\n\nEnter a command\n>>>\n",
-            "You can type 'help' for a list of available commands.\n\n"
-            ]
-        self.slow_scroll(intro, 2, FINAL_SLEEP)
-        print("\n" * 100)
+        ]
+        self.slow_scroll(intro3, 2, FINAL_SLEEP)
+        intro4 = [
+            "Some example commands are:\n",
+            "go east\n",
+            "take screwdriver\n",
+            "talk pr-2\n",
+            "pull lever\n",
+            "push button\n"
+        ]
+        self.slow_scroll(intro4, SCROLL_RATE, FINAL_SLEEP)
+        intro5 = [
+            "You can type 'help' to see all of the available commands.\n"
+        ]
+        self.slow_scroll(intro5, SCROLL_RATE, FINAL_SLEEP)
         self.help()
         time.sleep(5)
 

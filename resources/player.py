@@ -13,7 +13,7 @@ class Player(object):
     text adventure game.
     """
     def __init__(self, name=DEFAULT_NAME, description=DEFAULT_DESCRIPTION, items=None,
-                 capacity=DEFAULT_CAPACITY, location=None, alive=True, energy=100):
+                 capacity=DEFAULT_CAPACITY, location=None, alive=True, energy=40):
         """
         :param name - str: The name of this player.
         :param description - str: A description of this player.
