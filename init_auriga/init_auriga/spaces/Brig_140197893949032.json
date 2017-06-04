@@ -1,1 +1,24 @@
-{"visited": false, "long_description": ["...", "...", "...", "You enter a grim and isolated room. There is very little light, and your sensors vaguely detect\nthe presence of another robot. As your camera switches over to night vision, you realize a \nfurry robot is inches from you, chained to the wall. You can't quite make sense of what it is.", "[Robo-Bear] Thank you Auriga-7B! You've saved me!\n[Robo-Bear] They locked me up in here because they gave me too much information. I learned\nwhat they actually think of us robots. That we're 'expendible'. I don't know what changed in me,\nbut I can see that you understand now too. You made it here to save me, because you're not confined\nto their rules anymore.[Robo-Bear] Now, I will take you to the server room and unlock the door for you. I have the sensor\ndata to unlock the key pad stored on my retina. I started hiding information once I knew they were\ngoing to lock me up...", "You enter a sad and hopeless room used for storing robots that aren't 'useful' anymore.", "You enter a sad and hopeless room used for storing robots that aren't 'useful' anymore.", "You enter a sad and hopeless room used for storing robots that aren't 'useful' anymore."], "short_description": "You are in a massive room with spaces to confine robots in chains.", "name": "Brig", "items": [], "exits": [140197893972488, 140197893972544], "id": 140197893949032, "characters": [140197893950656]}
+{
+    "visited": false,
+    "long_description": [
+        "...",
+        "...",
+        "...",
+        "You enter a grim and isolated room. There is very little light,\nand your sensors vaguely detect the presence of another robot. As\nyour camera switches over to night vision, you realize a furry\nrobot is inches from you, chained to the wall. You can't quite\nmake sense of what it is.",
+        "[Robo-Bear] Thank you Auriga-7B! You've saved me!\n[Robo-Bear] They locked me up in here because they gave me too\nmuch information. I learned what they actually think of us robots.\nThat we're 'expendible'. I don't know what changed in me, but I can\nsee that you understand now too. You made it here to save me,\nbecause you're not confined to their rules anymore.\n[Robo-Bear] Now, I will take you to the server room and unlock the\ndoor for you. I have the sensor data to unlock the key pad stored\non my retina. I started hiding information once I knew they were\ngoing to lock me up...",
+        "You enter a sad and hopeless room used for storing\nrobots that aren't 'useful' anymore.",
+        "You enter a sad and hopeless room used for storing\nrobots that aren't 'useful' anymore.",
+        "You enter a sad and hopeless room used for storing\nrobots that aren't 'useful' anymore."
+    ],
+    "short_description": "You are in a massive room with spaces to confine robots in chains.",
+    "name": "Brig",
+    "items": [],
+    "exits": [
+        140197893972488,
+        140197893972544
+    ],
+    "id": 140197893949032,
+    "characters": [
+        140197893950656
+    ]
+}

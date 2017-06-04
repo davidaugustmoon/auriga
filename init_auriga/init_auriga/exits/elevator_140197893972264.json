@@ -1,1 +1,10 @@
-{"visible": true, "description": "an elevator with a badge scanner to activate it.", "space": 140197920299328, "unlock_item": 140197893949648, "direction": "down", "id": 140197893972264, "locked": true, "name": "elevator"}
+{
+    "visible": true,
+    "description": "an elevator with a badge scanner to activate it.",
+    "space": 140197920299328,
+    "unlock_item": 140197893949648,
+    "direction": "down",
+    "id": 140197893972264,
+    "locked": true,
+    "name": "elevator"
+}

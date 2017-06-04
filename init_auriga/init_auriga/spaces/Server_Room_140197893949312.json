@@ -1,0 +1,22 @@
+{
+    "visited": false,
+    "long_description": [
+        "...",
+        "...",
+        "...",
+        "...",
+        "As the door opens you see massive towers of computers that nearly\ntouch the ceiling. Your sensors detect that the room is nearly 20\ndegrees hotter than the rest of the building. There is a loud hum\nas all of the servers work to power the technology in the building.\nThere is one central machine with a monitor and a command prompt.\nThe only text on the screen is:\n\n$ lsusb?\n",
+        "The servers all around you are in overdrive. The central terminal\nreads:\n\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\n....",
+        "The servers all around you are in overdrive. The central terminal\nreads:\n\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\nCOME BACK TO ME\n...."
+    ],
+    "short_description": "You are in a room filled to the ceiling with computers.",
+    "name": "Server Room",
+    "items": [
+        140197893949984
+    ],
+    "exits": [
+        140197893972880
+    ],
+    "id": 140197893949312,
+    "characters": []
+}

@@ -1,0 +1,29 @@
+{
+    "visited": false,
+    "long_description": [
+        "...",
+        "You find yourself in a massive room with an 80-foot ceiling. The\nroom is so big that it could easily hold several airplanes or\nhelocopters. You see a small lever at the end of a row of employee\nlockers.",
+        "You enter the testing hangar and see Freight-500 working like\ncrazy to complete its tasks.",
+        "You enter the giant testing hangar and Freight-500 seems to be\nwandering aimlessly.",
+        "You enter the testing hangar and see Freight-500 working like\ncrazy to complete its tasks.",
+        "You enter the massive open room and see Freight-500 docked on a\ncharger. The hum of his fan makes it almost sound like he's\nsnoring.",
+        "As you enter the testing hangar, Freight-500 zooms up to you."
+    ],
+    "short_description": "You are in a massive open room.",
+    "name": "Testing Hangar",
+    "items": [
+        140197893949424,
+        140197893949592,
+        140197893950264
+    ],
+    "exits": [
+        140197893950824,
+        140197893950880,
+        140197893950936
+    ],
+    "id": 140197920325360,
+    "characters": [
+        140197893950432,
+        140197893950544
+    ]
+}

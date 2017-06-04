@@ -1,0 +1,8 @@
+{
+    "description": "A shelving attachment for a robot that increases its capacity by\n25 lbs.",
+    "weight": 0,
+    "locked": false,
+    "id": 140197893950096,
+    "visible": true,
+    "name": "HMI-25"
+}

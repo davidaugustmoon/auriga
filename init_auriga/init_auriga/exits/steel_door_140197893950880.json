@@ -1,0 +1,10 @@
+{
+    "visible": true,
+    "description": "a large steel door, big enough for a small truck to drive\nthrough.",
+    "space": 140197920299328,
+    "unlock_item": null,
+    "direction": "south",
+    "id": 140197893950880,
+    "locked": false,
+    "name": "steel door"
+}

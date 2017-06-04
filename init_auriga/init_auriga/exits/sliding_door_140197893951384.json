@@ -1,0 +1,10 @@
+{
+    "visible": true,
+    "description": "a wooden door that slides into the wall.",
+    "space": 140197920299328,
+    "unlock_item": null,
+    "direction": "east",
+    "id": 140197893951384,
+    "locked": false,
+    "name": "sliding door"
+}

@@ -1,0 +1,24 @@
+{
+    "visited": false,
+    "long_description": [
+        "...",
+        "...",
+        "...",
+        "You roll off the elevator into a long hallway that matches the\nhallway below, although it has one less door. It is long and\nbrightly lit. Your audio sensors detect faint readings to the\nnorth.",
+        "You enter a long and brightly lit hallway.",
+        "You enter a long and brightly lit hallway.",
+        "You enter a long and brightly lit hallway.",
+        "You enter a long and brightly lit hallway."
+    ],
+    "short_description": "You are in a long brightly lit hallway.",
+    "name": "Hallway 2",
+    "items": [],
+    "exits": [
+        140197893972264,
+        140197893972320,
+        140197893972376,
+        140197893972432
+    ],
+    "id": 140197893949088,
+    "characters": []
+}

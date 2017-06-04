@@ -1,1 +1,9 @@
-{"alive": true, "description": "This is a player.", "capacity": 30, "items": [], "energy": 100, "location": 140197920297312, "name": "Auriga-7B"}
+{
+    "alive": true,
+    "description": "This is a player.",
+    "capacity": 30,
+    "items": [],
+    "energy": 100,
+    "location": 140197920297312,
+    "name": "Auriga-7B"
+}

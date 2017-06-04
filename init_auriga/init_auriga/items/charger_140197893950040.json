@@ -1,1 +1,8 @@
-{"description": "an item", "weight": 1, "locked": true, "id": 140197893950040, "visible": true, "name": "charger"}
+{
+    "description": "an item",
+    "weight": 1,
+    "locked": true,
+    "id": 140197893950040,
+    "visible": true,
+    "name": "charger"
+}
