@@ -54,7 +54,7 @@ class Auriga(Game):
             "CREDITS",
             "Language Processing Developer..........Jason Goldfine-Middleton",
             "\n",
-            "Project Management.....................Greg Fernandez",
+            "Project Management/Tester.....................Greg Fernandez",
             "\n",
             "Game Engine Developer..................David Moon",
         ]
@@ -92,10 +92,10 @@ class Auriga(Game):
         intro4 = [
             "Some example commands are:\n",
             "go east\n",
-            "take screwdriver\n",
-            "talk pr-2\n",
+            "pick up the screwdriver\n",
+            "talk to PR-2\n",
             "pull lever\n",
-            "push button\n"
+            "push button down\n"
         ]
         self.slow_scroll(intro4, SCROLL_RATE, FINAL_SLEEP)
         intro5 = [

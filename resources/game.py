@@ -156,6 +156,9 @@ class Game(object):
             elif cmd_action == HELP:
                 self.help()
 
+                # wait for user to finish reading
+                input()
+
             elif cmd_action == INVENTORY:
                 self.player.print_inventory()
 
