@@ -11,7 +11,7 @@ from resources.item import Item
 from resources.character import Character
 from resources.player import Player
 from resources.exit import Exit
-from resources.game import Game, EVENT_MUSIC, BACKGROUND_MUSIC
+from resources.game import Game
 
 SCROLL_RATE = 2
 FINAL_SLEEP = 8
@@ -111,23 +111,15 @@ class Auriga(Game):
         # SPECIAL EVENT 3
         # Player makes it to 2nd floor
         if self.player.get_location().get_name() == "Hallway 2" and not self.event_status_list[3]:
-            self.kill_music()
-            self.event_music = self.start_music(EVENT_MUSIC)
             self.event_status += 1
             self.event_status_list[3] = True
             self.set_all_spaces_to_unvisited()
-            self.kill_music()
-            self.background_music = self.start_music(BACKGROUND_MUSIC)
         # SPECIAL EVENT 6
         # Player enters attic
         elif self.player.get_location().get_name() == "Attic" and not self.event_status_list[6]:
-            self.kill_music()
-            self.event_music = self.start_music(EVENT_MUSIC)
             self.event_status += 1
             self.event_status_list[6] = True
             self.set_all_spaces_to_unvisited()
-            self.kill_music()
-            self.background_music = self.start_music(BACKGROUND_MUSIC)
 
     def use(self, item_name):
         """Player uses an item
@@ -152,8 +144,6 @@ class Auriga(Game):
         # SPECIAL EVENT 2
         # Player uses ssd in testing hangar on Freight-500
         if item_name == "ssd" and cur_space.get_name() == "Testing Hangar" and not self.event_status_list[2]:
-            self.kill_music()
-            self.event_music = self.start_music(EVENT_MUSIC)
             self.event_status += 1
             self.event_status_list[2] = True
             self.player.remove_item(item)
@@ -179,13 +169,9 @@ class Auriga(Game):
                 "You notice a door that was blocked by the cargo, that your sensors couldn't detect before.\n"
             ]
             self.slow_scroll(output3, SCROLL_RATE, FINAL_SLEEP)
-            self.kill_music()
-            self.background_music = self.start_music(BACKGROUND_MUSIC)
 
             print("\n"*100)
         elif cur_space.get_name() == "Clean Room":
-            self.kill_music()
-            fetch_music = self.start_music("scary_dungeon.wav")
             output = [
                 "You attempt to use the {0} on Fetch-4, but something went terribly wrong!\n".format(item_name),
                 "fetch-4 begins smoking, and the head and arm begin moving faster and faster!\n",
@@ -202,13 +188,9 @@ class Auriga(Game):
             self.player.set_energy(self.player.get_energy() // 2)
             fetch4 = self.get_object_by_name(self.characters, "fetch-4")
             fetch4.response = ["...","...","...","...","...","...", "..."]
-            if fetch_music.poll() is None:
-                fetch_music.kill()
         # SPECIAL EVENT 4
         # Player installs external power supply on Robo-Bear
         elif item_name == "external power supply" and cur_space.get_name() == "Brig" and not self.event_status_list[4]:
-            self.kill_music()
-            self.event_music = self.start_music(EVENT_MUSIC)
             robo_bear = self.get_object_by_name(self.characters, "Robo-Bear")
             robo_bear.print_response(self.event_status)
             time.sleep(3)
@@ -233,13 +215,9 @@ class Auriga(Game):
             self.event_status += 1
             self.event_status_list[4] = True
             self.set_all_spaces_to_unvisited()
-            self.kill_music()
-            self.background_music = self.start_music(BACKGROUND_MUSIC)
         # SPECIAL EVENT 5
         # Player uses usb drive in server room
         elif item_name == "usb drive" and cur_space.get_name() == "Server Room" and not self.event_status_list[5]:
-            self.kill_music()
-            self.event_music = self.start_music(EVENT_MUSIC)
             self.event_status += 1
             self.event_status_list[5] = True
             self.set_all_spaces_to_unvisited()
@@ -266,13 +244,9 @@ class Auriga(Game):
                 ]
             self.slow_scroll(terminal_output2, SCROLL_RATE, FINAL_SLEEP)
             print("\n"*100)
-            self.kill_music()
-            self.background_music = self.start_music(BACKGROUND_MUSIC)
         # SPECIAL EVENT 7
         # Player uses ethernet cable in attic
         elif item_name == "ethernet cable" and cur_space.get_name() == "Attic" and not self.event_status_list[7]:
-            self.kill_music()
-            self.event_music = self.start_music(EVENT_MUSIC)
             self.event_status += 1
             self.event_status_list[7] = True
             output1 = [
@@ -317,8 +291,6 @@ class Auriga(Game):
             print("THE END")
             time.sleep(5)
             print("\n"*100)
-            self.kill_music()
-            self.background_music = self.start_music(BACKGROUND_MUSIC)
             self.print_credits()
             sys.exit()
         else:
@@ -347,8 +319,6 @@ class Auriga(Game):
         # SPECIAL EVENT 1:
         # Player pushes the button in the Assembly Room -> Unlocks door to Testing Hangar
         if item_name == "button" and cur_space.get_name() == "Assembly Room":
-            self.kill_music()
-            self.event_music = self.start_music(EVENT_MUSIC)
             testing_hanger_exit = self.get_object_by_name(cur_exits, "sliding door")
             testing_hanger_exit.set_is_locked(False)
             output1 = [
@@ -360,8 +330,6 @@ class Auriga(Game):
             print("\n"*100)
             self.event_status += 1
             self.event_status_list[1] = True
-            self.kill_music()
-            self.background_music = self.start_music(BACKGROUND_MUSIC)
         # More 'PUSH' cases here
         else:
             print("You pushed the {0}, and it made you feel nice.".format(item_name))
