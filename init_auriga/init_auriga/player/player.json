@@ -1,9 +1,9 @@
 {
     "alive": true,
     "description": "This is a player.",
-    "capacity": 30,
+    "capacity": 50,
     "items": [],
-    "energy": 100,
+    "energy": 30,
     "location": 140197920297312,
     "name": "Auriga-7B"
 }
