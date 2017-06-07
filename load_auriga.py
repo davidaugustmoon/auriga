@@ -133,7 +133,7 @@ class Auriga(Game):
         # Check if the player is carrying the item specified
         item = None
         for i in self.player.get_items():
-            if item_name.lower() == i.get_name().lower():
+            if item_name and (item_name.lower() == i.get_name().lower()):
                 item = i
                 break
 
@@ -354,12 +354,12 @@ class Auriga(Game):
         item = None
         cur_space = self.player.get_location()
         for i in cur_space.get_items():
-            if item_name.lower() == i.get_name().lower():
+            if item_name and item_name.lower() == i.get_name().lower():
                 item = i
                 break
 
         if not item:
-            print("{0} is not here.")
+            print("You can't push that.")
             return
 
         cur_exits = cur_space.get_exits()
@@ -393,7 +393,7 @@ class Auriga(Game):
         item = None
         cur_space = self.player.get_location()
         for i in cur_space.get_items():
-            if item_name.lower() == i.get_name().lower():
+            if item_name and item_name.lower() == i.get_name().lower():
                 item = i
                 break
 
