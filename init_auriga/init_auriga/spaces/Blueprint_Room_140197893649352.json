@@ -1,0 +1,21 @@
+{
+    "visited": false,
+    "long_description": [
+        "...",
+        "You enter a dimly lit room with rolled papers piled high on\nshelves and filling several bins.",
+        "You enter a dimly lit room with rolled papers piled high on\nshelves and filling several bins.",
+        "You enter a dimly lit room with rolled papers piled high on\nshelves and filling several bins.",
+        "You enter a dimly lit room with rolled papers piled high on\nshelves and filling several bins.",
+        "You enter a dimly lit room with rolled papers piled high on\nshelves and filling several bins.",
+        "You enter a dimly lit room with rolled papers piled high on\nshelves and filling several bins.",
+        "You enter a dimly lit room with rolled papers piled high on\nshelves and filling several bins."
+    ],
+    "short_description": "You are in a room with schematics and blueprints.",
+    "name": "Blueprint Room",
+    "items": [],
+    "exits": [
+        140197893951328
+    ],
+    "id": 140197893649352,
+    "characters": []
+}

@@ -1,1 +1,8 @@
-{"description": "an item", "weight": 1, "locked": false, "id": 140197893949536, "visible": true, "name": "screwdriver"}
+{
+    "description": "an item",
+    "weight": 1,
+    "locked": false,
+    "id": 140197893949536,
+    "visible": true,
+    "name": "screwdriver"
+}

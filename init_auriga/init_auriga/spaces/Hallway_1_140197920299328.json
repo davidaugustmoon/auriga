@@ -1,0 +1,26 @@
+{
+    "visited": false,
+    "long_description": [
+        "...",
+        "You enter a long, bright, and sterile hallway. There is an\nawkward man in an Auriga uniform frantically searching his pockets\nwhen, suddenly he looks up to see you and fear spreads across his\nface.",
+        "You enter a long hallway and see Jim pacing back and forth\nmumbling something to himself.",
+        "You enter a long hallway and see that Jim is sitting on the floor\nnear the entrance to the testing hangar.",
+        "You enter a hallway and...\n[Jim] Huh? What? Who's there?\n[Jim] Oh geez, Auriga-7B! You scared me!",
+        "You enter a long sterile hallway. Jim is standing with his hands\nin his pockets, still wondering where he left his badge.",
+        "You enter a long sterile hallway.\n[Jim] I hope they don't fire me for losing my badge! I like talking\nto all of you robots. Especially you, Auriga-7B."
+    ],
+    "short_description": "You are in a long hallway.",
+    "name": "Hallway 1",
+    "items": [],
+    "exits": [
+        140197893951048,
+        140197893951104,
+        140197893951160,
+        140197893951216,
+        140197893951272
+    ],
+    "id": 140197920299328,
+    "characters": [
+        140197893950488
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "visited": false,
+    "long_description": [
+        "...",
+        "You enter a small room with a few desks positioned to cordon the\nroom into smaller sections. Each desk seems to create an elaborate\nworkstation with a computer and 3 monitors.",
+        "You enter a small room with a few desks positioned to cordon the\nroom into smaller sections. Each desk seems to create an elaborate\nworkstation with a computer and 3 monitors.",
+        "You enter a small room with a few desks positioned to cordon the\nroom into smaller sections. Each desk seems to create an elaborate\nworkstation with a computer and 3 monitors.",
+        "You enter a small room with a few desks positioned to cordon the\nroom into smaller sections. Each desk seems to create an elaborate\nworkstation with a computer and 3 monitors.",
+        "You enter a small room with a few desks positioned to cordon the\nroom into smaller sections. Each desk seems to create an elaborate\nworkstation with a computer and 3 monitors.",
+        "You enter a small room with a few desks positioned to cordon the\nroom into smaller sections. Each desk seems to create an elaborate\nworkstation with a computer and 3 monitors."
+    ],
+    "short_description": "You are in a small room with computer docking stations.",
+    "name": "Computer Lab 2",
+    "items": [
+        140197893949872,
+        140197893949760
+    ],
+    "exits": [
+        140197893972152,
+        140197893972208
+    ],
+    "id": 140197893948976,
+    "characters": []
+}

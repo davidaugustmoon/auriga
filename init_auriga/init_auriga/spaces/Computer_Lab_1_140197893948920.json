@@ -1,0 +1,23 @@
+{
+    "visited": false,
+    "long_description": [
+        "...",
+        "You enter a small room with three rows of computers lined up on\ndesks. It appears to be a field support room with work stations.\nSome of the computers even look partially disassembled.",
+        "You enter a small room with three rows of computers lined up on\ndesks. It appears to be a field support room with work stations.\nSome of the computers even look partially disassembled.",
+        "You enter a small room with three rows of computers lined up on\ndesks. It appears to be a field support room with work stations.\nSome of the computers even look partially disassembled.",
+        "You enter a small room with three rows of computers lined up on\ndesks. It appears to be a field support room with work stations.\nSome of the computers even look partially disassembled.",
+        "You enter a small room with three rows of computers lined up on\ndesks. It appears to be a field support room with work stations.\nSome of the computers even look partially disassembled.",
+        "You enter a small room with three rows of computers lined up on\ndesks. It appears to be a field support room with work stations.\nSome of the computers even look partially disassembled."
+    ],
+    "short_description": "You are in a large room with several computers.",
+    "name": "Computer Lab 1",
+    "items": [
+        140197893949480
+    ],
+    "exits": [
+        140197893972040,
+        140197893972096
+    ],
+    "id": 140197893948920,
+    "characters": []
+}

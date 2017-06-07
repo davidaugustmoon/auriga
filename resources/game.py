@@ -40,8 +40,6 @@ LOADGAME = "loadgame"
 commands = [GO, TAKE, DROP, TALK, LOOK, SAVEGAME, QUIT, LOOK_AT, LISTEN,
             PULL, PUSH, CHARGE, USE, WAIT, HELP, INVENTORY, LOADGAME]
 
-BACKGROUND_MUSIC = "dark_rumble.wav"
-EVENT_MUSIC = "epic_combat.wav"
 
 class Game(object):
     def __init__(self, player=None):
@@ -53,8 +51,6 @@ class Game(object):
         self.characters = []
         self.exits = []
         self.items = []
-        self.background_music = None
-        self.event_music = None
 
     def get_spaces(self):
         """Return all of the space objects in the game.
@@ -84,32 +80,10 @@ class Game(object):
         print("Characters: {}".format([c.name for c in self.characters]))
         print("Items: {}".format([i.name for i in self.items]))
 
-    def start_music(self, sound_file):
-        """Plays a music wav file.
-        Returns the pid of the subprocess that started the wav file.
-        """
-        # supress output from playing sound file
-        devnull = open(os.devnull, 'wb')
-        music = subprocess.Popen(["aplay", "sounds/" + sound_file],
-                                  stdout=subprocess.PIPE, stderr=devnull)
-        return music
-
-    def kill_music(self):
-        """Kills any music processes currently playing.
-        """
-        if self.background_music is not None \
-           and self.background_music.poll() is None:
-            self.background_music.kill()
-
-        if self.event_music is not None \
-           and self.event_music.poll() is None:
-            self.event_music.kill()
-
     def start(self):
         """Start the game. This is the main game loop. This loop does not exit
         until the game is finished.
         """
-        self.background_music = self.start_music(BACKGROUND_MUSIC)
 
         p = Parser()
         if self.event_status < 1:
@@ -119,15 +93,12 @@ class Game(object):
 
         playing = True
         while playing:
-            # If background music loop has stopped, restart it.
-            if self.background_music.poll() is not None:
-                self.background_music = self.start_music(BACKGROUND_MUSIC)
-
             self.check_upgrades()
             self.check_energy()
             self.check_event_status()
             cur_location = self.player.get_location()
-            print_space_info(cur_location, self.event_status)
+            cur_location.print_description(self.event_status)
+            cur_location.print_details(self.event_status)
             print_player_info(self.player)
             cur_location.set_visited(True)
 
@@ -160,7 +131,6 @@ class Game(object):
 
             elif cmd_action == QUIT:
                 print("Exiting the game...")
-                self.kill_music()
                 return
 
             elif cmd_action == LOOK_AT:
@@ -182,10 +152,47 @@ class Game(object):
                 self.use(cmd_item)
 
             elif cmd_action == WAIT:
-                pass
+                sleep_rate = 0.2
+                print("You wait for a few moments...")
+                time.sleep(2)
+                duration = time.time() + 5
+                while time.time() < duration:
+                    print("\n" * 100)
+                    print("*")
+                    time.sleep(sleep_rate)
+                    print("\n" * 100)
+                    print("**")
+                    time.sleep(sleep_rate)
+                    print("\n" * 100)
+                    print("***")
+                    time.sleep(sleep_rate)
+                    print("\n" * 100)
+                    print("****")
+                    time.sleep(sleep_rate)
+                    print("\n" * 100)
+                    print("*****")
+                    time.sleep(sleep_rate)
+                    print("\n" * 100)
+                    print("****")
+                    time.sleep(sleep_rate)
+                    print("\n" * 100)
+                    print("***")
+                    time.sleep(sleep_rate)
+                    print("\n" * 100)
+                    print("**")
+                    time.sleep(sleep_rate)
+                    print("\n" * 100)
+                    print("*")
+                    time.sleep(sleep_rate)
+                    print("\n" * 100)
+                print("Nothing happened...")
+                time.sleep(2)
+                print("\n" * 100)
 
             elif cmd_action == HELP:
                 self.help()
+                # wait for user to finish reading
+                input("Press 'enter' to continue.")
 
             elif cmd_action == INVENTORY:
                 self.player.print_inventory()
@@ -256,8 +263,10 @@ class Game(object):
             print("Maybe the AI program will bring you back again...")
             sys.exit()
         elif self.player.get_energy() < 15:
-            print("\nYou're getting low on energy.")
-            print("You'll need to find a charger quick!")
+            print("*********************************************************")
+            print("***           You're getting low on energy!           ***")
+            print("***        You'll need to find a charger quick!       ***")
+            print("*********************************************************")
 
     def to_json_dict(self):
         """Write all of the game fields to a json dict. Writes the ids of
@@ -502,11 +511,12 @@ class Game(object):
         """
         print("GAME HELP")
         print("Command\t\t\t\tDescription\n")
-        print("{0} <{1}> || <{2}>:\t{3}".format(GO, "direction", "exit", "Move through an exit."))
+        print("{0} <{1}>:\t\t\t{2}".format(GO, "direction", "Move through an exit."))
+        print("{0} <{1}>:\t\t{2}".format(GO, "exit description", "Move through an exit."))
         print("{0} <{1}>:\t\t\t{2}".format(TAKE, "item", "Take an item."))
         print("{0} <{1}>:\t\t\t{2}".format(DROP, "item", "Drop an item."))
         print("{0} <{1}>:\t\t{2}".format(TALK, "character", "Talk to a character."))
-        print("{0}:\t\t\t\t{1}".format(LOOK, "Look around the space you are currently in."))
+        print("{0}:\t\t\t\t{1}".format(LOOK, "Print the current space description again."))
         print("{0}:\t\t\t{1}".format(SAVEGAME, "Save your current game."))
         print("{0}:\t\t\t\t{1}".format(QUIT, "Quit the game."))
         print("{0} <{1}>:\t\t\t{2}".format(LOOK_AT, "item", "Look more closely at an item."))
@@ -550,9 +560,9 @@ class Game(object):
     def check_upgrades(self):
         """Check if the player is carrying any items that give them an upgrade.
         """
-        if "hmi-25" in self.player.get_item_names():
+        if "HMI-25" in self.player.get_item_names():
             self.player.set_capacity(DEFAULT_CAPACITY + 25)
-        if "hmi-50" in self.player.get_item_names():
+        if "HMI-50" in self.player.get_item_names():
             self.player.set_capacity(DEFAULT_CAPACITY + 50)
 
     def reset_game_fields(self):
@@ -573,21 +583,21 @@ def get_command():
     command = input("\nEnter a command\n>>> ")
     return command
 
-def print_space_info(space, event_index):
-    """Print details about a particular space.
+# def print_space_info(space, event_index):
+#     """Print details about a particular space.
 
-    :param space - Space: The space to print details about
-    :param event_index - int: The int that corresponds to the player's current
-                       achievements
-    """
-    space.print_details(event_index)
+#     :param space - Space: The space to print details about
+#     :param event_index - int: The int that corresponds to the player's current
+#                        achievements
+#     """
+#     space.print_details(event_index)
 
 def print_player_info(player):
     """Print information about the player.
 
     :param player - Player: The player to print information about
     """
-    print("\nPLAYER INFO:")
+    print("\nPLAYER INFO")
     player.print_energy()
     print("Current location: {}".format(player.location.name))
     print("Carrying: {0}/{1}".format(player.get_items_total_weight(), player.get_capacity()))

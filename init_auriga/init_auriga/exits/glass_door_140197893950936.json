@@ -1,0 +1,10 @@
+{
+    "visible": false,
+    "description": "a thick glass door that opens via a badge scanner.",
+    "space": 140197920325472,
+    "unlock_item": 140197893949424,
+    "direction": "east",
+    "id": 140197893950936,
+    "locked": true,
+    "name": "glass door"
+}

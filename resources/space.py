@@ -248,8 +248,7 @@ class Space(object):
         """Print details about this event. Description, exits, characters,
         and items.
         """
-        self.print_description(event_index)
+        print("\nSPACE INFO")
         self.print_exits()
-        print("\n", end="")
         self.print_characters()
         self.print_items()

@@ -1,0 +1,24 @@
+{
+    "visited": false,
+    "long_description": [
+        "...",
+        "...",
+        "...",
+        "You enter a large room with broken robot pieces strewn about. It\nlooks like this was a room for disassembling robots. By the\ncondition of the parts, it seems that these were well-used robots.",
+        "You enter a large room with broken robot pieces strewn about. It\nlooks like this was a room for disassembling robots. By the\ncondition of the parts, it seems that these were well-used robots.",
+        "You enter a large room with broken robot pieces strewn about. It\nlooks like this was a room for disassembling robots. By the\ncondition of the parts, it seems that these were well-used robots.",
+        "You enter a large room with broken robot pieces strewn about. It\nlooks like this was a room for disassembling robots. By the\ncondition of the parts, it seems that these were well-used robots."
+    ],
+    "short_description": "You are in a small room with tools and building materials.",
+    "name": "Maintenance Room",
+    "items": [
+        140197893950152,
+        140197893949928
+    ],
+    "exits": [
+        140197893972768,
+        140197893972824
+    ],
+    "id": 140197893949256,
+    "characters": []
+}

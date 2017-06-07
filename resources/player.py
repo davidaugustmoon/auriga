@@ -287,7 +287,8 @@ class Player(object):
         :param event_status - int: The current status of events the player has
                             achieved.
         """
-        print(self.location.print_long_description(event_status))
+        print("You looked around the {0}.".format(self.location.get_name()))
+        self.location.print_long_description(event_status)
         self.energy -= 1
 
     def look_at(self, item_name):
@@ -321,6 +322,7 @@ class Player(object):
 
         if is_charger:
             print("Feel the snake bite enter your veins!")
+            print("You fully charged your batteries.")
             self.set_energy(self.max_energy)
         else:
             print("Sorry, there is no charger here.\nYou are probably going to die...")

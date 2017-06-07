@@ -1,0 +1,10 @@
+{
+    "visible": true,
+    "description": "two saloon-style doors that swing in and out.",
+    "space": 140197920299328,
+    "unlock_item": null,
+    "direction": "south",
+    "id": 140197893951328,
+    "locked": false,
+    "name": "saloon doors"
+}

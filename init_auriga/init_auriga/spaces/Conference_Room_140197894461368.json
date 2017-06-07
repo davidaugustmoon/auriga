@@ -1,0 +1,23 @@
+{
+    "visited": false,
+    "long_description": [
+        "...",
+        "You enter a large room with a massive table at the center. There\nare intercoms, and ports placed sporadically across the table.\nThere are a dozen luxurious, plush leather chairs strategically\npositioned around the table, slightly angled toward a huge\nflatscreen television mounted on the wall.",
+        "You enter a large room with a massive table at the center. There\nare intercoms, and ports placed sporadically across the table.\nThere are a dozen luxurious, plush leather chairs strategically\npositioned around the table, slightly angled toward a huge\nflatscreen television mounted on the wall.",        
+        "You enter a large room with a massive table at the center. There\nare intercoms, and ports placed sporadically across the table.\nThere are a dozen luxurious, plush leather chairs strategically\npositioned around the table, slightly angled toward a huge\nflatscreen television mounted on the wall.",
+        "You enter a large room with a massive table at the center. There\nare intercoms, and ports placed sporadically across the table.\nThere are a dozen luxurious, plush leather chairs strategically\npositioned around the table, slightly angled toward a huge\nflatscreen television mounted on the wall.",        
+        "You enter a large room with a massive table at the center. There\nare intercoms, and ports placed sporadically across the table.\nThere are a dozen luxurious, plush leather chairs strategically\npositioned around the table, slightly angled toward a huge\nflatscreen television mounted on the wall.",
+        "You enter a large room with a massive table at the center. There\nare intercoms, and ports placed sporadically across the table.\nThere are a dozen luxurious, plush leather chairs strategically\npositioned around the table, slightly angled toward a huge\nflatscreen television mounted on the wall."    ],
+    "short_description": "You are in a large conference room.",
+    "name": "Conference Room",
+    "items": [
+        140197893950096,
+        140197893950040
+    ],
+    "exits": [
+        140197893951384,
+        140197893951440
+    ],
+    "id": 140197894461368,
+    "characters": []
+}

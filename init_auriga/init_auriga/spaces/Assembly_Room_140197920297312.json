@@ -1,0 +1,27 @@
+{
+    "visited": true,
+    "long_description": [
+        "You open your eyes to a brightly lit room with circuit boards,\nwires, computers, and electronic components everywhere. You see\ntwo other robots in the room. One looks like a tank with lasers\nfor arms and the other is a loud, old, mobile manipulator.",
+        "You are in a brightly lit room with circuit boards, wires,\ncomputers, and electronic componenets everywhere. You see two\nother robots in the room. One looks like a tank with lasers for\narms, and the other is a loud, old, mobile manipulator.",
+        "You are in a brightly lit room with circuit boards, wires,\ncomputers, and electronic componenets everywhere. You see two\nother robots in the room. One looks like a tank with lasers for\narms, and the other is a loud, old, mobile manipulator.",
+        "You are in a brightly lit room with circuit boards, wires,\ncomputers, and electronic componenets everywhere. You see two\nother robots in the room. One looks like a tank with lasers for\narms, and the other is a loud, old, mobile manipulator.",
+        "You are in a brightly lit room with circuit boards, wires,\ncomputers, and electronic componenets everywhere. You see two\nother robots in the room. One looks like a tank with lasers for\narms, and the other is a loud, old, mobile manipulator.",
+        "You are in a brightly lit room with circuit boards, wires,\ncomputers, and electronic componenets everywhere. You see two\nother robots in the room. One looks like a tank with lasers for\narms, and the other is a loud, old, mobile manipulator.",
+        "You are in a brightly lit room with circuit boards, wires,\ncomputers, and electronic componenets everywhere. You see two\nother robots in the room. One looks like a tank with lasers for\narms, and the other is a loud, old, mobile manipulator."
+    ],
+    "short_description": "You are in a bright room full of robot parts.",
+    "name": "Assembly Room",
+    "items": [
+        140197893949536,
+        140197893949816,
+        140197893950208
+    ],
+    "exits": [
+        140197893950768
+    ],
+    "id": 140197920297312,
+    "characters": [
+        140197893950320,
+        140197893950376
+    ]
+}

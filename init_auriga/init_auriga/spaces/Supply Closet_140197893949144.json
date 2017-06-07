@@ -1,1 +1,23 @@
-{"visited": false, "long_description": ["...", "...", "...", "You enter a small and cramped room full of robot parts and tools. You notice a massive brick on the\nfloor, that looks like it might be some kind of battery. Based on its composition, you calculate\nthat it weighs over 90 lbs.", "You enter a small room packed with parts and tools.", "You enter a small room packed with parts and tools.", "You enter a small room packed with parts and tools.", "You enter a small room packed with parts and tools."], "short_description": "You are in a small closet with mechanical parts.", "name": "Supply Closet", "items": [140197893949704], "exits": [140197893972712], "id": 140197893949144, "characters": []}
+{
+    "visited": false,
+    "long_description": [
+        "...",
+        "...",
+        "...",
+        "You enter a small and cramped room full of robot parts and tools.\nYou notice a massive brick on the floor, that looks like it might\nbe some kind of battery. Based on its composition, you calculate\nthat it weighs over 90 lbs.",
+        "You enter a small room packed with parts and tools.",
+        "You enter a small room packed with parts and tools.",
+        "You enter a small room packed with parts and tools.",
+        "You enter a small room packed with parts and tools."
+    ],
+    "short_description": "You are in a small closet with mechanical parts.",
+    "name": "Supply Closet",
+    "items": [
+        140197893949704
+    ],
+    "exits": [
+        140197893972712
+    ],
+    "id": 140197893949144,
+    "characters": []
+}

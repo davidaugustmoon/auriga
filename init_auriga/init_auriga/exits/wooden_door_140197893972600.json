@@ -1,0 +1,10 @@
+{
+    "visible": true,
+    "description": "a light wooden door with a twistable door knob.",
+    "space": 140197893949144,
+    "unlock_item": null,
+    "direction": "north",
+    "id": 140197893972600,
+    "locked": false,
+    "name": "wooden door"
+}
