@@ -263,10 +263,10 @@ class Game(object):
             print("Maybe the AI program will bring you back again...")
             sys.exit()
         elif self.player.get_energy() < 15:
-            print("***************************************************")
-            print("***        You're getting low on energy!        ***")
-            print("***     You'll need to find a charger quick!    ***")
-            print("***************************************************")
+            print("*********************************************************")
+            print("***           You're getting low on energy!           ***")
+            print("***        You'll need to find a charger quick!       ***")
+            print("*********************************************************")
 
     def to_json_dict(self):
         """Write all of the game fields to a json dict. Writes the ids of

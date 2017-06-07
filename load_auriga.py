@@ -187,9 +187,9 @@ class Auriga(Game):
             self.slow_scroll(output, SCROLL_RATE, FINAL_SLEEP)
 
             print("\n"*100)
-            print("****************************************************")
-            print("***                    BOOM!                     ***")
-            print("****************************************************")
+            print("**********************************************************")
+            print("***                       BOOM!                        ***")
+            print("**********************************************************")
             time.sleep(3)
             print("\n"*100)
             print("FETCH-4 explodes and causes extensive damage to your shielding and batteries.")
