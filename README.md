@@ -36,6 +36,8 @@ python3 load_auriga.py
 * **loadgame**:                 Load a previously saved game.
 
 ### Cheat Sheet
+This list of commands and actions will navigate you through the entire game from start to finish. This is intended to aid graders on this assignment. It is not intended to be used when "playing" the game.
+
 Push the button to unlock the exit to the east.
 ```
 push button
