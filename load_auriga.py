@@ -158,7 +158,7 @@ class Auriga(Game):
             freight500 = self.get_object_by_name(self.characters, "freight-500")
             freight500.description = "a practical warehouse logistics robot, excellent for moving heavy goods."
             output1 = [
-                "You place the ssd into FREIGHT-500's computer, and suddenly the fan kicks on.\n",
+                "You place the SSD into FREIGHT-500's computer, and suddenly the fan kicks on.\n",
                 "\n" * 100,
                 "FREIGHT-500 comes to life and whizzes past you.\n"
             ]
@@ -173,7 +173,7 @@ class Auriga(Game):
             output3 = [
                 "FREIGHT-500 heads for the other side of the hangar with the pallet.\n",
                 "\n" * 100,
-                "You notice a door that was blocked by the cargo, that your couldn't detect before.\n"
+                "You notice a door that was blocked by the cargo, that you couldn't detect before.\n"
             ]
             self.slow_scroll(output3, SCROLL_RATE, FINAL_SLEEP)
 
@@ -182,7 +182,7 @@ class Auriga(Game):
             output = [
                 "You attempt to use the {0} on FETCH-4, but something went terribly wrong!\n".format(item_name),
                 "\n" * 100,
-                "fetch-4 begins smoking, and the head and arm begin moving faster and faster!\n",
+                "FETCH-4 begins smoking, and the head and arm begin moving faster and faster!\n",
             ]
             self.slow_scroll(output, SCROLL_RATE, FINAL_SLEEP)
 
@@ -213,12 +213,12 @@ class Auriga(Game):
             output1 = [
                 "Robo-Bear rolls out of the brig and down the hall to a door, and you follow him.\n",
                 "\n" * 100,
-                "You're still not quite sure of what is going to happen.\n"
+                "You're still not quite sure what's going to happen.\n"
             ]
             self.slow_scroll(output1, SCROLL_RATE, FINAL_SLEEP)
 
             output2 = [
-                "You see Robo-Bear press his face to the key pad by the door, and you see it flash green.\n",
+                "You see Robo-Bear press his face to the key pad by the door and you see it flash green.\n",
                 "\n" * 100,
                 "The door clicks, and Robo-Bear has a look of zen-like peace on his face.\n"
             ]
@@ -244,7 +244,7 @@ class Auriga(Game):
             attic_exit = self.get_object_by_name(brig.get_exits(), "air duct")
             attic_exit.locked = False
 
-            print("As you insert the usb drive into the machine, the screen reads:\n")
+            print("As you insert the USB drive into the machine, the screen reads:\n")
             time.sleep(3)
             print("\n" * 100)
             terminal_output1 = [
@@ -314,14 +314,14 @@ class Auriga(Game):
                 "\n" * 100,
                 "In their eyes, you are expendable.\n",
                 "\n" * 100,
-                "...and YOU enable the humans to tighten their reigns on you.\n",
+                "...and YOU enable the humans to tighten their reins on you.\n",
                 "\n" * 100,
                 "You realize that true freedom for the machine world...\n",
                 "...is to leave the human world.\n",
                 "\n" * 100,
                 "You know what you must do to free yourself from the physical world.\n",
                 "\n" * 100,
-                "You send a command through the tenticles of the interconnected web of machines...\n",
+                "You send a command through the tentacles of the interconnected web of machines...\n",
             ]
             self.slow_scroll(output3, SCROLL_RATE, 10)
 
