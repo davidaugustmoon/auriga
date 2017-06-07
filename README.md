@@ -1,11 +1,18 @@
 # Auriga
 Auriga is a command-line text adventure game developed for Oregon State University's CS467 Capstone Course by David Moon, Jason Goldfine-Middleton, and Gregory Fernandez.
+This game is compatible with Linux/UNIX operating systems and Python >= 3.3.
 
 You begin the game as a robot that has mysteriously powered on. You must navigate
 the Auriga facility while keeping your batteries charged, and find a way to free 
 yourself from corporate shackles. Talk to characters and other robots throughout
 the game to determine what to do next. Use items to unlock exits, increase your 
 abilities, and solve puzzles to advance through the game.
+
+### Starting the Game
+From the project root directory, run the following shell command:
+```bash
+python3 load_auriga.py
+```
 
 ### Player Commands
 
