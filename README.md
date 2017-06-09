@@ -8,6 +8,8 @@ yourself from corporate shackles. Talk to characters and other robots throughout
 the game to determine what to do next. Use items to unlock exits, increase your 
 abilities, and solve puzzles to advance through the game.
 
+You can view a video walkthrough of the game with audio here: https://media.oregonstate.edu/media/t/0_thfu2xgy
+
 ### Starting the Game
 From the project root directory, run the following shell command:
 ```bash
