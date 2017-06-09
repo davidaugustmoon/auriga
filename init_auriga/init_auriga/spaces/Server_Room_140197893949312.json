@@ -12,7 +12,8 @@
     "short_description": "You are in a room filled to the ceiling with computers.",
     "name": "Server Room",
     "items": [
-        140197893949984
+        140197893949984,
+	8999165743468156
     ],
     "exits": [
         140197893972880

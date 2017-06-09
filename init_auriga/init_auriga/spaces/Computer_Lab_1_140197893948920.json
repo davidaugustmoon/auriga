@@ -12,7 +12,8 @@
     "short_description": "You are in a large room with several computers.",
     "name": "Computer Lab 1",
     "items": [
-        140197893949480
+        140197893949480,
+	6863516156477
     ],
     "exits": [
         140197893972040,

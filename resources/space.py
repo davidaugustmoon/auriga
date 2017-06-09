@@ -218,7 +218,7 @@ class Space(object):
         print("Items: ", end="")
         for item in self.items:
             if item.get_visible():
-                print("{0}  ".format(item.get_name()), end="")
+                print("[{0}]  ".format(item.get_name()), end="")
         print()
 
     def print_characters(self):
@@ -226,7 +226,7 @@ class Space(object):
         """
         print("Characters: ", end="")
         for character in self.characters:
-            print("{0}  ".format(character.get_name()), end="")
+            print("[{0}]  ".format(character.get_name()), end="")
         print()
 
     def to_json_dict(self):

@@ -12,7 +12,9 @@
     ],
     "short_description": "You are in a big room filled with trash and parts.",
     "name": "Trash Room",
-    "items": [],
+    "items": [
+	8646168413334
+    ],
     "exits": [
         140197893972600,
         140197893972656

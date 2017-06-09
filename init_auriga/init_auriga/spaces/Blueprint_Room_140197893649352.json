@@ -12,7 +12,10 @@
     ],
     "short_description": "You are in a room with schematics and blueprints.",
     "name": "Blueprint Room",
-    "items": [],
+    "items": [
+	6541863541165,
+  	9846531684354
+    ],
     "exits": [
         140197893951328
     ],

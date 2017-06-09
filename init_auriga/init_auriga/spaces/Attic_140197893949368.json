@@ -12,7 +12,10 @@
     ],
     "short_description": "You are in a rooftop attic.",
     "name": "Attic",
-    "items": [],
+    "items": [
+	3241635410863,
+	897778943716683
+    ],
     "exits": [
         140197893972936
     ],

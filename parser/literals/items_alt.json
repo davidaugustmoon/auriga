@@ -62,5 +62,22 @@
     "battery": "external power supply",
     "power supply": "external power supply",
     "external supply": "external power supply",
-    "ethernet": "ethernet cable"
+    "ethernet": "ethernet cable",
+    "aol": "aol2.0",
+    "aol 2.0": "aol2.0",
+    "monitor": "computer monitor",
+    "tower": "computer tower",
+    "board": "dry erase board",
+    "erase board": "dry erase board",
+    "dry erase": "dry erase board",
+    "disk": "floppy disk",
+    "floppy": "floppy disk",
+    "diskette": "floppy disk",
+    "robot": "robot toy",
+    "toy": "robot toy",
+    "trash can": "waste basket",
+    "basket": "waste basket",
+    "waste": "waste basket",
+    "garbage can": "waste basket",
+    "garbage": "waste basket"
 }

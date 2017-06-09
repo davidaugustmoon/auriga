@@ -80,6 +80,13 @@ class Game(object):
         print("Characters: {}".format([c.name for c in self.characters]))
         print("Items: {}".format([i.name for i in self.items]))
 
+    def print_all_items_in_all_spaces(self):
+        for s in self.spaces:
+            print("{}:".format(s.name).upper())
+            for i in s.items:
+                print("{}  ".format(i.name))
+            print("\n")
+
     def start(self):
         """Start the game. This is the main game loop. This loop does not exit
         until the game is finished.
@@ -400,69 +407,74 @@ class Game(object):
         # Create Items
         item_files = os.listdir(os.path.join(load_dir, "items"))
         for file in item_files:
-            with open(os.path.join(load_dir, "items", file)) as file_handle:
-                item_data = json.load(file_handle)
-                item_name = item_data['name']
-                item_visible = item_data['visible']
-                item_locked = item_data['locked']
-                item_weight = item_data['weight']
-                item_description = item_data['description']
-                item_id = item_data['id']
+            if file[-1] is not '~':
+                with open(os.path.join(load_dir, "items", file)) as file_handle:
+                    item_data = json.load(file_handle)
+                    item_name = item_data['name']
+                    item_visible = item_data['visible']
+                    item_locked = item_data['locked']
+                    item_weight = item_data['weight']
+                    item_description = item_data['description']
+                    item_id = item_data['id']
 
-                i = Item(new_id=item_id, name=item_name, visible=item_visible, locked=item_locked,
-                         weight=item_weight, description=item_description)
-                self.items.append(i)
+                    i = Item(new_id=item_id, name=item_name, visible=item_visible, locked=item_locked,
+                             weight=item_weight, description=item_description)
+                    self.items.append(i)
 
         # Create Characters
         character_files = os.listdir(os.path.join(load_dir, "characters"))
         for file in character_files:
-            with open(os.path.join(load_dir, "characters", file)) as file_handle:
-                char_data = json.load(file_handle)
-                char_name = char_data['name']
-                char_response = char_data['response']
-                char_description = char_data['description']
-                char_id = char_data['id']
+            if file[-1] is not '~':
+                with open(os.path.join(load_dir, "characters", file)) as file_handle:
+                    char_data = json.load(file_handle)
+                    char_name = char_data['name']
+                    char_response = char_data['response']
+                    char_description = char_data['description']
+                    char_id = char_data['id']
 
-                c = Character(new_id=char_id, name=char_name, description=char_description, response=char_response)
-                self.characters.append(c)
+                    c = Character(new_id=char_id, name=char_name, description=char_description, response=char_response)
+                    self.characters.append(c)
 
         # Create Spaces
         space_files = os.listdir(os.path.join(load_dir, "spaces"))
         for file in space_files:
-            with open(os.path.join(load_dir, "spaces", file)) as file_handle:
-                space_data = json.load(file_handle)
-                space_name = space_data['name']
-                space_long_description = space_data['long_description']
-                space_short_description = space_data['short_description']
-                space_visited = space_data['visited']
-                space_id = space_data['id']
-                space_characters = space_data['characters']
-                space_exits = space_data['exits']
-                space_items = space_data['items']
+            if file[-1] is not '~':
+                with open(os.path.join(load_dir, "spaces", file)) as file_handle:
+                    space_data = json.load(file_handle)
+                    space_name = space_data['name']
+                    space_long_description = space_data['long_description']
+                    space_short_description = space_data['short_description']
+                    space_visited = space_data['visited']
+                    space_id = space_data['id']
+                    space_characters = space_data['characters']
+                    space_exits = space_data['exits']
+                    space_items = space_data['items']
 
-                s = Space(new_id=space_id, name=space_name, long_description=space_long_description,
-                          short_description=space_short_description, visited=space_visited,
-                          items=space_items, characters=space_characters, exits=space_exits)
-                self.spaces.append(s)
+                    s = Space(new_id=space_id, name=space_name, long_description=space_long_description,
+                              short_description=space_short_description, visited=space_visited,
+                              items=space_items, characters=space_characters, exits=space_exits)
+                    self.spaces.append(s)
+
 
         # Create Exits
         exit_files = os.listdir(os.path.join(load_dir, "exits"))
         for file in exit_files:
-            with open(os.path.join(load_dir, "exits", file)) as file_handle:
-                exit_data = json.load(file_handle)
-                exit_space = exit_data['space']
-                exit_name = exit_data['name']
-                exit_direction = exit_data['direction']
-                exit_unlock_item = exit_data['unlock_item']
-                exit_visible = exit_data['visible']
-                exit_id = exit_data['id']
-                exit_locked = exit_data['locked']
-                exit_description = exit_data['description']
+            if file[-1] is not '~':
+                with open(os.path.join(load_dir, "exits", file)) as file_handle:
+                    exit_data = json.load(file_handle)
+                    exit_space = exit_data['space']
+                    exit_name = exit_data['name']
+                    exit_direction = exit_data['direction']
+                    exit_unlock_item = exit_data['unlock_item']
+                    exit_visible = exit_data['visible']
+                    exit_id = exit_data['id']
+                    exit_locked = exit_data['locked']
+                    exit_description = exit_data['description']
 
-                e = Exit(new_id=exit_id, space=exit_space, name=exit_name, direction=exit_direction,
-                         unlock_item=exit_unlock_item, visible=exit_visible, locked=exit_locked,
-                         description=exit_description)
-                self.exits.append(e)
+                    e = Exit(new_id=exit_id, space=exit_space, name=exit_name, direction=exit_direction,
+                             unlock_item=exit_unlock_item, visible=exit_visible, locked=exit_locked,
+                             description=exit_description)
+                    self.exits.append(e)
 
         # Set player location
         loc_id = self.player.location
@@ -505,6 +517,8 @@ class Game(object):
             exit.unlock_item = None
             exit.space = self.get_object_by_id(self.spaces, space_id)
             exit.unlock_item = self.get_object_by_id(self.items, item_id)
+
+        self.print_all_items_in_all_spaces()
 
     def help(self):
         """Print a help menu for the player.

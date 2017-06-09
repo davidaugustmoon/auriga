@@ -11,7 +11,9 @@
     ],
     "short_description": "You are in a long hallway.",
     "name": "Hallway 1",
-    "items": [],
+    "items": [
+	65131384321354
+    ],
     "exits": [
         140197893951048,
         140197893951104,

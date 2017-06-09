@@ -12,7 +12,10 @@
     ],
     "short_description": "You are in a long brightly lit hallway.",
     "name": "Hallway 2",
-    "items": [],
+    "items": [
+	8946837742163,
+	8777896351335
+    ],
     "exits": [
         140197893972264,
         140197893972320,

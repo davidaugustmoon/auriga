@@ -304,8 +304,7 @@ class Player(object):
                     break
 
         if item:
-            print("You looked at the {0}".format(item_name))
-            print(item.get_description())
+            print("You see {0}".format(item.get_description()))
             self.energy -= 1
         else:
             print("{0} isn't here...".format(item_name))
@@ -337,9 +336,9 @@ class Player(object):
         """Print the names of the items currently carried by the player.
         """
         if self.items:
-            print("Your Inventory (Item, Weight):")
+            print("Your Inventory ([Item], Weight):")
             for i in self.items:
-                print("({0}, {1}) ".format(i.get_name(), i.get_weight()), end="")
+                print("([{0}], {1}) ".format(i.get_name(), i.get_weight()), end="")
             print()
         else:
             print("You're not carrying anything...")
