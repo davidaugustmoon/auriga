@@ -117,13 +117,22 @@ class Game(object):
                 self.player.go_exit(self.event_status, direction=cmd_direction, exit_name=cmd_exit)
 
             elif cmd_action == TAKE:
-                self.player.take(cmd_item)
+                if cmd_item is None:
+                    print("You can't take that.")
+                else:
+                    self.player.take(cmd_item)
 
             elif cmd_action == DROP:
-                self.player.drop(cmd_item)
+                if cmd_item is None:
+                    print("You can't drop that.")
+                else:
+                    self.player.drop(cmd_item)
 
             elif cmd_action == TALK:
-                self.player.talk(cmd_character, self.event_status)
+                if cmd_character is None:
+                    print("You can't do talk to that.")
+                else:
+                    self.player.talk(cmd_character, self.event_status)
 
             elif cmd_action == LOOK:
                 self.player.look(self.event_status)
@@ -141,22 +150,34 @@ class Game(object):
                 return
 
             elif cmd_action == LOOK_AT:
-                self.player.look_at(cmd_item)
+                if cmd_item is None:
+                    print("You can't look at that.")
+                else:
+                    self.player.look_at(cmd_item)
 
             elif cmd_action == LISTEN:
                 self.player.listen()
 
             elif cmd_action == PULL:
-                self.pull(cmd_item)
+                if cmd_item is None:
+                    print("You can't pull that.")
+                else:
+                    self.pull(cmd_item)
 
             elif cmd_action == PUSH:
-                self.push(cmd_item)
+                if cmd_item is None:
+                    print("You can't push that.")
+                else:
+                    self.push(cmd_item)
 
             elif cmd_action == CHARGE:
                 self.player.charge()
 
             elif cmd_action == USE:
-                self.use(cmd_item)
+                if cmd_item is None:
+                    print("You can't use that.")
+                else:
+                    self.use(cmd_item)
 
             elif cmd_action == WAIT:
                 sleep_rate = 0.2
