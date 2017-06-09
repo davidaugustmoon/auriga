@@ -1,8 +1,10 @@
+#!/usr/bin/env python3
+
 import unittest
 from resources.player import Player
 from resources.item import Item
 from resources.space import Space
-from auriga import Auriga
+import generate_auriga
 
 class TestPlayer(unittest.TestCase):
     """Tests for player.py"""
